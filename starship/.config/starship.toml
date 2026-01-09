@@ -1,6 +1,6 @@
 add_newline = false
 
-format = "${custom.directory}${custom.fdir}${custom.fbranch} ${git_branch}[\uf0e7](bold #FFEA00) "
+format = "${custom.directory}${custom.fdir}${custom.fbranch} ${custom.gbranch}[\uf0e7](bold #FFEA00) "
 # 26a1
 # f0e7
 
@@ -23,7 +23,8 @@ command = 'pwd | sed "s|$HOME|~|" | sed "s|^$STARSHIP_F_PREFIX/||" | sed "s|/.*$
 when = '[[ -n ${STARSHIP_F_PREFIX-} && "$PWD" == "${STARSHIP_F_PREFIX%/}"/* ]]'
 format = ' [ $output](bold #FFAC1C)'
 
-[git_branch]
-symbol = ''
-format = '[$symbol $branch(:$remote_branch)]($style) '
-style = 'bold #FFAC1C'
+[custom.gbranch]
+shell = 'zsh'
+command = 'git branch --show-current'
+when = 'git branch --show-current 2>/dev/null'
+format = '[ $output](bold #FFAC1C) '

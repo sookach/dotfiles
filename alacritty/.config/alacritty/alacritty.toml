@@ -1,0 +1,42 @@
+[window]
+padding = { x = 7, y = 7 }
+decorations = 'None'
+startup_mode = 'Maximized'
+
+[font]
+normal = { family = "NotoSansM NFM", style = "Regular" }
+size = 11
+
+[cursor]
+style = { shape = "Block", blinking = "Off" }
+
+[colors]
+primary = { background = "#282c34", foreground = "#abb2bf" }
+
+cursor = { text = "#1e2127", cursor = "#5c6370" }
+selection = { text = "#abb2bf", background = "#3a3f4b" }
+
+normal = { black = "#1e2127", red = "#e06c75", green = "#98c379", yellow = "#d19a66", blue = "#61afef", magenta = "#c678dd", cyan = "#56b6c2", white = "#abb2bf" }
+bright = { black = "#5c6370", red = "#e06c75", green = "#98c379", yellow = "#d19a66", blue = "#61afef", magenta = "#c678dd", cyan = "#56b6c2", white = "#ffffff" }
+
+[keyboard]
+bindings = [
+  # macOS-style word movement with Option+Left/Right
+  # ESC-b / ESC-f are the standard backward/forward-word sequences in zsh/readline
+  { key = "Left",  mods = "Alt", chars = "\u001bb" },
+  { key = "Right", mods = "Alt", chars = "\u001bf" },
+
+  # Optional extras if you want Terminal-like behavior:
+  # Option+Backspace = delete previous word (ESC-DEL)
+  # { key = "Back", mods = "Alt", chars = "\u001b\u007f" },
+]
+
+# NOTE:
+# Your Terminal profile has useOptionAsMetaKey = false.
+# So I did NOT force "alt_send_esc = true" globally.
+# If you decide you want Option to behave as Meta for ALL keys, add:
+#
+# [keyboard]
+# alt_send_esc = true
+#
+# (but that changes how Option produces special characters on macOS)
