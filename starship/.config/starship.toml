@@ -1,0 +1,29 @@
+add_newline = false
+
+format = "${custom.directory}${custom.fdir}${custom.fbranch} ${git_branch}[\uf0e7](bold #FFEA00) "
+# 26a1
+# f0e7
+
+
+[custom.directory]
+shell = 'zsh'
+command = 'pwd | sed "s|$HOME|~|"'
+when = '[[ -z ${STARSHIP_F_PREFIX-} || "$PWD" != "${STARSHIP_F_PREFIX%/}"/* ]]'
+format = '[$output](bold bright-blue)'
+
+[custom.fdir]
+shell = 'zsh'
+command = 'pwd | sed "s|$HOME|~|" | sed "s|^$STARSHIP_F_PREFIX/.*/||"'
+when = '[[ -n ${STARSHIP_F_PREFIX-} && "$PWD" == "${STARSHIP_F_PREFIX%/}"/* ]]'
+format = '[$output](bold bright-blue)'
+
+[custom.fbranch]
+shell = 'zsh'
+command = 'pwd | sed "s|$HOME|~|" | sed "s|^$STARSHIP_F_PREFIX/||" | sed "s|/.*$||"'
+when = '[[ -n ${STARSHIP_F_PREFIX-} && "$PWD" == "${STARSHIP_F_PREFIX%/}"/* ]]'
+format = ' [ $output](bold #FFAC1C)'
+
+[git_branch]
+symbol = ''
+format = '[$symbol $branch(:$remote_branch)]($style) '
+style = 'bold #FFAC1C'
