@@ -1,6 +1,6 @@
 [window]
 padding = { x = 7, y = 7 }
-decorations = 'None'
+decorations = 'Buttonless'
 startup_mode = 'Maximized'
 
 [font]
