@@ -24,8 +24,10 @@ ctrl-alt-k = "move up"
 ctrl-alt-l = "move right"
 
 # ---- Layout toggles
-ctrl-cmd-slash = "layout tiles horizontal vertical"
 ctrl-cmd-comma = "layout accordion horizontal vertical"
+ctrl-cmd-period = "layout tiles horizontal vertical"
+ctrl-cmd-slash = 'layout floating tiling'
+
 
 # ---- Fullscreen toggle
 ctrl-cmd-f = "fullscreen"
@@ -40,8 +42,8 @@ ctrl-cmd-6 = "workspace 6"
 ctrl-cmd-7 = "workspace 7"
 ctrl-cmd-8 = "workspace 8"
 ctrl-cmd-9 = "workspace 9"
-ctrl-cmd-u  = "workspace prev"
-ctrl-cmd-i = "workspace next"
+ctrl-cmd-semicolon  = "workspace prev"
+ctrl-cmd-quote = "workspace next"
 
 # ---- Move window to workspace
 ctrl-alt-1 = "move-node-to-workspace 1"
@@ -53,5 +55,5 @@ ctrl-alt-6 = "move-node-to-workspace 6"
 ctrl-alt-7 = "move-node-to-workspace 7"
 ctrl-alt-8 = "move-node-to-workspace 8"
 ctrl-alt-9 = "move-node-to-workspace 9"
-ctrl-alt-u = "move-node-to-workspace next"
-ctrl-alt-i  = "move-node-to-workspace prev"
+ctrl-alt-semicolon = "move-node-to-workspace next"
+ctrl-alt-quote = "move-node-to-workspace prev"
