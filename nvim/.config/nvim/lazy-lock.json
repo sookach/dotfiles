@@ -4,10 +4,10 @@
   "codex.nvim": { "branch": "main", "commit": "4317788afc091d5e913109c55d5a04f32be4e14a" },
   "conform.nvim": { "branch": "master", "commit": "c2526f1cde528a66e086ab1668e996d162c75f4f" },
   "friendly-snippets": { "branch": "main", "commit": "6cd7280adead7f586db6fccbd15d2cac7e2188b9" },
-  "fzf-lua": { "branch": "main", "commit": "95f6baea73d0440a28c55d370d424ac645b447a0" },
+  "fzf-lua": { "branch": "main", "commit": "5cc68a2a20d4d1b1260f2c452becf557f9dcd479" },
   "lazy.nvim": { "branch": "main", "commit": "306a05526ada86a7b30af95c5cc81ffba93fef97" },
   "lualine.nvim": { "branch": "master", "commit": "47f91c416daef12db467145e16bed5bbfe00add8" },
-  "nvim-tree.lua": { "branch": "master", "commit": "1701e41b07d398757101ac35e11d6992085fc75f" },
+  "nvim-tree.lua": { "branch": "master", "commit": "b93dbb9b58a882116b381dcc6ae33acafadfb8ee" },
   "nvim-treesitter": { "branch": "master", "commit": "42fc28ba918343ebfd5565147a42a26580579482" },
   "nvim-web-devicons": { "branch": "master", "commit": "803353450c374192393f5387b6a0176d0972b848" },
   "onedarkpro.nvim": { "branch": "main", "commit": "743bf248cf238a0625f3a204eecefafcf6281a9f" }
