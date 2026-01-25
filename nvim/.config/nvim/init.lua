@@ -21,7 +21,9 @@ vim.keymap.set({ 'n', 'v' }, 'gf', function()
   else
     vim.lsp.buf.format()
   end
-end)
+end
+)
+
 vim.keymap.set('n', 'grd', vim.lsp.buf.declaration)
 vim.keymap.set('n', 'grf', vim.lsp.buf.definition)
 vim.keymap.set('n', '<c-w>u', '<cmd>tabprevious<cr>')
