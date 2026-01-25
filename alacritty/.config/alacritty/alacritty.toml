@@ -10,14 +10,33 @@ size = 11
 [cursor]
 style = { shape = "Block", blinking = "Off" }
 
-[colors]
-primary = { background = "#282c34", foreground = "#abb2bf" }
+[colors.primary]
+foreground = '#bbc2cf'
+background ='#282c34'
 
-cursor = { text = "#1e2127", cursor = "#5c6370" }
-selection = { text = "#abb2bf", background = "#3a3f4b" }
+[colors.cursor]
+cursor = '#51afef'
+text   = '#282c34'
 
-normal = { black = "#1e2127", red = "#e06c75", green = "#98c379", yellow = "#d19a66", blue = "#61afef", magenta = "#c678dd", cyan = "#56b6c2", white = "#abb2bf" }
-bright = { black = "#5c6370", red = "#e06c75", green = "#98c379", yellow = "#d19a66", blue = "#61afef", magenta = "#c678dd", cyan = "#56b6c2", white = "#ffffff" }
+[colors.normal]
+black   = '#282c34'
+red     = '#ff6c6b'
+green   = '#98be65'
+yellow  = '#ecbe7b'
+blue    = '#51afef'
+magenta = '#a9a1e1'
+cyan    = '#46d9ff'
+white   = '#bbc2cf'
+
+[colors.bright]
+black   = '#3f444a'
+red     = '#ff6c6b'
+green   = '#98be65'
+yellow  = '#da8548'
+blue    = '#51afef'
+magenta = '#a9a1e1'
+cyan    = '#46d9ff'
+white   = '#efefef'
 
 [keyboard]
 bindings = [
