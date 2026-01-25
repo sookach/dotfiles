@@ -40,22 +40,7 @@ white   = '#efefef'
 
 [keyboard]
 bindings = [
-  # macOS-style word movement with Option+Left/Right
-  # ESC-b / ESC-f are the standard backward/forward-word sequences in zsh/readline
   { key = "Left",  mods = "Alt", chars = "\u001bb" },
   { key = "Right", mods = "Alt", chars = "\u001bf" },
-
-  # Optional extras if you want Terminal-like behavior:
-  # Option+Backspace = delete previous word (ESC-DEL)
-  # { key = "Back", mods = "Alt", chars = "\u001b\u007f" },
 ]
 
-# NOTE:
-# Your Terminal profile has useOptionAsMetaKey = false.
-# So I did NOT force "alt_send_esc = true" globally.
-# If you decide you want Option to behave as Meta for ALL keys, add:
-#
-# [keyboard]
-# alt_send_esc = true
-#
-# (but that changes how Option produces special characters on macOS)
