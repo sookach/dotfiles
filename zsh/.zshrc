@@ -56,4 +56,4 @@ function yy() {
 
 (( $+commands[fzf] )) && source <(fzf --zsh)
 
-eval "$(starship init zsh)"
+PROMPT='%B%F{12}%~%f%b %B%F{#FFEA00}%f%b '
