@@ -45,6 +45,8 @@ alias lt='ls --tree'
 alias zj=zellij
 function zj-rt { zj ac rename-tab "$@" }
 
+function skull { printf '\u2620' }
+
 function yy() {
   local tmp="$(mktemp -t "yazi-cwd.XXXXX")"
   yazi "$@" --cwd-file="$tmp"
