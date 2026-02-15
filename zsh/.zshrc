@@ -45,6 +45,8 @@ alias lt='ls --tree'
 alias zj=zellij
 function zj-rt { zj ac rename-tab "$@" }
 
+alias drwn='sudo darwin-rebuild switch --flake ~/src/nix-darwin'
+
 function skull { printf '\u2620' }
 
 function yy() {
