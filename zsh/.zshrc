@@ -1,4 +1,4 @@
-export PATH="$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/opt/homebrew/bin:$PATH"
+export PATH="/run/current-system/sw/bin:/opt/homebrew/bin:$PATH"
 
 typeset -i HISTSIZE=16384
 typeset -i SAVEHIST=16384
