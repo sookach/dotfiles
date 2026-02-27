@@ -15,6 +15,8 @@ vim.keymap.set({ 'n', 'v' }, 'gf', function()
   local conform_filetypes = {
     python = true,
     sh = true,
+    objc = true,
+    objcpp = true,
   }
   if conform_filetypes[vim.bo.filetype] then
     require("conform").format()

@@ -4,6 +4,8 @@ return {
     formatters_by_ft = {
       python = { "black" },
       sh = { "shfmt" },
+      objc = { "clang-format" },
+      objcpp = { "clang-format" },
     },
   },
 }
