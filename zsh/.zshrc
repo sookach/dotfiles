@@ -1,4 +1,5 @@
-export PATH="/run/current-system/sw/bin:/opt/homebrew/bin:$PATH"
+export PATH="/opt/homebrew/opt/llvm/bin:/opt/homebrew/bin:$PATH"
+export LDFLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -L/opt/homebrew/opt/llvm/lib/unwind -lunwind"
 
 typeset -i HISTSIZE=16384
 typeset -i SAVEHIST=16384
