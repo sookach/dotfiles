@@ -1,0 +1,7 @@
+# Theme
+theme = "Doom One"
+
+# Font Settings
+font-family = "NotoSansM NFM"
+font-size = 11
+font-thicken = true
