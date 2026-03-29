@@ -1,10 +1,13 @@
 return {
   "ibhagwan/fzf-lua",
-  dependencies = { "nvim-tree/nvim-web-devicons" },
   opts = {},
-  keys = {
-    { '<leader>ff', '<cmd>FzfLua files<cr>',                mode = 'n' },
-    { '<leader>fs', '<cmd>FzfLua live_grep<cr>',            mode = 'n' },
-    { '<leader>fd', '<cmd>FzfLua diagnostics_document<cr>', mode = 'n' }
-  }
+  config = function()
+    local fzf = require("fzf-lua")
+    fzf.setup {
+      files = { cmd = "fd --type f" },
+    }
+    vim.keymap.set('n', '<leader>ff', fzf.builtin, { desc = "Fzf Builtin" })
+    vim.keymap.set('n', '<leader>fs', fzf.files, { desc = "Fzf Files" })
+    vim.keymap.set("n", "<leader>fg", fzf.live_grep, { desc = "Fzf Grep" })
+  end,
 }
