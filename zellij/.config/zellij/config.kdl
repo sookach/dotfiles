@@ -28,6 +28,7 @@ keybinds clear-defaults=true {
     bind "r" { SwitchToMode "resize"; }
     bind "s" { SwitchToMode "scroll"; }
     bind "&" { CloseTab; SwitchToMode "normal"; }
+    bind "*" { CloseFocus; SwitchToMode "normal"; }
   }
 
   move {
