@@ -8,7 +8,7 @@ return {
     'https://github.com/lewis6991/gitsigns.nvim',
   },
   config = function()
-    local ok, gitsigns = pcall(require, 'gitsigns')
-    if ok then gitsigns.setup() end
+    local gitsigns = require('gitsigns')
+    gitsigns.setup()
   end
 }

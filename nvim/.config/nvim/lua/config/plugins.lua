@@ -34,4 +34,3 @@ vim.pack.add(specs)
 for _, cfg in ipairs(configs) do
   cfg()
 end
-
