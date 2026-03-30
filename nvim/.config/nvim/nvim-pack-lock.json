@@ -19,7 +19,7 @@
     },
     "doom-one.nvim": {
       "rev": "beae92173315c7282f6897e666cfd67fbf0f3ac9",
-      "src": "ssh://git@github.com/NTBBloodbath/doom-one.nvim.git"
+      "src": "https://github.com/NTBBloodbath/doom-one.nvim"
     },
     "friendly-snippets": {
       "rev": "6cd7280adead7f586db6fccbd15d2cac7e2188b9",
