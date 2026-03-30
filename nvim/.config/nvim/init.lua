@@ -39,7 +39,7 @@ vim.keymap.set('n', '<c-w>c', '<cmd>BufferClose<cr>')
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 
-require("config.lazy")
+require("config.plugins")
 
 vim.lsp.enable('luals')
 vim.lsp.enable('clangd')

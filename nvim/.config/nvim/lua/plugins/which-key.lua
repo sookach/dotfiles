@@ -1,19 +1,14 @@
- return {
-  "folke/which-key.nvim",
-  event = "VeryLazy",
-  init = function()
+return {
+  spec = 'https://github.com/folke/which-key.nvim',
+  config = function()
     vim.o.timeout = true
     vim.o.timeoutlen = 300
-  end,
-  opts = {
-    plugins = { spelling = true },
-    -- Use mini.icons highlights when available
-    colors = true,
-    -- Modern spec format - all mappings defined here
-    defaults = {},
-  },
-  config = function(_, opts)
-    local wk = require("which-key")
-    wk.setup(opts)
-  end,
+    local ok, wk = pcall(require, 'which-key')
+    if ok then
+      wk.setup({
+        plugins = { spelling = true },
+        colors = true,
+      })
+    end
+  end
 }

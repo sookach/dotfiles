@@ -1,7 +1,7 @@
 return {
-  'romgrk/barbar.nvim',
-  dependencies = {
-    'lewis6991/gitsigns.nvim',
-    'nvim-tree/nvim-web-devicons',
-  }
+  spec = 'https://github.com/romgrk/barbar.nvim',
+  config = function()
+    local ok, barbar = pcall(require, 'barbar')
+    if ok then barbar.setup() end
+  end
 }
