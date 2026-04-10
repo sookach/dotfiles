@@ -1,5 +1,5 @@
 return {
-  spec = { src = 'https://github.com/saghen/blink.cmp', version = 'v1.10.1' },
+  spec = { src = 'https://github.com/saghen/blink.cmp', version = 'v1' },
   config = function()
     local blink = require('blink.cmp')
     blink.setup {
