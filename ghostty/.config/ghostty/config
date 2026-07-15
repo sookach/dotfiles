@@ -8,3 +8,7 @@ font-thicken = true
 
 macos-titlebar-style = hidden
 keybind = cmd+c=copy_to_clipboard
+
+background-opacity = 0.80
+background-blur-radius = 20
+background-blur = macos-glass-regular
