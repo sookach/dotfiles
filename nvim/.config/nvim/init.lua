@@ -44,8 +44,11 @@ vim.pack.add {
   'https://github.com/nvim-tree/nvim-web-devicons',
   'https://github.com/nvim-lualine/lualine.nvim'
 }
-require('lualine').setup()
-
+require('lualine').setup {
+  options = {
+    theme = "auto", -- "auto" will set the theme dynamically based on the colorscheme
+  },
+}
 
 vim.pack.add {
   'https://github.com/folke/noice.nvim.git',
@@ -110,3 +113,8 @@ vim.api.nvim_create_user_command("PackClean", function()
     print("Your native plugins are already clean!")
   end
 end, {})
+
+-- vim.pack.add { 'https://github.com/rktjmp/lush.nvim' }
+-- vim.pack.add { 'https://github.com/uloco/bluloco.nvim' }
+-- require('bluloco').setup { transparent = true }
+-- vim.cmd.colorscheme('bluloco')
