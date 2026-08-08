@@ -114,6 +114,9 @@ vim.api.nvim_create_user_command("PackClean", function()
   end
 end, {})
 
+vim.pack.add { "https://github.com/sphamba/smear-cursor.nvim" }
+require('smear_cursor').setup {}
+
 -- vim.pack.add { 'https://github.com/rktjmp/lush.nvim' }
 -- vim.pack.add { 'https://github.com/uloco/bluloco.nvim' }
 -- require('bluloco').setup { transparent = true }
