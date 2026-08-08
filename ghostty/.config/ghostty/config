@@ -1,5 +1,5 @@
 # Theme
-theme = "Doom One"
+theme = "cyberdream"
 
 # Font Settings
 font-family = "NotoSansM NFM"
@@ -9,6 +9,9 @@ font-thicken = true
 macos-titlebar-style = hidden
 keybind = cmd+c=copy_to_clipboard
 
-background-opacity = 0.80
+background-opacity = 0.70
 background-blur-radius = 20
 background-blur = macos-glass-regular
+
+# background = 09090b
+
