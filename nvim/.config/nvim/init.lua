@@ -26,7 +26,6 @@ vim.lsp.enable('lua_ls')
 
 vim.pack.add { 'https://github.com/ibhagwan/fzf-lua.git' }
 vim.pack.add { 'https://github.com/nvim-treesitter/nvim-treesitter' }
-vim.pack.add { 'https://github.com/NTBBloodbath/doom-one.nvim.git' }
 vim.pack.add {
   'https://github.com/saghen/blink.lib',
   'https://github.com/saghen/blink.cmp'
@@ -73,8 +72,24 @@ require("noice").setup({
   },
 })
 
-vim.g.doom_one_transparent_background = true
-vim.cmd('colorscheme doom-one')
+-- 1. Load cyberdream using Neovim's native pack add
+vim.pack.add { 'https://github.com/scottmckendry/cyberdream.nvim.git' }
+
+-- 2. Configure Cyberdream options
+require("cyberdream").setup({
+  -- Enable transparent background to let Ghostty's glass show through
+  transparent = true,
+
+  -- High contrast Vivaldi/Cyberpunk vibes
+  cache = true, -- Improves startup speed
+  styles = {
+    sidebars = "transparent",
+    floats = "transparent",
+  },
+})
+
+-- 3. Set the colorscheme
+vim.cmd("colorscheme cyberdream")
 
 vim.api.nvim_create_user_command("PackClean", function()
   local inactive = {}

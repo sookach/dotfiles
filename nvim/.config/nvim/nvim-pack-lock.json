@@ -1,19 +1,23 @@
 {
   "plugins": {
     "blink.cmp": {
-      "rev": "9dcb1f3a9164f10c8950a790aace576f2e89dc78",
+      "rev": "cba53eff1948109ec0f47cbead4f07494d1e25c9",
       "src": "https://github.com/saghen/blink.cmp"
     },
     "blink.lib": {
-      "rev": "5876dd95deeb70aadbe9f1c0b7117a135061cdac",
+      "rev": "8b04d0e0acc8565cfa4dd291a89a9212b7262633",
       "src": "https://github.com/saghen/blink.lib"
+    },
+    "cyberdream.nvim": {
+      "rev": "d0e6e837b0248e3507f3a295deb4661221610e78",
+      "src": "https://github.com/scottmckendry/cyberdream.nvim.git"
     },
     "doom-one.nvim": {
       "rev": "beae92173315c7282f6897e666cfd67fbf0f3ac9",
       "src": "https://github.com/NTBBloodbath/doom-one.nvim.git"
     },
     "fzf-lua": {
-      "rev": "237b7e7f2bd07becc83144933b6058cc15bef2dc",
+      "rev": "8671012a7b2a1648595952c655039d51fb301c14",
       "src": "https://github.com/ibhagwan/fzf-lua.git"
     },
     "lualine.nvim": {
@@ -33,11 +37,11 @@
       "src": "https://github.com/rcarriga/nvim-notify.git"
     },
     "nvim-treesitter": {
-      "rev": "4916d6592ede8c07973490d9322f187e07dfefac",
+      "rev": "3d3321b560a63ff92a8692401f303a5123336b86",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-web-devicons": {
-      "rev": "dad71387de386a946b123079d0e53f23028f3abd",
+      "rev": "2ae6958df7ced50baac5035cec0c15799eedfbf7",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "plenary.nvim": {
@@ -45,7 +49,7 @@
       "src": "https://github.com/nvim-lua/plenary.nvim.git"
     },
     "yazi.nvim": {
-      "rev": "39fefe6b78cf589f3f689c9d552951cde25f6d09",
+      "rev": "7cc8fe84f48b636502f38df5410318b9a6642d0d",
       "src": "https://github.com/mikavilpas/yazi.nvim.git"
     }
   }
