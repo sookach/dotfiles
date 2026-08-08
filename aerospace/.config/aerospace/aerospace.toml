@@ -1,3 +1,5 @@
+config-version = 2
+
 [gaps]
 inner.horizontal = 4
 inner.vertical   = 4
@@ -18,16 +20,15 @@ ctrl-cmd-n = 'focus-back-and-forth'
 ctrl-cmd-m = 'workspace-back-and-forth'
 
 # ---- Move windows
-ctrl-alt-h = "move left"
-ctrl-alt-j = "move down"
-ctrl-alt-k = "move up"
-ctrl-alt-l = "move right"
+ctrl-cmd-shift-h = "move left"
+ctrl-cmd-shift-j = "move down"
+ctrl-cmd-shift-k = "move up"
+ctrl-cmd-shift-l = "move right"
 
 # ---- Layout toggles
-ctrl-cmd-comma = "layout accordion horizontal vertical"
-ctrl-cmd-period = "layout tiles horizontal vertical"
-ctrl-cmd-slash = 'layout floating tiling'
-
+ctrl-cmd-slash = 'layout tiles horizontal vertical'
+ctrl-cmd-comma = 'layout accordion horizontal vertical'
+ctrl-cmd-period = 'layout floating tiling'
 
 # ---- Fullscreen toggle
 ctrl-cmd-f = "fullscreen"
@@ -46,14 +47,14 @@ ctrl-cmd-semicolon  = "workspace prev"
 ctrl-cmd-quote = "workspace next"
 
 # ---- Move window to workspace
-ctrl-alt-1 = "move-node-to-workspace 1"
-ctrl-alt-2 = "move-node-to-workspace 2"
-ctrl-alt-3 = "move-node-to-workspace 3"
-ctrl-alt-4 = "move-node-to-workspace 4"
-ctrl-alt-5 = "move-node-to-workspace 5"
-ctrl-alt-6 = "move-node-to-workspace 6"
-ctrl-alt-7 = "move-node-to-workspace 7"
-ctrl-alt-8 = "move-node-to-workspace 8"
-ctrl-alt-9 = "move-node-to-workspace 9"
-ctrl-alt-semicolon = "move-node-to-workspace prev"
-ctrl-alt-quote = "move-node-to-workspace next"
+alt-shift-1 = "move-node-to-workspace 1"
+alt-shift-2 = "move-node-to-workspace 2"
+alt-shift-3 = "move-node-to-workspace 3"
+alt-shift-4 = "move-node-to-workspace 4"
+alt-shift-5 = "move-node-to-workspace 5"
+alt-shift-6 = "move-node-to-workspace 6"
+alt-shift-7 = "move-node-to-workspace 7"
+alt-shift-8 = "move-node-to-workspace 8"
+alt-shift-9 = "move-node-to-workspace 9"
+alt-shift-semicolon = "move-node-to-workspace prev"
+alt-shift-quote = "move-node-to-workspace next"
