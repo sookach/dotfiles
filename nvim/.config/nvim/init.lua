@@ -81,6 +81,18 @@ vim.keymap.set({ 'n', 'v' }, '<leader>y', ':Yazi<cr>')
 
 vim.pack.add { 'https://github.com/ibhagwan/fzf-lua.git' }
 local fzf = require('fzf-lua')
+--[[
+fzf.setup {
+  grep = {
+    -- --hidden includes dotfiles (.config, .env, etc.)
+    -- --no-ignore bypasses .gitignore
+    rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4000 --hidden --no-ignore",
+    -- Search hidden files, but keep respecting .gitignore
+    --  rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4000 --hidden"
+  }
+}
+--]]
+
 vim.keymap.set('n', '<leader>ff', fzf.files, { desc = "Find Files" })
 vim.keymap.set('n', '<leader>fg', fzf.live_grep, { desc = "Live Grep" })
 
@@ -102,6 +114,7 @@ require('nvim-treesitter').install {
   'make',
   'mlir',
   'python',
+  'toml',
   'vim',
   'vimdoc',
   'yaml',
@@ -141,6 +154,7 @@ vim.keymap.set({ 'n', 'v' }, 'grd', vim.lsp.buf.definition)
 vim.lsp.enable('clangd')
 vim.lsp.enable('cmake')
 vim.lsp.enable('lua_ls')
+vim.lsp.enable('taplo')
 
 vim.api.nvim_create_user_command("PackClean", function()
   local inactive = {}
