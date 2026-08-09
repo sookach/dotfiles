@@ -16,33 +16,43 @@ ctrl-cmd-j = "focus down"
 ctrl-cmd-k = "focus up"
 ctrl-cmd-l = "focus right"
 
-ctrl-cmd-n = 'focus-back-and-forth'
-ctrl-cmd-m = 'workspace-back-and-forth'
+ctrl-cmd-leftSquareBracket = 'focus-back-and-forth'
+ctrl-cmd-rightSquareBracket = 'workspace-back-and-forth'
 
 # ---- Move windows
-ctrl-cmd-shift-h = "move left"
-ctrl-cmd-shift-j = "move down"
-ctrl-cmd-shift-k = "move up"
-ctrl-cmd-shift-l = "move right"
+ctrl-cmd-u = "move left"
+ctrl-cmd-i = "move down"
+ctrl-cmd-o = "move up"
+ctrl-cmd-p = "move right"
+
+# ---- Joins
+ctrl-cmd-m = "join-with left"
+ctrl-cmd-comma = "join-with down"
+ctrl-cmd-period = "join-with up"
+ctrl-cmd-slash = "join-with right"
 
 # ---- Layout toggles
-ctrl-cmd-slash = 'layout tiles horizontal vertical'
-ctrl-cmd-comma = 'layout accordion horizontal vertical'
-ctrl-cmd-period = 'layout floating tiling'
+alt-slash = 'layout tiles horizontal vertical'
+alt-comma = 'layout accordion horizontal vertical'
+alt-period = 'layout floating tiling'
+
+# ---- Resize
+ctrl-cmd-minus = 'resize smart -50'
+ctrl-cmd-equal = 'resize smart +50'
 
 # ---- Fullscreen toggle
 ctrl-cmd-f = "fullscreen"
 
 # ---- Workspaces (1..9)
-ctrl-cmd-1 = "workspace 1"
-ctrl-cmd-2 = "workspace 2"
-ctrl-cmd-3 = "workspace 3"
-ctrl-cmd-4 = "workspace 4"
-ctrl-cmd-5 = "workspace 5"
-ctrl-cmd-6 = "workspace 6"
-ctrl-cmd-7 = "workspace 7"
-ctrl-cmd-8 = "workspace 8"
-ctrl-cmd-9 = "workspace 9"
+alt-1 = "workspace 1"
+alt-2 = "workspace 2"
+alt-3 = "workspace 3"
+alt-4 = "workspace 4"
+alt-5 = "workspace 5"
+alt-6 = "workspace 6"
+alt-7 = "workspace 7"
+alt-8 = "workspace 8"
+alt-9 = "workspace 9"
 ctrl-cmd-semicolon  = "workspace prev"
 ctrl-cmd-quote = "workspace next"
 
@@ -58,3 +68,16 @@ alt-shift-8 = "move-node-to-workspace 8"
 alt-shift-9 = "move-node-to-workspace 9"
 alt-shift-semicolon = "move-node-to-workspace prev"
 alt-shift-quote = "move-node-to-workspace next"
+
+# ----- Open Applications
+alt-g = '''exec-and-forget osascript -e '
+tell application "Ghostty"
+  new window
+end tell'
+'''
+alt-s = '''exec-and-forget osascript -e '
+tell application "Safari"
+  make new document at end of documents
+  activate
+end tell'
+'''
