@@ -1,5 +1,8 @@
 config-version = 2
 
+# ---- Mouse Niceties
+on-focus-changed = ['move-mouse window-lazy-center']
+
 [gaps]
 inner.horizontal = 4
 inner.vertical   = 4
@@ -69,7 +72,8 @@ alt-shift-9 = "move-node-to-workspace 9"
 alt-shift-semicolon = "move-node-to-workspace prev"
 alt-shift-quote = "move-node-to-workspace next"
 
-# ----- Open Applications
+
+# ---- Open Applications
 alt-g = '''exec-and-forget osascript -e '
 tell application "Ghostty"
   new window
