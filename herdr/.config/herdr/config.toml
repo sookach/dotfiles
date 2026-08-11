@@ -5,27 +5,30 @@ prefix = "ctrl+s"
 
 [theme.custom]
 # Backgrounds & Surfaces
-panel_bg    = "#16181a"  # Main background
-surface0    = "#1e2124"  # Dark UI elements
-surface1    = "#2e3238"  # Lighter UI elements
-surface_dim = "#181a1c"  # Dimmed areas
+panel_bg = "#16181a"    # Main background
+surface0 = "#1e2124"    # Dark UI elements
+surface1 = "#2e3238"    # Lighter UI elements
+surface_dim = "#181a1c" # Dimmed areas
 
 # Text & Muted Content
-text        = "#ffffff"  # Primary text
-subtext0    = "#7b8496"  # Secondary / muted text
-overlay0    = "#3c4048"  # Borders / dividers
-overlay1    = "#5a606d"  # Subtle highlights
+text = "#ffffff"     # Primary text
+subtext0 = "#7b8496" # Secondary / muted text
+overlay0 = "#3c4048" # Borders / dividers
+overlay1 = "#5a606d" # Subtle highlights
 
 # Accent & Color Palette
-accent      = "#5ef1f5"  # Primary Cyberdream Cyan
-mauve       = "#ff5ef1"  # Pink / Magenta
-blue        = "#5ea1ff"  # Blue
-green       = "#5eff6c"  # Bright Green
-yellow      = "#f1ff5e"  # Bright Yellow
-red         = "#ff6e5e"  # Red / Danger
-teal        = "#5ef1f5"  # Cyan / Teal
-peach       = "#ffbd5e"  # Orange / Peach
+accent = "#5ef1f5" # Primary Cyberdream Cyan
+mauve = "#ff5ef1"  # Pink / Magenta
+blue = "#5ea1ff"   # Blue
+green = "#5eff6c"  # Bright Green
+yellow = "#f1ff5e" # Bright Yellow
+red = "#ff6e5e"    # Red / Danger
+teal = "#5ef1f5"   # Cyan / Teal
+peach = "#ffbd5e"  # Orange / Peach
 
 [ui]
 sidebar_collapsed_mode = "hidden"
 sidebar_start_collapsed = true
+
+[experimental]
+kitty_graphics = true
