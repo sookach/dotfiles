@@ -1,0 +1,101 @@
+config-version = 2
+
+# ---- JankyBorders
+after-startup-command = [
+  'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0 hidpi=on',
+]
+
+# ---- Mouse Niceties
+on-focus-changed = ['move-mouse window-lazy-center']
+
+[gaps]
+inner.horizontal = 9
+inner.vertical = 9
+outer.left = 4
+outer.right = 4
+outer.top = 4
+outer.bottom = 4
+
+[mode.main.binding]
+
+# ---- Focus (vim keys)
+ctrl-cmd-h = "focus left"
+ctrl-cmd-j = "focus down"
+ctrl-cmd-k = "focus up"
+ctrl-cmd-l = "focus right"
+
+ctrl-cmd-leftSquareBracket = 'focus-back-and-forth'
+ctrl-cmd-rightSquareBracket = 'workspace-back-and-forth'
+
+# ---- Move windows
+ctrl-cmd-u = "move left"
+ctrl-cmd-i = "move down"
+ctrl-cmd-o = "move up"
+ctrl-cmd-p = "move right"
+
+# ---- Joins
+ctrl-cmd-m = "join-with left"
+ctrl-cmd-comma = "join-with down"
+ctrl-cmd-period = "join-with up"
+ctrl-cmd-slash = "join-with right"
+
+# ---- Layout toggles
+alt-slash = 'layout tiles horizontal vertical'
+alt-comma = 'layout accordion horizontal vertical'
+alt-period = 'layout floating tiling'
+
+# ---- Resize
+ctrl-cmd-minus = 'resize smart -50'
+ctrl-cmd-equal = 'resize smart +50'
+
+# ---- Fullscreen toggle
+ctrl-cmd-f = "fullscreen"
+
+# ---- Workspaces (1..9)
+alt-1 = "workspace 1"
+alt-2 = "workspace 2"
+alt-3 = "workspace 3"
+alt-4 = "workspace 4"
+alt-5 = "workspace 5"
+alt-6 = "workspace 6"
+alt-7 = "workspace 7"
+alt-8 = "workspace 8"
+alt-9 = "workspace 9"
+ctrl-cmd-semicolon = "workspace prev"
+ctrl-cmd-quote = "workspace next"
+
+# ---- Move window to workspace
+alt-shift-1 = "move-node-to-workspace 1"
+alt-shift-2 = "move-node-to-workspace 2"
+alt-shift-3 = "move-node-to-workspace 3"
+alt-shift-4 = "move-node-to-workspace 4"
+alt-shift-5 = "move-node-to-workspace 5"
+alt-shift-6 = "move-node-to-workspace 6"
+alt-shift-7 = "move-node-to-workspace 7"
+alt-shift-8 = "move-node-to-workspace 8"
+alt-shift-9 = "move-node-to-workspace 9"
+alt-shift-semicolon = "move-node-to-workspace prev"
+alt-shift-quote = "move-node-to-workspace next"
+
+
+# ---- Open Applications
+alt-f = '''exec-and-forget osascript -e '
+tell application "Finder"
+  make new Finder window to (get home)
+  activate
+end tell'
+'''
+alt-g = '''exec-and-forget osascript -e '
+tell application "Ghostty"
+  new window
+end tell'
+'''
+alt-s = '''exec-and-forget osascript -e '
+tell application "Safari"
+  make new document at end of documents
+  activate
+end tell'
+'''
+
+# Jump focus back onto the current workspace tree
+ctrl-cmd-w = 'close'
