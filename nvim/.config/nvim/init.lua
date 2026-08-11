@@ -140,13 +140,15 @@ vim.api.nvim_create_autocmd("FileType", {
 
 vim.pack.add {
   'https://github.com/saghen/blink.lib',
-  'https://github.com/saghen/blink.cmp'
+  { src = 'https://github.com/saghen/blink.cmp', version = '*' },
 }
-require('blink.cmp').setup {
+local blink = require('blink.cmp')
+blink.setup {
   keymap = { preset = 'default' },
   appearance = { use_nvim_cmp_as_default = true },
   sources = { default = { 'lsp', 'path', 'snippets', 'buffer' } },
 }
+blink.build():pwait()
 
 vim.keymap.set({ 'n', 'v' }, 'gf', vim.lsp.buf.format)
 vim.keymap.set({ 'n', 'v' }, 'grd', vim.lsp.buf.definition)
