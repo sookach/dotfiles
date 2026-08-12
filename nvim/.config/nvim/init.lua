@@ -103,6 +103,7 @@ require('nvim-treesitter').install {
   'c',
   'cmake',
   'cpp',
+  'css',
   'git_config',
   'git_rebase',
   'gitattributes',
@@ -155,6 +156,7 @@ vim.keymap.set({ 'n', 'v' }, 'grd', vim.lsp.buf.definition)
 
 vim.lsp.enable('clangd')
 vim.lsp.enable('cmake')
+vim.lsp.enable('cssls')
 vim.lsp.enable('jsonls')
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('taplo')

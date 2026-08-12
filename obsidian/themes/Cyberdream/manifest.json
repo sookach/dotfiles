@@ -1,0 +1,11 @@
+{
+	"id": "cyberdream",
+	"name": "Cyberdream",
+	"version": "1.0.0",
+	"minAppVersion": "1.5.0",
+	"description": "A high-contrast, futuristic & vibrant theme for Obsidian, inspired by the cyberdream.nvim colorscheme.",
+	"author": "scottmckendry",
+	"authorUrl": "https://github.com/scottmckendry",
+	"fundingUrl": "https://github.com/sponsors/scottmckendry",
+	"isDesktopOnly": false
+}
