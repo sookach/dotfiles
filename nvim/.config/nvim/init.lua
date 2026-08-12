@@ -71,6 +71,7 @@ require("noice").setup {
     lsp_doc_border = false,
   },
 }
+vim.keymap.set('n', '<leader>ud', ':NoiceDismiss<cr>')
 
 vim.pack.add { "https://github.com/sphamba/smear-cursor.nvim" }
 require('smear_cursor').setup {}
