@@ -65,4 +65,6 @@ function swin() {
   aerospace list-windows --all | fzf | cut -d '|' -f1 | xargs aerospace focus --window-id
 }
 
+source .config/zsh/atuin.zsh
+
 PROMPT='%B%F{12}%~%f%b %B%F{#FFEA00}%f%b '
