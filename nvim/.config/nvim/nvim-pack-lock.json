@@ -1,9 +1,8 @@
 {
   "plugins": {
     "blink.cmp": {
-      "rev": "8ca29c2eb34f5ce4770bffc0d62e6f636a4e8526",
-      "src": "https://github.com/saghen/blink.cmp",
-      "version": "'*'"
+      "rev": "0e63407c28bd09ef0d3604478823f7f92dd8d9ec",
+      "src": "https://github.com/saghen/blink.cmp"
     },
     "blink.lib": {
       "rev": "c8fdc12c8a2fab6cf786dd7141a283f8079f902b",
@@ -57,6 +56,10 @@
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://github.com/nvim-lua/plenary.nvim.git"
     },
+    "render-markdown.nvim": {
+      "rev": "4663eb3ecd538bd5062628fb6d95bbe6bdca78f6",
+      "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
+    },
     "smear-cursor.nvim": {
       "rev": "9e9378d6ee34bb3782e0e8c63d9ec8ca618b479b",
       "src": "https://github.com/sphamba/smear-cursor.nvim"
@@ -66,7 +69,7 @@
       "src": "https://github.com/folke/tokyonight.nvim.git"
     },
     "yazi.nvim": {
-      "rev": "67ec278144fcadbf31462f7f06a02a5ec8a35de0",
+      "rev": "465986969f57233b2aaa041c106e0dffd586c3f6",
       "src": "https://github.com/mikavilpas/yazi.nvim.git"
     }
   }
