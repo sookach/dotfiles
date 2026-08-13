@@ -97,6 +97,8 @@ fzf.setup {
 vim.keymap.set('n', '<leader>ff', fzf.files, { desc = "Find Files" })
 vim.keymap.set('n', '<leader>fg', fzf.live_grep, { desc = "Live Grep" })
 
+vim.pack.add { 'https://github.com/MeanderingProgrammer/render-markdown.nvim' }
+
 vim.pack.add { 'https://github.com/nvim-treesitter/nvim-treesitter' }
 require('nvim-treesitter').install {
   'awk',
@@ -142,7 +144,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 vim.pack.add {
   'https://github.com/saghen/blink.lib',
-  { src = 'https://github.com/saghen/blink.cmp', version = '*' },
+  'https://github.com/saghen/blink.cmp',
 }
 local blink = require('blink.cmp')
 blink.setup {
