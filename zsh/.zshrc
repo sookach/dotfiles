@@ -66,5 +66,6 @@ function swin() {
 }
 
 source .config/zsh/atuin.zsh
+eval "$(zoxide init zsh)"
 
 PROMPT='%B%F{12}%~%f%b %B%F{#FFEA00}%f%b '
