@@ -3,7 +3,7 @@ export LDFLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -L/opt/homebrew/opt/llvm/lib/un
 
 typeset -i HISTSIZE=16384
 typeset -i SAVEHIST=16384
-typeset HISTFILE="$HOME/suk/.zsh_history"
+typeset HISTFILE="$HOME/.config/zsh/.zsh_history"
 mkdir -p $(dirname "$HISTFILE")
 
 setopt HIST_FCNTL_LOCK
@@ -65,7 +65,7 @@ function swin() {
   aerospace list-windows --all | fzf | cut -d '|' -f1 | xargs aerospace focus --window-id
 }
 
-source .config/zsh/atuin.zsh
+source "$HOME/.config/zsh/atuin.zsh"
 eval "$(zoxide init zsh)"
 
 PROMPT='%B%F{12}%~%f%b %B%F{#FFEA00}%f%b '
