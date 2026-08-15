@@ -63,6 +63,10 @@ alt-8 = "workspace 8"
 alt-9 = "workspace 9"
 ctrl-cmd-semicolon = "workspace prev"
 ctrl-cmd-quote = "workspace next"
+alt-z = "workspace prev"
+alt-x = "workspace next"
+alt-left = "workspace prev"
+alt-right = "workspace next"
 
 # ---- Move window to workspace
 alt-shift-1 = "move-node-to-workspace 1"
