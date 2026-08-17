@@ -65,7 +65,7 @@ function swin() {
   aerospace list-windows --all | fzf | cut -d '|' -f1 | xargs aerospace focus --window-id
 }
 
-source "$HOME/.config/zsh/atuin.zsh"
+eval "$(atuin init zsh)"
 eval "$(zoxide init zsh)"
 
 PROMPT='%B%F{12}%~%f%b %B%F{#FFEA00}%f%b '
