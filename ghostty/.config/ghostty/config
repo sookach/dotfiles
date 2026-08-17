@@ -14,4 +14,4 @@ background-blur-radius = 20
 background-blur = macos-glass-regular
 
 # background = 09090b
-
+confirm-close-surface = false
