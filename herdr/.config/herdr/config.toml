@@ -29,6 +29,8 @@ peach = "#ffbd5e"  # Orange / Peach
 [ui]
 sidebar_collapsed_mode = "hidden"
 sidebar_start_collapsed = true
+pane_borders = false
+pane_outer_borders = false
 
 [experimental]
 kitty_graphics = true
