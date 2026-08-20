@@ -26,6 +26,21 @@ vim.keymap.set('n', 'th', ':tabprevious<cr>')
 vim.keymap.set('n', 'tj', ':tabnew<cr>')
 vim.keymap.set('n', 'tk', ':tabclose<cr>')
 
+vim.keymap.set("n", "<leader>co", function()
+  vim.cmd.edit(vim.env.MYVIMRC)
+end, { desc = "Edit Neovim config" })
+
+vim.keymap.set("n", "<leader>cs", function()
+  vim.cmd.source(vim.env.MYVIMRC)
+end, { desc = "Reload Neovim config" })
+
+vim.keymap.set("n", "<leader>cv", function()
+  vim.cmd.vsplit(vim.env.MYVIMRC)
+end, { desc = "Open Neovim config in vertical split" })
+
+vim.keymap.set("n", "<leader>ch", function()
+  vim.cmd.split(vim.env.MYVIMRC)
+end, { desc = "Open Neovim config in horizontal split" })
 
 vim.pack.add {
   'https://github.com/scottmckendry/cyberdream.nvim.git',
