@@ -65,6 +65,11 @@ function swin() {
   aerospace list-windows --all | fzf | cut -d '|' -f1 | xargs aerospace focus --window-id
 }
 
+
+function hwin() {
+  hyprspace list-windows --all | fzf | cut -d '|' -f1 | xargs hyprspace focus --window-id
+}
+
 eval "$(atuin init zsh)"
 eval "$(zoxide init zsh)"
 
