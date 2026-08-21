@@ -1,14 +1,23 @@
-local old_bg = '#16181a'
-local space = {
-  function()
-    return ' '
-  end,
-}
 local rounded_edge = {
   left = "",
   right = "",
 }
 local colors = require("cyberdream.colors").default
+local mode_color = function()
+  local mode_colors = {
+    n = colors.blue,
+    i = colors.green,
+    v = colors.magenta,
+    V = colors.magenta,
+    c = colors.red,
+  }
+
+  return {
+    fg = mode_colors[vim.fn.mode()] or colors.blue,
+    bg = '#000000',
+    gui = 'bold',
+  }
+end
 
 return {
   options = {
@@ -17,47 +26,79 @@ return {
   sections = {
     lualine_a = {
       {
+        function()
+          return ''
+          --  return ''
+        end,
+        separator = {
+          left = '     ' .. rounded_edge.left,
+          right = nil,
+        },
+        padding = 0,
+        color = mode_color,
+      },
+      {
         "mode",
         separator = {
-          left = ' ' .. rounded_edge.left,
-          right = rounded_edge.right
+          left = rounded_edge.left,
+          right = nil,
         },
-        color = function()
-          local mode_colors = {
-            n = colors.blue,
-            i = colors.green,
-            v = colors.magenta,
-            V = colors.magenta,
-            c = colors.red,
-          }
-
-          return {
-            fg = old_bg,
-            bg = mode_colors[vim.fn.mode()] or colors.blue,
-            gui = 'bold',
-          }
-        end,
+        padding = 1,
+        color = {
+          fg = '#ffffff',
+          bg = '#000000',
+          gui = 'bold',
+        },
       },
-      space,
+      {
+        function()
+          return ''
+        end,
+        color = {
+          fg = colors.orange,
+          bg = '#000000',
+          gui = 'bold',
+        },
+        padding = 0,
+      },
       {
         "branch",
-        icon = '',
-        separator = rounded_edge,
+        icon = '',
+        separator = nil,
         color = {
-          fg = old_bg,
-          bg = colors.cyan,
+          fg = '#ffffff',
+          bg = '#000000',
           gui = 'bold',
         },
+        padding = {
+          left = 0,
+          right = 1,
+        }
       },
-      space,
+      {
+        function()
+          return ''
+        end,
+        color = {
+          fg = colors.pink,
+          bg = '#000000',
+          gui = 'bold',
+        },
+        padding = 1,
+        separator = nil,
+      },
       {
         "filename",
-        separator = rounded_edge,
+        separator = {
+          left = nil,
+          right = rounded_edge.right,
+        },
         color = {
-          fg = old_bg,
-          bg = colors.pink,
+          fg = '#ffffff',
+          bg = '#000000',
           gui = 'bold',
         },
+        padding = 0
       },
     },
     lualine_b = {},
@@ -66,54 +107,60 @@ return {
     lualine_y = {},
     lualine_z = {
       {
-        'encoding',
-        separator = rounded_edge,
+        'fileformat',
+        separator = {
+          left = rounded_edge.left,
+          right = nil
+        },
         color = {
-          fg = old_bg,
-          bg = colors.fg,
+          fg = colors.yellow,
+          bg = '#000000',
           gui = 'bold',
         },
       },
       {
-        'fileformat',
-        rounded_edge,
+        'encoding',
+        separator = nil,
         color = {
-          fg = old_bg,
-          bg = colors.fg,
+          fg = '#ffffff',
+          bg = '#000000',
           gui = 'bold',
         },
       },
       {
         'filetype',
-        separator = rounded_edge,
+        separator = nil,
         color = {
-          fg = old_bg,
-          bg = colors.fg,
+          fg = '#ffffff',
+          bg = '#000000',
           gui = 'bold',
         },
       },
-      --[[
-      space,
       {
-        'progress',
-        separator = rounded_edge,
+        function()
+          return ''
+        end,
+        sepeartor = nil,
+        padding = {
+          left = 1,
+          right = 0,
+        },
         color = {
-          fg = old_bg,
-          bg = colors.green,
+          fg = colors.green,
+          bg = '#000000',
           gui = 'bold',
         },
       },
-      --]]
-      space,
       {
         "location",
         separator = {
-          left = rounded_edge.left,
-          right = rounded_edge.right .. ' ',
+          left = nil,
+          right = rounded_edge.right,
         },
+        padding = 0,
         color = {
-          fg = old_bg,
-          bg = colors.green,
+          fg = '#ffffff',
+          bg = '#000000',
           gui = 'bold',
         },
       }
