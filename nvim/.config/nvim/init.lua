@@ -107,6 +107,22 @@ vim.pack.add { 'https://github.com/MeanderingProgrammer/render-markdown.nvim' }
 
 vim.pack.add { 'https://github.com/lewis6991/gitsigns.nvim' }
 
+vim.pack.add { 'https://github.com/folke/flash.nvim' }
+local flash = require('flash')
+flash.setup {}
+
+vim.keymap.set({ "n", "x", "o" }, "<leader>s", function()
+  flash.jump()
+end, { desc = "Flash" })
+
+vim.keymap.set({ "n", "x", "o" }, "<leader>S", function()
+  require("flash").treesitter()
+end, { desc = "Flash Treesitter" })
+
+vim.keymap.set("o", "<leader>r", function()
+  require("flash").remote()
+end, { desc = "Remote Flash" })
+
 vim.pack.add { 'https://github.com/nvim-treesitter/nvim-treesitter' }
 require('nvim-treesitter').install {
   'awk',
