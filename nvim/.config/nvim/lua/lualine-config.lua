@@ -19,9 +19,25 @@ local mode_color = function()
   }
 end
 
+vim.api.nvim_set_hl(0, "LualineTabActive", {
+  fg = "#ffffff",
+  bg = "#000000",
+})
+
+vim.api.nvim_set_hl(0, "LualineTabInactive", {
+  fg = colors.grey,
+  bg = "#000000",
+})
+
 return {
   options = {
     icons_enabled = true,
+    globalstatus = true,
+    refresh = {
+      statusline = 100,
+      tabline = 100,
+      winbar = 100,
+    },
   },
   sections = {
     lualine_a = {
@@ -49,6 +65,20 @@ return {
           bg = '#000000',
           gui = 'bold',
         },
+      },
+      {
+        "tabs",
+        mode = 0, -- shows buffer numbers
+        tabs_color = {
+          active = "LualineTabActive",
+          inactive = "LualineTabInactive",
+        },
+        symbols = {
+          modified = "",
+          alternate_file = "",
+          directory = "",
+        },
+        icons_enabled = false,
       },
       {
         function()
@@ -157,7 +187,10 @@ return {
           left = nil,
           right = rounded_edge.right,
         },
-        padding = 0,
+        padding = {
+          left = 1,
+          right = 0,
+        },
         color = {
           fg = '#ffffff',
           bg = '#000000',

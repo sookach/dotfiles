@@ -10,6 +10,8 @@ vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.expandtab = true
 vim.opt.mousescroll = 'ver:1,hor:1'
+vim.opt.showtabline = 0
+
 -- UI & Search Optimizations
 vim.opt.undofile = true
 vim.opt.ignorecase = true
