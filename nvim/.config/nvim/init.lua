@@ -49,7 +49,7 @@ vim.pack.add {
 }
 require('cyberdream').setup {
   transparent = true,
-  cache = true,
+  cache = false,
   styles = {
     sidebars = 'transparent',
     floats = 'transparent',
