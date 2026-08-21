@@ -33,6 +33,15 @@ return {
   options = {
     icons_enabled = true,
     globalstatus = true,
+    section_separators = {
+      left = "",
+      right = "",
+    },
+
+    component_separators = {
+      left = "",
+      right = "",
+    },
     refresh = {
       statusline = 100,
       tabline = 100,
@@ -50,7 +59,6 @@ return {
           left = '     ' .. rounded_edge.left,
           right = nil,
         },
-        padding = 0,
         color = mode_color,
       },
       {
@@ -59,7 +67,6 @@ return {
           left = rounded_edge.left,
           right = nil,
         },
-        padding = 1,
         color = {
           fg = '#ffffff',
           bg = '#000000',
@@ -89,7 +96,10 @@ return {
           bg = '#000000',
           gui = 'bold',
         },
-        padding = 0,
+        padding = {
+          left = 1,
+          right = 0,
+        }
       },
       {
         "branch",
@@ -100,10 +110,6 @@ return {
           bg = '#000000',
           gui = 'bold',
         },
-        padding = {
-          left = 0,
-          right = 1,
-        }
       },
       {
         function()
@@ -114,34 +120,20 @@ return {
           bg = '#000000',
           gui = 'bold',
         },
-        padding = 1,
         separator = nil,
       },
       {
         "filename",
-        separator = {
-          left = nil,
-          right = rounded_edge.right,
-        },
+        separator = nil,
         color = {
           fg = '#ffffff',
           bg = '#000000',
           gui = 'bold',
         },
-        padding = 0
       },
-    },
-    lualine_b = {},
-    lualine_c = {},
-    lualine_x = {},
-    lualine_y = {},
-    lualine_z = {
       {
         'fileformat',
-        separator = {
-          left = rounded_edge.left,
-          right = nil
-        },
+        separator = nil,
         color = {
           fg = colors.yellow,
           bg = '#000000',
@@ -170,11 +162,7 @@ return {
         function()
           return ''
         end,
-        sepeartor = nil,
-        padding = {
-          left = 1,
-          right = 0,
-        },
+        seperator = nil,
         color = {
           fg = colors.green,
           bg = '#000000',
@@ -187,16 +175,17 @@ return {
           left = nil,
           right = rounded_edge.right,
         },
-        padding = {
-          left = 1,
-          right = 0,
-        },
         color = {
           fg = '#ffffff',
           bg = '#000000',
           gui = 'bold',
         },
-      }
+      },
     },
+    lualine_b = {},
+    lualine_c = {},
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = {},
   },
 }
