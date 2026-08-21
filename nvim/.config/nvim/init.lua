@@ -103,6 +103,8 @@ vim.keymap.set('n', '<leader>fg', fzf.live_grep, { desc = "Live Grep" })
 
 vim.pack.add { 'https://github.com/MeanderingProgrammer/render-markdown.nvim' }
 
+vim.pack.add { 'https://github.com/lewis6991/gitsigns.nvim' }
+
 vim.pack.add { 'https://github.com/nvim-treesitter/nvim-treesitter' }
 require('nvim-treesitter').install {
   'awk',
