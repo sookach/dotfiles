@@ -10,7 +10,6 @@ vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.expandtab = true
 vim.opt.mousescroll = 'ver:1,hor:1'
-
 -- UI & Search Optimizations
 vim.opt.undofile = true
 vim.opt.ignorecase = true
@@ -63,7 +62,8 @@ vim.pack.add {
   'https://github.com/nvim-tree/nvim-web-devicons',
   'https://github.com/nvim-lualine/lualine.nvim'
 }
-require('lualine').setup { options = { theme = 'auto' } }
+
+require('lualine').setup(require('lualine-config'))
 
 vim.pack.add {
   'https://github.com/MunifTanjim/nui.nvim.git',
