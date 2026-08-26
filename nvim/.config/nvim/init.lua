@@ -128,6 +128,7 @@ require('nvim-treesitter').install {
   'awk',
   'bash',
   'c',
+  'capnp',
   'cmake',
   'cpp',
   'css',
@@ -181,6 +182,13 @@ blink.build():pwait()
 vim.keymap.set({ 'n', 'v' }, 'gf', vim.lsp.buf.format)
 vim.keymap.set({ 'n', 'v' }, 'grd', vim.lsp.buf.definition)
 
+vim.filetype.add {
+  extension = {
+    capnp = 'capnp',
+  },
+}
+
+vim.lsp.enable('capnprotols')
 vim.lsp.enable('clangd')
 vim.lsp.enable('cmake')
 vim.lsp.enable('cssls')

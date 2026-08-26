@@ -56,7 +56,7 @@ return {
           --  return ''
         end,
         separator = {
-          left = '     ' .. rounded_edge.left,
+          left = ' ' .. rounded_edge.left,
           right = nil,
         },
         color = mode_color,
