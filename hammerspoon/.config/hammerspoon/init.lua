@@ -1,13 +1,36 @@
 require("hs.ipc")
 
 local yabai = "/opt/homebrew/bin/yabai"
+local activeTasks = {}
 
-local function runYabai(args)
-  local output, ok, kind, code = hs.execute(yabai .. " " .. table.concat(args, " "), true)
-  if not ok then
-    hs.printf("yabai failed (%s %s): %s", kind, code, output)
+local function runYabai(args, callback)
+  local task
+  task = hs.task.new(yabai, function(exitCode, stdout, stderr)
+    activeTasks[task] = nil
+
+    local ok = exitCode == 0
+    if not ok then
+      hs.printf("yabai failed (%d): %s", exitCode, stderr ~= "" and stderr or stdout)
+    end
+
+    if callback then
+      callback(ok, stdout, stderr)
+    end
+  end, args)
+
+  if not task then
+    hs.printf("could not start yabai task")
+    return false
   end
-  return ok, output
+
+  activeTasks[task] = true
+  if not task:start() then
+    activeTasks[task] = nil
+    hs.printf("could not start yabai task")
+    return false
+  end
+
+  return true
 end
 
 local function bind(modifiers, key, action)
@@ -15,17 +38,18 @@ local function bind(modifiers, key, action)
 end
 
 local function resizeFocused(delta)
-  local ok, output = runYabai({ "-m", "query", "--windows", "--window" })
-  if not ok then return end
+  runYabai({ "-m", "query", "--windows", "--window" }, function(ok, output)
+    if not ok then return end
 
-  local window = hs.json.decode(output)
-  if not window or not window["split-child"] then return end
+    local window = hs.json.decode(output)
+    if not window or not window["split-child"] then return end
 
-  if window["split-child"] ~= "first_child" then
-    delta = -delta
-  end
+    if window["split-child"] ~= "first_child" then
+      delta = -delta
+    end
 
-  runYabai({ "-m", "window", "--ratio", string.format("rel:%0.2f", delta) })
+    runYabai({ "-m", "window", "--ratio", string.format("rel:%0.2f", delta) })
+  end)
 end
 
 local directions = {
@@ -80,10 +104,63 @@ bind({ "alt", "shift" }, ";", function() runYabai({ "-m", "window", "--space", "
 bind({ "alt", "shift" }, "'", function() runYabai({ "-m", "window", "--space", "next" }) end)
 
 bind({ "alt" }, "f", function()
-  hs.osascript.applescript('tell application "Finder" to make new Finder window to (get home)')
+  hs.osascript.applescript([[tell application "Finder"
+  make new Finder window to (get home)
+  activate
+end tell]])
 end)
-bind({ "alt" }, "g", function() hs.application.launchOrFocus("Ghostty") end)
+bind({ "alt" }, "g", function()
+  hs.osascript.applescript([[tell application "Ghostty"
+  new window
+  activate
+end tell]])
+end)
 bind({ "alt" }, "s", function()
-  hs.osascript.applescript('tell application "Safari" to make new document at end of documents')
+  hs.osascript.applescript([[tell application "Safari"
+  make new document at end of documents
+  activate
+end tell]])
 end)
-bind({ "ctrl", "cmd" }, "w", function() runYabai({ "-m", "window", "--close" }) end)
+
+local function closeFocusedWindow()
+  local closeWindow = function(focusWindow)
+    runYabai({ "-m", "window", "--close" }, function(closed)
+      if closed and focusWindow then
+        runYabai({ "-m", "window", tostring(focusWindow), "--focus" })
+      end
+    end)
+  end
+
+  runYabai({ "-m", "query", "--windows", "--window" }, function(ok, output)
+    if not ok then
+      closeWindow()
+      return
+    end
+
+    local focused = hs.json.decode(output)
+    if not focused or not focused.id or not focused.space then
+      closeWindow()
+      return
+    end
+
+    runYabai({ "-m", "query", "--windows", "--space", tostring(focused.space) }, function(ok, output)
+      local focusWindow
+      if ok then
+        local windows = hs.json.decode(output) or {}
+        for _, window in ipairs(windows) do
+          if window.id ~= focused.id
+              and window["is-visible"]
+              and not window["is-minimized"]
+              and not window["is-hidden"] then
+            focusWindow = window.id
+            break
+          end
+        end
+      end
+
+      closeWindow(focusWindow)
+    end)
+  end)
+end
+
+bind({ "ctrl", "cmd" }, "w", closeFocusedWindow)
