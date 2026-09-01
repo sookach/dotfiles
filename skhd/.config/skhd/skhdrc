@@ -45,8 +45,8 @@ alt - 0x2C : yabai -m window --toggle zoom-fullscreen
 # RESIZE
 # ============================================================
 
-ctrl + cmd - 0x1B : yabai -m window --resize left:-50:0
-ctrl + cmd - 0x18 : yabai -m window --resize left:50:0
+ctrl + cmd - 0x1B : if [ "$(yabai -m query --windows --window | jq -r '.["split-child"]')" = "first_child" ]; then yabai -m window --ratio rel:-0.03; else yabai -m window --ratio rel:0.03; fi
+ctrl + cmd - 0x18 : if [ "$(yabai -m query --windows --window | jq -r '.["split-child"]')" = "first_child" ]; then yabai -m window --ratio rel:0.03; else yabai -m window --ratio rel:-0.03; fi
 
 
 # ============================================================
