@@ -21,6 +21,15 @@ _G._dotfilesHammerspoonState = state
 
 local yabai = "/opt/homebrew/bin/yabai"
 local activeTasks = {}
+local spaceFont = "NotoSansM Nerd Font Mono"
+
+hs.alert.defaultStyle.textFont = spaceFont
+
+local function styledSpaceTitle(index)
+  return hs.styledtext.new(tostring(index), {
+    font = { name = spaceFont, size = 12 },
+  })
+end
 
 local function runYabai(args, callback)
   local task
@@ -68,7 +77,7 @@ local function setSpaceIndicator(index, showAlert)
 
   state.spaceIndex = index
   if state.spaceMenu then
-    state.spaceMenu:setTitle(index)
+    state.spaceMenu:setTitle(styledSpaceTitle(index))
   end
   if showAlert then
     hs.alert.show(" " .. index .. " ", 0.7)
@@ -91,7 +100,7 @@ end
 
 state.spaceMenu = hs.menubar.new()
 if state.spaceMenu then
-  state.spaceMenu:setTitle("?")
+  state.spaceMenu:setTitle(styledSpaceTitle("?"))
   state.spaceMenu:setTooltip("Current Space")
 end
 
