@@ -2,6 +2,8 @@ onboarding = false
 
 [keys]
 prefix = "ctrl+s"
+move_tab_previous = "prefix+shift+p"
+move_tab_next = "prefix+shift+n"
 
 [theme.custom]
 # Backgrounds & Surfaces
