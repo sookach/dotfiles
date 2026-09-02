@@ -41,8 +41,8 @@ yabai -m config right_padding 4
 # Window behavior
 # ------------------------------------------------------------
 
-# Don't move the mouse when focus changes.
-yabai -m config mouse_follows_focus off
+# Move the mouse to the focused window when focus changes.
+yabai -m config mouse_follows_focus on
 
 # Don't focus windows merely by moving the mouse.
 yabai -m config focus_follows_mouse off
