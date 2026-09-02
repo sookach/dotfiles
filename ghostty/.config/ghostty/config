@@ -13,5 +13,8 @@ background-opacity = 0.70
 background-blur-radius = 20
 background-blur = macos-glass-regular
 
+# Cursor animation
+custom-shader = shaders/cursor-smear.glsl
+
 # background = 09090b
 confirm-close-surface = false
