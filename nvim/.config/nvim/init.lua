@@ -90,8 +90,8 @@ require('noice').setup {
 }
 vim.keymap.set('n', '<leader>ud', ':NoiceDismiss<cr>')
 
-vim.pack.add { 'https://github.com/sphamba/smear-cursor.nvim' }
-require('smear_cursor').setup {}
+-- vim.pack.add { 'https://github.com/sphamba/smear-cursor.nvim' }
+-- require('smear_cursor').setup {}
 
 vim.pack.add { 'https://github.com/nvim-lua/plenary.nvim.git' }
 vim.pack.add { 'https://github.com/mikavilpas/yazi.nvim.git' }
