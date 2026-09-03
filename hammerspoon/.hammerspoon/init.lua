@@ -74,16 +74,6 @@ local function bind(modifiers, key, action)
   hs.hotkey.bind(modifiers, key, action)
 end
 
-local windowSwitcher = hs.loadSpoon("WindowSwitcher")
-windowSwitcher.yabai = yabai
-windowSwitcher:bindHotkey({ "ctrl", "cmd" }, "tab")
-state.windowSwitcher = windowSwitcher
-
-local ghosttyWindowSwitcher = hs.loadSpoon("GhosttyWindowSwitcher")
-ghosttyWindowSwitcher.yabai = yabai
-ghosttyWindowSwitcher:bindHotkey({ "ctrl", "cmd", "shift" }, "tab")
-state.ghosttyWindowSwitcher = ghosttyWindowSwitcher
-
 local function spaceList()
   return hs.spaces.spacesForScreen(hs.screen.mainScreen()) or {}
 end

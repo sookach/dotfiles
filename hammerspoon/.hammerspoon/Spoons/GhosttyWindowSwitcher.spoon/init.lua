@@ -166,13 +166,14 @@ function obj:prepareSwitcher(windowID)
   end
 
   if self.previousSpace then
-    self:runYabai({ "-m", "window", tostring(windowID), "--space", tostring(self.previousSpace) }, function(ok, _, stderr)
-      if not ok then
-        self:abort(stderr ~= "" and stderr or "Could not move the Ghostty picker")
-        return
-      end
-      floatSwitcher()
-    end)
+    self:runYabai({ "-m", "window", tostring(windowID), "--space", tostring(self.previousSpace) },
+      function(ok, _, stderr)
+        if not ok then
+          self:abort(stderr ~= "" and stderr or "Could not move the Ghostty picker")
+          return
+        end
+        floatSwitcher()
+      end)
     return
   end
 
