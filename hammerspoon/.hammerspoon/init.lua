@@ -501,7 +501,7 @@ bind({ "ctrl", "cmd" }, "w", closeFocusedWindow)
 
 -- Vim-style navigation in macOS text fields.
 local VimMode = hs.loadSpoon("VimMode")
-local vim = VimMode:new()
-vim:bindHotKeys({
+local vimMode = VimMode:new()
+vimMode:bindHotKeys({
   enter = { { "ctrl", "cmd" }, "a" },
 })
