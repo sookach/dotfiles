@@ -419,13 +419,13 @@ for key, direction in pairs(warpDirections) do
   end)
 end
 
-bind({ "ctrl", "cmd" }, "m", function() runYabai({ "-m", "window", "--insert", "west" }) end)
-bind({ "ctrl", "cmd" }, ",", function() runYabai({ "-m", "window", "--insert", "south" }) end)
-bind({ "ctrl", "cmd" }, ".", function() runYabai({ "-m", "window", "--insert", "north" }) end)
-bind({ "ctrl", "cmd" }, "/", function() runYabai({ "-m", "window", "--insert", "east" }) end)
+-- bind({ "ctrl", "cmd" }, "m", function() runYabai({ "-m", "window", "--insert", "west" }) end)
+-- bind({ "ctrl", "cmd" }, ",", function() runYabai({ "-m", "window", "--insert", "south" }) end)
+bind({ "ctrl", "cmd" }, ".", function() runYabai({ "-m", "window", "--toggle", "float" }) end)
+bind({ "ctrl", "cmd" }, "/", function() runYabai({ "-m", "window", "--toggle", "split" }) end)
 
-bind({ "alt" }, ".", function() runYabai({ "-m", "window", "--toggle", "float" }) end)
-bind({ "alt" }, "/", function() runYabai({ "-m", "window", "--toggle", "zoom-fullscreen" }) end)
+-- bind({ "alt" }, ".", function() runYabai({ "-m", "window", "--toggle", "float" }) end)
+-- bind({ "alt" }, "/", function() runYabai({ "-m", "window", "--toggle", "zoom-fullscreen" }) end)
 
 bind({ "ctrl", "cmd" }, "-", function() resizeFocused(-0.03) end)
 bind({ "ctrl", "cmd" }, "=", function() resizeFocused(0.03) end)
