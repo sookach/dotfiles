@@ -20,6 +20,9 @@ if previousState then
   if previousState.windowSwitcher then
     previousState.windowSwitcher:delete()
   end
+  if previousState.ghosttyWindowSwitcher then
+    previousState.ghosttyWindowSwitcher:delete()
+  end
 end
 
 local state = {}
@@ -75,6 +78,11 @@ local windowSwitcher = hs.loadSpoon("WindowSwitcher")
 windowSwitcher.yabai = yabai
 windowSwitcher:bindHotkey({ "ctrl", "cmd" }, "tab")
 state.windowSwitcher = windowSwitcher
+
+local ghosttyWindowSwitcher = hs.loadSpoon("GhosttyWindowSwitcher")
+ghosttyWindowSwitcher.yabai = yabai
+ghosttyWindowSwitcher:bindHotkey({ "ctrl", "cmd", "shift" }, "tab")
+state.ghosttyWindowSwitcher = ghosttyWindowSwitcher
 
 local function spaceList()
   return hs.spaces.spacesForScreen(hs.screen.mainScreen()) or {}
