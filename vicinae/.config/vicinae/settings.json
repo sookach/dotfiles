@@ -36,6 +36,13 @@
    "providers": {
       "macos-settings": {
          "enabled": true
+      },
+      "wm": {
+         "entrypoints": {
+            "switch-windows": {
+               "shortcut": "super+control+A"
+            }
+         }
       }
    }
 }
