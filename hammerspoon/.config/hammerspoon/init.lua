@@ -344,7 +344,7 @@ local function removeCurrentSpace()
             hs.alert.show("Could not switch to the neighboring Space", 1.2)
             return
           end
-          hs.timer.doAfter(0.05, function() removeWhenFocused(attempts - 1) end)
+          hs.timer.doAfter(0.01, function() removeWhenFocused(attempts - 1) end)
           return
         end
 
@@ -441,12 +441,14 @@ bind({ "alt" }, "f", function()
   activate
 end tell]])
 end)
+
 bind({ "alt" }, "g", function()
   hs.osascript.applescript([[tell application "Ghostty"
-  new window
-  activate
-end tell]])
+    new window
+    activate
+  end tell]])
 end)
+
 bind({ "alt" }, "s", function()
   hs.osascript.applescript([[tell application "Safari"
   make new document at end of documents
