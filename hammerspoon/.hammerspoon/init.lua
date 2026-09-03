@@ -498,10 +498,3 @@ local function closeFocusedWindow()
 end
 
 bind({ "ctrl", "cmd" }, "w", closeFocusedWindow)
-
--- Vim-style navigation in macOS text fields.
-local VimMode = hs.loadSpoon("VimMode")
-local vimMode = VimMode:new()
-vimMode:bindHotKeys({
-  enter = { { "ctrl", "cmd" }, "a" },
-})
