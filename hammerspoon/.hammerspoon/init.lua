@@ -14,6 +14,12 @@ if previousState then
   if previousState.spaceMenu then
     previousState.spaceMenu:delete()
   end
+  if previousState.windowChooser then
+    previousState.windowChooser:delete()
+  end
+  if previousState.windowSwitcher then
+    previousState.windowSwitcher:delete()
+  end
 end
 
 local state = {}
@@ -64,6 +70,11 @@ end
 local function bind(modifiers, key, action)
   hs.hotkey.bind(modifiers, key, action)
 end
+
+local windowSwitcher = hs.loadSpoon("WindowSwitcher")
+windowSwitcher.yabai = yabai
+windowSwitcher:bindHotkey({ "ctrl", "cmd" }, "tab")
+state.windowSwitcher = windowSwitcher
 
 local function spaceList()
   return hs.spaces.spacesForScreen(hs.screen.mainScreen()) or {}
