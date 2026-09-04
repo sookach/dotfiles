@@ -400,19 +400,6 @@ local function resizeFocused(delta)
   end)
 end
 
-local directions = {
-  h = "west",
-  j = "south",
-  k = "north",
-  l = "east",
-}
-
-for key, direction in pairs(directions) do
-  bind({ "ctrl", "cmd" }, key, function()
-    runYabai({ "-m", "window", "--focus", direction })
-  end)
-end
-
 local warpDirections = {
   u = "west",
   i = "south",
