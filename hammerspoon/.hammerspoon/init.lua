@@ -23,10 +23,38 @@ if previousState then
   if previousState.ghosttyWindowSwitcher then
     previousState.ghosttyWindowSwitcher:delete()
   end
+  if previousState.rightCommandToTabTap then
+    previousState.rightCommandToTabTap:stop()
+    if previousState.rightCommandToTabDown then
+      hs.eventtap.event.newKeyEvent({}, "tab", false):post()
+    end
+  end
 end
 
 local state = {}
 _G._dotfilesHammerspoonState = state
+
+-- Remap only the right Command key to Tab.
+state.rightCommandToTabDown = false
+state.rightCommandToTabTap = hs.eventtap.new(
+  { hs.eventtap.event.types.flagsChanged },
+  function(event)
+    if event:getKeyCode() ~= 54 then -- right Command; left Command is 55
+      return false
+    end
+
+    local isDown = (event:rawFlags()
+      & hs.eventtap.event.rawFlagMasks.deviceRightCommand) ~= 0
+    if isDown == state.rightCommandToTabDown then
+      return true
+    end
+
+    state.rightCommandToTabDown = isDown
+    hs.eventtap.event.newKeyEvent({}, "tab", isDown):post()
+    return true
+  end
+)
+state.rightCommandToTabTap:start()
 
 local yabai = "/opt/homebrew/bin/yabai"
 local activeTasks = {}
