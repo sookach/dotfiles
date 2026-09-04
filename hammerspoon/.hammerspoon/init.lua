@@ -23,6 +23,7 @@ if previousState then
   if previousState.ghosttyWindowSwitcher then
     previousState.ghosttyWindowSwitcher:delete()
   end
+  -- Clean up the former right Shift-to-Tab remap on the first reload.
   if previousState.rightShiftToTabTap then
     previousState.rightShiftToTabTap:stop()
     if previousState.rightShiftToTabDown then
@@ -33,40 +34,6 @@ end
 
 local state = {}
 _G._dotfilesHammerspoonState = state
-
--- Remap only the right Shift key to Tab.
-state.rightShiftToTabDown = false
-state.rightShiftToTabTap = hs.eventtap.new(
-  { hs.eventtap.event.types.flagsChanged },
-  function(event)
-    if event:getKeyCode() ~= 60 then -- right Shift; left Shift is 56
-      return false
-    end
-
-    local isDown = (event:rawFlags()
-      & hs.eventtap.event.rawFlagMasks.deviceRightShift) ~= 0
-    if isDown == state.rightShiftToTabDown then
-      return true
-    end
-
-    local flags = event:getFlags()
-    local modifiers = {}
-    if flags.cmd then modifiers[#modifiers + 1] = "cmd" end
-    if flags.alt then modifiers[#modifiers + 1] = "alt" end
-    if flags.ctrl then modifiers[#modifiers + 1] = "ctrl" end
-    if flags.fn then modifiers[#modifiers + 1] = "fn" end
-    -- The remapped right Shift is in flags.shift; retain Shift only for left Shift.
-    if (event:rawFlags()
-        & hs.eventtap.event.rawFlagMasks.deviceLeftShift) ~= 0 then
-      modifiers[#modifiers + 1] = "shift"
-    end
-
-    state.rightShiftToTabDown = isDown
-    hs.eventtap.event.newKeyEvent(modifiers, "tab", isDown):post()
-    return true
-  end
-)
-state.rightShiftToTabTap:start()
 
 local yabai = "/opt/homebrew/bin/yabai"
 local activeTasks = {}
