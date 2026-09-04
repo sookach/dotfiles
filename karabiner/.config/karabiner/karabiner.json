@@ -1,0 +1,93 @@
+{
+  "profiles": [
+    {
+      "devices": [
+        {
+          "identifiers": {
+            "is_keyboard": true
+          },
+          "simple_modifications": [
+            {
+              "from": {
+                "key_code": "caps_lock"
+              },
+              "to": [
+                {
+                  "key_code": "left_control"
+                }
+              ]
+            },
+            {
+              "from": {
+                "key_code": "right_shift"
+              },
+              "to": [
+                {
+                  "key_code": "tab"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "name": "Default profile",
+      "selected": true,
+      "complex_modifications": {
+        "rules": [
+          {
+            "description": "Open a new Safari window with Option-Shift-S",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "s",
+                  "modifiers": {
+                    "mandatory": [
+                      "option"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "osascript -e 'tell application \"Safari\"\n  make new document\n  activate\nend tell'"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "description": "yabai: close focused window and focus sibling",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "w",
+                  "modifiers": {
+                    "mandatory": [
+                      "control",
+                      "command"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "$HOME/.config/yabai/close-window-and-focus-sibling.sh"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "virtual_hid_keyboard": {
+        "keyboard_type_v2": "ansi"
+      }
+    }
+  ]
+}
