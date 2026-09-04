@@ -72,6 +72,10 @@ function hwin() {
   hyprspace list-windows --all | fzf | cut -d '|' -f1 | xargs hyprspace focus --window-id
 }
 
+function vnote() {
+  vi `notes_dir`
+}
+
 eval "$(atuin init zsh)"
 eval "$(zoxide init zsh)"
 
