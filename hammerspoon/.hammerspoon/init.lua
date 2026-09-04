@@ -49,8 +49,20 @@ state.rightShiftToTabTap = hs.eventtap.new(
       return true
     end
 
+    local flags = event:getFlags()
+    local modifiers = {}
+    if flags.cmd then modifiers[#modifiers + 1] = "cmd" end
+    if flags.alt then modifiers[#modifiers + 1] = "alt" end
+    if flags.ctrl then modifiers[#modifiers + 1] = "ctrl" end
+    if flags.fn then modifiers[#modifiers + 1] = "fn" end
+    -- The remapped right Shift is in flags.shift; retain Shift only for left Shift.
+    if (event:rawFlags()
+        & hs.eventtap.event.rawFlagMasks.deviceLeftShift) ~= 0 then
+      modifiers[#modifiers + 1] = "shift"
+    end
+
     state.rightShiftToTabDown = isDown
-    hs.eventtap.event.newKeyEvent({}, "tab", isDown):post()
+    hs.eventtap.event.newKeyEvent(modifiers, "tab", isDown):post()
     return true
   end
 )
