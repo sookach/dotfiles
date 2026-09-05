@@ -385,17 +385,7 @@ end
 bind({ "ctrl", "cmd" }, "n", function() refreshSpaceIndicator(true) end)
 bind({ "ctrl", "cmd" }, "d", removeCurrentSpace)
 
--- bind({ "ctrl", "cmd" }, "m", function() runYabai({ "-m", "window", "--insert", "west" }) end)
--- bind({ "ctrl", "cmd" }, ",", function() runYabai({ "-m", "window", "--insert", "south" }) end)
--- bind({ "ctrl", "cmd" }, ".", function() runYabai({ "-m", "window", "--toggle", "float" }) end)
--- bind({ "ctrl", "cmd" }, "/", function() runYabai({ "-m", "window", "--toggle", "split" }) end)
-
--- bind({ "alt" }, ".", function() runYabai({ "-m", "window", "--toggle", "float" }) end)
--- bind({ "alt" }, "/", function() runYabai({ "-m", "window", "--toggle", "zoom-fullscreen" }) end)
-
-bind({ "ctrl", "cmd" }, "f", function() runYabai({ "-m", "window", "--toggle", "zoom-fullscreen" }) end)
-
-bind({ "ctrl", "cmd" }, "[", function() runYabai({ "-m", "space", "--focus", "recent" }) end)
+-- bind({ "ctrl", "cmd" }, "[", function() runYabai({ "-m", "space", "--focus", "recent" }) end)
 
 bind({ "alt" }, "f", function()
   hs.osascript.applescript([[tell application "Finder"
