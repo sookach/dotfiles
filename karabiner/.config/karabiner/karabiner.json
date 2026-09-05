@@ -129,6 +129,29 @@
             ]
           },
           {
+            "description": "yabai: delete Spaces at or after a threshold",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "d",
+                  "modifiers": {
+                    "mandatory": [
+                      "option",
+                      "shift"
+                    ],
+                    "optional": []
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "$HOME/.config/yabai/delete-spaces-from.sh"
+                  }
+                ]
+              }
+            ]
+          },
+          {
             "description": "yabai: close focused window and focus sibling",
             "manipulators": [
               {

@@ -35,7 +35,7 @@ fi
 [ -n "$target_index" ] || fail "Could not identify the target Space index."
 [ -n "$target_display" ] || fail "Could not identify the target display."
 
-space_type=$("$hs" -q -n -c "return hs.spaces.spaceType($target_id)" 2>/dev/null) || {
+space_type=$("$hs" -q -n -c "return hs.spaces.spaceType($target_id)" </dev/null 2>/dev/null) || {
   fail "Could not determine the target Space type."
 }
 
@@ -127,7 +127,7 @@ if [ "$target_is_focused" = true ]; then
   [ "$focused_id" = "$destination_id" ] || fail "Could not switch to the neighboring Space."
 fi
 
-"$hs" -q -n -c "assert(hs.spaces.removeSpace($target_id))" >/dev/null || {
+"$hs" -q -n -c "assert(hs.spaces.removeSpace($target_id))" </dev/null >/dev/null || {
   fail "Could not remove the target Space."
 }
 
