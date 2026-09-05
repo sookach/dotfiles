@@ -620,6 +620,23 @@
                 },
                 "to": [
                   {
+                    "shell_command": "/opt/homebrew/bin/yabai -m space --focus 6"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "7",
+                  "modifiers": {
+                    "mandatory": [
+                      "control"
+                    ],
+                    "optional": []
+                  }
+                },
+                "to": [
+                  {
                     "shell_command": "/opt/homebrew/bin/yabai -m space --focus 7"
                   }
                 ],
