@@ -553,7 +553,7 @@
               {
                 "type": "basic",
                 "from": {
-                  "key_code": ";",
+                  "key_code": "semicolon",
                   "modifiers": {
                     "mandatory": [
                       "control",
@@ -571,7 +571,7 @@
               {
                 "type": "basic",
                 "from": {
-                  "key_code": "'",
+                  "key_code": "quote",
                   "modifiers": {
                     "mandatory": [
                       "control",
@@ -756,7 +756,7 @@
               {
                 "type": "basic",
                 "from": {
-                  "key_code": ";",
+                  "key_code": "semicolon",
                   "modifiers": {
                     "mandatory": [
                       "control",
@@ -775,7 +775,7 @@
               {
                 "type": "basic",
                 "from": {
-                  "key_code": "'",
+                  "key_code": "quote",
                   "modifiers": {
                     "mandatory": [
                       "control",
