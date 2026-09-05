@@ -387,8 +387,8 @@ bind({ "ctrl", "cmd" }, "d", removeCurrentSpace)
 
 -- bind({ "ctrl", "cmd" }, "m", function() runYabai({ "-m", "window", "--insert", "west" }) end)
 -- bind({ "ctrl", "cmd" }, ",", function() runYabai({ "-m", "window", "--insert", "south" }) end)
-bind({ "ctrl", "cmd" }, ".", function() runYabai({ "-m", "window", "--toggle", "float" }) end)
-bind({ "ctrl", "cmd" }, "/", function() runYabai({ "-m", "window", "--toggle", "split" }) end)
+-- bind({ "ctrl", "cmd" }, ".", function() runYabai({ "-m", "window", "--toggle", "float" }) end)
+-- bind({ "ctrl", "cmd" }, "/", function() runYabai({ "-m", "window", "--toggle", "split" }) end)
 
 -- bind({ "alt" }, ".", function() runYabai({ "-m", "window", "--toggle", "float" }) end)
 -- bind({ "alt" }, "/", function() runYabai({ "-m", "window", "--toggle", "zoom-fullscreen" }) end)
