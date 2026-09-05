@@ -82,6 +82,29 @@
             ]
           },
           {
+            "description": "yabai: close the current Space and focus its neighbor",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "d",
+                  "modifiers": {
+                    "mandatory": [
+                      "control",
+                      "command"
+                    ],
+                    "optional": []
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "$HOME/.config/yabai/close-space.sh"
+                  }
+                ]
+              }
+            ]
+          },
+          {
             "description": "yabai: close focused window and focus sibling",
             "manipulators": [
               {
