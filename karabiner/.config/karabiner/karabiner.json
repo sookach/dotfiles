@@ -549,6 +549,42 @@
                     "shell_command": "/opt/homebrew/bin/yabai -m space --focus 9"
                   }
                 ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": ";",
+                  "modifiers": {
+                    "mandatory": [
+                      "control",
+                      "command"
+                    ],
+                    "optional": []
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/opt/homebrew/bin/yabai -m space --focus prev"
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "'",
+                  "modifiers": {
+                    "mandatory": [
+                      "control",
+                      "command"
+                    ],
+                    "optional": []
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/opt/homebrew/bin/yabai -m space --focus next"
+                  }
+                ]
               }
             ]
           },
@@ -714,6 +750,44 @@
                 "to": [
                   {
                     "shell_command": "/opt/homebrew/bin/yabai -m window --space 9"
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": ";",
+                  "modifiers": {
+                    "mandatory": [
+                      "control",
+                      "command",
+                      "shift"
+                    ],
+                    "optional": []
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/opt/homebrew/bin/yabai -m window --space prev"
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "'",
+                  "modifiers": {
+                    "mandatory": [
+                      "control",
+                      "command",
+                      "shift"
+                    ],
+                    "optional": []
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/opt/homebrew/bin/yabai -m window --space next"
                   }
                 ]
               }
