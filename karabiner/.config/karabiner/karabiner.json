@@ -105,6 +105,30 @@
             ]
           },
           {
+            "description": "yabai: choose a Space to delete",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "d",
+                  "modifiers": {
+                    "mandatory": [
+                      "control",
+                      "command",
+                      "shift"
+                    ],
+                    "optional": []
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "$HOME/.config/yabai/delete-space.sh"
+                  }
+                ]
+              }
+            ]
+          },
+          {
             "description": "yabai: close focused window and focus sibling",
             "manipulators": [
               {
