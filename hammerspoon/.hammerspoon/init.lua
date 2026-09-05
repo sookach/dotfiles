@@ -396,10 +396,6 @@ bind({ "ctrl", "cmd" }, "/", function() runYabai({ "-m", "window", "--toggle", "
 bind({ "ctrl", "cmd" }, "f", function() runYabai({ "-m", "window", "--toggle", "zoom-fullscreen" }) end)
 
 bind({ "ctrl", "cmd" }, "[", function() runYabai({ "-m", "space", "--focus", "recent" }) end)
-bind({ "alt" }, "z", function() runYabai({ "-m", "space", "--focus", "prev" }) end)
-bind({ "alt" }, "x", function() runYabai({ "-m", "space", "--focus", "next" }) end)
-bind({ "alt", "shift" }, ";", function() runYabai({ "-m", "window", "--space", "prev" }) end)
-bind({ "alt", "shift" }, "'", function() runYabai({ "-m", "window", "--space", "next" }) end)
 
 bind({ "alt" }, "f", function()
   hs.osascript.applescript([[tell application "Finder"
