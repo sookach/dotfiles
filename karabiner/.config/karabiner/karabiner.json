@@ -31,6 +31,50 @@
             ]
           },
           {
+            "description": "Open a new Finder window with Option-F",
+            "manipulators": [
+              {
+                "from": {
+                  "key_code": "f",
+                  "modifiers": {
+                    "mandatory": [
+                      "option"
+                    ],
+                    "optional": []
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "osascript -e 'tell application \"Finder\"\n  make new Finder window to (get home)\n  activate\nend tell'"
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Open a new Ghostty window with Option-G",
+            "manipulators": [
+              {
+                "from": {
+                  "key_code": "g",
+                  "modifiers": {
+                    "mandatory": [
+                      "option"
+                    ],
+                    "optional": []
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "$HOME/.config/ghostty/open-window.sh"
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
             "description": "Open the Vicinae Space picker with Control-Command-S",
             "manipulators": [
               {
