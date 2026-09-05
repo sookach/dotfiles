@@ -1,4 +1,5 @@
 require("hs.ipc")
+hs = hs
 
 local previousState = rawget(_G, "_dotfilesHammerspoonState")
 if previousState then
