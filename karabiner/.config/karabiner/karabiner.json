@@ -585,6 +585,24 @@
                     "shell_command": "/opt/homebrew/bin/yabai -m space --focus next"
                   }
                 ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "open_bracket",
+                  "modifiers": {
+                    "mandatory": [
+                      "control",
+                      "command"
+                    ],
+                    "optional": []
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/opt/homebrew/bin/yabai -m space --focus recent"
+                  }
+                ]
               }
             ]
           },
