@@ -385,21 +385,6 @@ end
 bind({ "ctrl", "cmd" }, "n", function() refreshSpaceIndicator(true) end)
 bind({ "ctrl", "cmd" }, "d", removeCurrentSpace)
 
-local function resizeFocused(delta)
-  runYabai({ "-m", "query", "--windows", "--window" }, function(ok, output)
-    if not ok then return end
-
-    local window = hs.json.decode(output)
-    if not window or not window["split-child"] then return end
-
-    if window["split-child"] ~= "first_child" then
-      delta = -delta
-    end
-
-    runYabai({ "-m", "window", "--ratio", string.format("rel:%0.2f", delta) })
-  end)
-end
-
 -- bind({ "ctrl", "cmd" }, "m", function() runYabai({ "-m", "window", "--insert", "west" }) end)
 -- bind({ "ctrl", "cmd" }, ",", function() runYabai({ "-m", "window", "--insert", "south" }) end)
 bind({ "ctrl", "cmd" }, ".", function() runYabai({ "-m", "window", "--toggle", "float" }) end)
@@ -408,8 +393,6 @@ bind({ "ctrl", "cmd" }, "/", function() runYabai({ "-m", "window", "--toggle", "
 -- bind({ "alt" }, ".", function() runYabai({ "-m", "window", "--toggle", "float" }) end)
 -- bind({ "alt" }, "/", function() runYabai({ "-m", "window", "--toggle", "zoom-fullscreen" }) end)
 
-bind({ "ctrl", "cmd" }, "-", function() resizeFocused(-0.03) end)
-bind({ "ctrl", "cmd" }, "=", function() resizeFocused(0.03) end)
 bind({ "ctrl", "cmd" }, "f", function() runYabai({ "-m", "window", "--toggle", "zoom-fullscreen" }) end)
 
 for index = 1, 9 do
