@@ -16,7 +16,7 @@ end tell
 APPLESCRIPT
 }
 
-if /usr/bin/pgrep -x Ghostty >/dev/null 2>&1; then
+if /usr/bin/pgrep -x ghostty >/dev/null 2>&1; then
   osascript_new_window
   exit $?
 fi
