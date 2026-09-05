@@ -395,12 +395,6 @@ bind({ "ctrl", "cmd" }, "/", function() runYabai({ "-m", "window", "--toggle", "
 
 bind({ "ctrl", "cmd" }, "f", function() runYabai({ "-m", "window", "--toggle", "zoom-fullscreen" }) end)
 
-for index = 1, 9 do
-  local space = tostring(index)
-  bind({ "alt" }, space, function() runYabai({ "-m", "space", "--focus", space }) end)
-  bind({ "alt", "shift" }, space, function() runYabai({ "-m", "window", "--space", space }) end)
-end
-
 bind({ "ctrl", "cmd" }, ";", function() runYabai({ "-m", "space", "--focus", "prev" }) end)
 bind({ "ctrl", "cmd" }, "'", function() runYabai({ "-m", "space", "--focus", "next" }) end)
 bind({ "ctrl", "cmd" }, "[", function() runYabai({ "-m", "space", "--focus", "recent" }) end)
