@@ -839,6 +839,24 @@
                 },
                 "to": [
                   {
+                    "shell_command": "/opt/homebrew/bin/yabai -m window --space 6"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "7",
+                  "modifiers": {
+                    "mandatory": [
+                      "control",
+                      "command"
+                    ],
+                    "optional": []
+                  }
+                },
+                "to": [
+                  {
                     "shell_command": "/opt/homebrew/bin/yabai -m window --space 7"
                   }
                 ],
