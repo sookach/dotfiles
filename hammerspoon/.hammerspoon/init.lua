@@ -2,33 +2,11 @@ require("hs.ipc")
 
 local previousState = rawget(_G, "_dotfilesHammerspoonState")
 if previousState then
-  if previousState.spaceInputTap then
-    previousState.spaceInputTap:stop()
-  end
-  if previousState.spaceInputAlert then
-    hs.alert.closeSpecific(previousState.spaceInputAlert, 0)
-  end
   if previousState.spaceWatcher then
     previousState.spaceWatcher:stop()
   end
   if previousState.spaceMenu then
     previousState.spaceMenu:delete()
-  end
-  if previousState.windowChooser then
-    previousState.windowChooser:delete()
-  end
-  if previousState.windowSwitcher then
-    previousState.windowSwitcher:delete()
-  end
-  if previousState.ghosttyWindowSwitcher then
-    previousState.ghosttyWindowSwitcher:delete()
-  end
-  -- Clean up the former right Shift-to-Tab remap on the first reload.
-  if previousState.rightShiftToTabTap then
-    previousState.rightShiftToTabTap:stop()
-    if previousState.rightShiftToTabDown then
-      hs.eventtap.event.newKeyEvent({}, "tab", false):post()
-    end
   end
 end
 
@@ -81,23 +59,18 @@ local function bind(modifiers, key, action)
   hs.hotkey.bind(modifiers, key, action)
 end
 
-local function spaceList()
-  return hs.spaces.spacesForScreen(hs.screen.mainScreen()) or {}
-end
-
 local function setSpaceIndicator(index)
   index = tonumber(index)
   if not index or index < 1 then
     return
   end
 
-  state.spaceIndex = index
   if state.spaceMenu then
     state.spaceMenu:setTitle(styledSpaceTitle(index))
   end
 end
 
-local function refreshSpaceIndicator(showAlert)
+local function refreshSpaceIndicator()
   runYabai({ "-m", "query", "--spaces" }, function(ok, output)
     if not ok then return end
 
@@ -126,8 +99,6 @@ state.spaceWatcher = hs.spaces.watcher.new(function(index)
 end)
 state.spaceWatcher:start()
 refreshSpaceIndicator()
-
-bind({ "ctrl", "cmd" }, "n", function() refreshSpaceIndicator(true) end)
 
 bind({ "alt" }, "f", function()
   hs.osascript.applescript([[tell application "Finder"
