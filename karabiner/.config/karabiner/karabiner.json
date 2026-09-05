@@ -59,6 +59,29 @@
             ]
           },
           {
+            "description": "Open the Vicinae Space picker with Control-Command-S",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "s",
+                  "modifiers": {
+                    "mandatory": [
+                      "control",
+                      "command"
+                    ],
+                    "optional": []
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "$HOME/.config/yabai/focus-or-create-space.sh"
+                  }
+                ]
+              }
+            ]
+          },
+          {
             "description": "yabai: close focused window and focus sibling",
             "manipulators": [
               {
