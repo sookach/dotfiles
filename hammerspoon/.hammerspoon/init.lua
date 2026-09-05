@@ -14,7 +14,6 @@ local state = {}
 _G._dotfilesHammerspoonState = state
 
 local yabai = "/opt/homebrew/bin/yabai"
-local activeTasks = {}
 local spaceFont = "NotoSansM Nerd Font Mono"
 
 hs.alert.defaultStyle.textFont = spaceFont
@@ -26,10 +25,7 @@ local function styledSpaceTitle(index)
 end
 
 local function runYabai(args, callback)
-  local task
-  task = hs.task.new(yabai, function(exitCode, stdout, stderr)
-    activeTasks[task] = nil
-
+  local task = hs.task.new(yabai, function(exitCode, stdout, stderr)
     local ok = exitCode == 0
     if not ok then
       hs.printf("yabai failed (%d): %s", exitCode, stderr ~= "" and stderr or stdout)
@@ -45,18 +41,12 @@ local function runYabai(args, callback)
     return false
   end
 
-  activeTasks[task] = true
   if not task:start() then
-    activeTasks[task] = nil
     hs.printf("could not start yabai task")
     return false
   end
 
   return true
-end
-
-local function bind(modifiers, key, action)
-  hs.hotkey.bind(modifiers, key, action)
 end
 
 local function setSpaceIndicator(index)
