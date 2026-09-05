@@ -84,7 +84,7 @@
             ]
           },
           {
-            "description": "yabai: focus west",
+            "description": "yabai: focus window",
             "manipulators": [
               {
                 "type": "basic",
@@ -103,12 +103,7 @@
                     "shell_command": "/opt/homebrew/bin/yabai -m window --focus west"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "description": "yabai: focus south",
-            "manipulators": [
+              },
               {
                 "type": "basic",
                 "from": {
@@ -126,12 +121,7 @@
                     "shell_command": "/opt/homebrew/bin/yabai -m window --focus south"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "description": "yabai: focus north",
-            "manipulators": [
+              },
               {
                 "type": "basic",
                 "from": {
@@ -149,12 +139,7 @@
                     "shell_command": "/opt/homebrew/bin/yabai -m window --focus north"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "description": "yabai: focus east",
-            "manipulators": [
+              },
               {
                 "type": "basic",
                 "from": {
@@ -176,7 +161,7 @@
             ]
           },
           {
-            "description": "yabai: warp west",
+            "description": "yabai: warp window",
             "manipulators": [
               {
                 "type": "basic",
@@ -195,12 +180,7 @@
                     "shell_command": "/opt/homebrew/bin/yabai -m window --warp west"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "description": "yabai: warp south",
-            "manipulators": [
+              },
               {
                 "type": "basic",
                 "from": {
@@ -218,12 +198,7 @@
                     "shell_command": "/opt/homebrew/bin/yabai -m window --warp south"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "description": "yabai: warp north",
-            "manipulators": [
+              },
               {
                 "type": "basic",
                 "from": {
@@ -241,12 +216,7 @@
                     "shell_command": "/opt/homebrew/bin/yabai -m window --warp north"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "description": "yabai: warp east",
-            "manipulators": [
+              },
               {
                 "type": "basic",
                 "from": {
@@ -268,7 +238,7 @@
             ]
           },
           {
-            "description": "yabai: resize left +",
+            "description": "yabai: resize window",
             "manipulators": [
               {
                 "type": "basic",
@@ -288,12 +258,7 @@
                     "shell_command": "/opt/homebrew/bin/yabai -m window --resize left:-50:0"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "description": "yabai: resize bottom +",
-            "manipulators": [
+              },
               {
                 "type": "basic",
                 "from": {
@@ -312,12 +277,7 @@
                     "shell_command": "/opt/homebrew/bin/yabai -m window --resize bottom:0:50"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "description": "yabai: resize top +",
-            "manipulators": [
+              },
               {
                 "type": "basic",
                 "from": {
@@ -336,12 +296,7 @@
                     "shell_command": "/opt/homebrew/bin/yabai -m window --resize top:0:50"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "description": "yabai: resize right +",
-            "manipulators": [
+              },
               {
                 "type": "basic",
                 "from": {
@@ -360,12 +315,7 @@
                     "shell_command": "/opt/homebrew/bin/yabai -m window --resize right:50:0"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "description": "yabai: resize left -",
-            "manipulators": [
+              },
               {
                 "type": "basic",
                 "from": {
@@ -384,12 +334,7 @@
                     "shell_command": "/opt/homebrew/bin/yabai -m window --resize left:50:0"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "description": "yabai: resize bottom -",
-            "manipulators": [
+              },
               {
                 "type": "basic",
                 "from": {
@@ -408,12 +353,7 @@
                     "shell_command": "/opt/homebrew/bin/yabai -m window --resize bottom:0:-50"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "description": "yabai: resize top -",
-            "manipulators": [
+              },
               {
                 "type": "basic",
                 "from": {
@@ -432,12 +372,7 @@
                     "shell_command": "/opt/homebrew/bin/yabai -m window --resize top:0:50"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "description": "yabai: resize right -",
-            "manipulators": [
+              },
               {
                 "type": "basic",
                 "from": {
