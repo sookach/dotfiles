@@ -195,6 +195,7 @@ vim.lsp.enable('cssls')
 vim.lsp.enable('jsonls')
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('marksman')
+vim.lsp.enable('perlnavigator')
 vim.lsp.enable('taplo')
 
 vim.api.nvim_create_user_command('PackClean', function()
