@@ -142,6 +142,7 @@ require('nvim-treesitter').install {
   'lua',
   'make',
   'mlir',
+  'perl',
   'python',
   'toml',
   'vim',
