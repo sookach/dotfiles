@@ -198,6 +198,7 @@ vim.lsp.enable('lua_ls')
 vim.lsp.enable('marksman')
 vim.lsp.enable('perlnavigator')
 vim.lsp.enable('taplo')
+vim.lsp.enable("zuban")
 
 vim.api.nvim_create_user_command('PackClean', function()
   local inactive = {}
