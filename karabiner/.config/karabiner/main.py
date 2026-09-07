@@ -30,10 +30,18 @@ config: dict = {
     ],
 }
 
-NORMAL_MODE = 0
-INSERT_MODE = 1
+INSERT_MODE = 0
+NORMAL_MODE = 1
 VISUAL_MODE = 2
 MAX_VIM_COUNT = 99
+
+
+def hammerspoon_vim_mode(mode):
+    return {
+        "shell_command": (
+            f"/opt/homebrew/bin/hs -c '_dotfilesSetVimMode(\"{mode}\")'"
+        )
+    }
 
 
 def create_manipulator(manipulator):
@@ -193,6 +201,7 @@ create_manipulators(
         "to": [
             {"set_variable": {"name": "vim_mode", "value": NORMAL_MODE}},
             {"set_variable": {"name": "vim_count", "value": 0}},
+            hammerspoon_vim_mode("normal"),
         ],
     },
     {
@@ -200,17 +209,24 @@ create_manipulators(
         "to": [
             {"set_variable": {"name": "vim_mode", "value": INSERT_MODE}},
             {"set_variable": {"name": "vim_count", "value": 0}},
+            hammerspoon_vim_mode("insert"),
         ],
     },
     {
         "conditions": [{"type": "variable_if", "name": "vim_mode", "value": NORMAL_MODE}],
         "from": {"key_code": "i"},
-        "to": [{"set_variable": {"name": "vim_mode", "value": INSERT_MODE}}],
+        "to": [
+            {"set_variable": {"name": "vim_mode", "value": INSERT_MODE}},
+            hammerspoon_vim_mode("insert"),
+        ],
     },
     {
         "conditions": [{"type": "variable_if", "name": "vim_mode", "value": NORMAL_MODE}],
         "from": {"key_code": "v"},
-        "to": [{"set_variable": {"name": "vim_mode", "value": VISUAL_MODE}}],
+        "to": [
+            {"set_variable": {"name": "vim_mode", "value": VISUAL_MODE}},
+            hammerspoon_vim_mode("visual"),
+        ],
     },
 )
 
