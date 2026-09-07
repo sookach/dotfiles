@@ -30,6 +30,11 @@ config: dict = {
     ],
 }
 
+NORMAL_MODE = 0
+INSERT_MODE = 1
+VISUAL_MODE = 2
+MAX_VIM_COUNT = 99
+
 
 def create_manipulator(manipulator):
     manipulator["type"] = "basic"
@@ -137,7 +142,7 @@ for x, y in [
                 "modifiers": {"mandatory": ["control", "command", "shift"]},
             },
             "to": [
-                {"shell_command": f"/opt/homebrew/bin/yabai -m window --resize ${y}"}
+                {"shell_command": f"/opt/homebrew/bin/yabai -m window --resize {y}"}
             ],
         }
     )
@@ -186,41 +191,53 @@ create_manipulators(
     {
         "from": {"key_code": "c", "modifiers": {"mandatory": ["control", "command"]}},
         "to": [
-            {"set_variable": {"name": "vim_mode", "value": 0}},
+            {"set_variable": {"name": "vim_mode", "value": NORMAL_MODE}},
             {"set_variable": {"name": "vim_count", "value": 0}},
         ],
     },
     {
         "from": {"key_code": "x", "modifiers": {"mandatory": ["control", "command"]}},
         "to": [
-            {"set_variable": {"name": "vim_mode", "value": 1}},
+            {"set_variable": {"name": "vim_mode", "value": INSERT_MODE}},
             {"set_variable": {"name": "vim_count", "value": 0}},
         ],
     },
     {
-        "conditions": [{"type": "variable_if", "name": "vim_mode", "value": 0}],
+        "conditions": [{"type": "variable_if", "name": "vim_mode", "value": NORMAL_MODE}],
         "from": {"key_code": "i"},
-        "to": [{"set_variable": {"name": "vim_mode", "value": 1}}],
+        "to": [{"set_variable": {"name": "vim_mode", "value": INSERT_MODE}}],
     },
     {
-        "conditions": [{"type": "variable_if", "name": "vim_mode", "value": 0}],
+        "conditions": [{"type": "variable_if", "name": "vim_mode", "value": NORMAL_MODE}],
         "from": {"key_code": "v"},
-        "to": [{"set_variable": {"name": "vim_mode", "value": 2}}],
+        "to": [{"set_variable": {"name": "vim_mode", "value": VISUAL_MODE}}],
     },
 )
 
-for i in range(0, 10):
+for digit in range(0, 10):
     create_manipulator(
         {
             "conditions": [
-                {"type": "variable_unless", "name": "vim_mode", "value": 1},
+                {"type": "variable_unless", "name": "vim_mode", "value": INSERT_MODE},
+                {"type": "variable_if", "name": "vim_count", "value": MAX_VIM_COUNT},
             ],
-            "from": {"key_code": str(i)},
+            "from": {"key_code": str(digit)},
+            "to": [{"set_variable": {"name": "vim_count", "value": 0}}],
+        }
+    )
+
+for digit in range(0, 10):
+    create_manipulator(
+        {
+            "conditions": [
+                {"type": "variable_unless", "name": "vim_mode", "value": INSERT_MODE},
+            ],
+            "from": {"key_code": str(digit)},
             "to": [
                 {
                     "set_variable": {
                         "name": "vim_count",
-                        "expression": f"vim_count * 10 + {i}",
+                        "expression": f"vim_count * 10 + {digit}",
                     }
                 }
             ],
@@ -241,11 +258,11 @@ for x, y in [
     ("k", "up_arrow"),
     ("l", "right_arrow"),
 ]:
-    for i in range(0, 100):
+    for i in range(0, MAX_VIM_COUNT + 1):
         create_manipulators(
             {
                 "conditions": [
-                    {"type": "variable_if", "name": "vim_mode", "value": 0},
+                    {"type": "variable_if", "name": "vim_mode", "value": NORMAL_MODE},
                     {"type": "variable_if", "name": "vim_count", "value": i},
                 ],
                 "from": {"key_code": x},
@@ -261,7 +278,7 @@ for x, y in [
             },
             {
                 "conditions": [
-                    {"type": "variable_if", "name": "vim_mode", "value": 2},
+                    {"type": "variable_if", "name": "vim_mode", "value": VISUAL_MODE},
                     {"type": "variable_if", "name": "vim_count", "value": i},
                 ],
                 "from": {"key_code": x},
@@ -278,18 +295,33 @@ for x, y in [
         )
 
 for x, y in [("w", "right_arrow"), ("e", "right_arrow"), ("b", "left_arrow")]:
-    create_manipulators(
-        {
-            "conditions": [{"type": "variable_if", "name": "vim_mode", "value": 0}],
-            "from": {"key_code": x},
-            "to": [{"key_code": y, "modifiers": ["option"]}],
-        },
-        {
-            "conditions": [{"type": "variable_if", "name": "vim_mode", "value": 2}],
-            "from": {"key_code": x},
-            "to": [{"key_code": y, "modifiers": ["option", "shift"]}],
-        },
-    )
+    for i in range(0, MAX_VIM_COUNT + 1):
+        create_manipulators(
+            {
+                "conditions": [
+                    {"type": "variable_if", "name": "vim_mode", "value": NORMAL_MODE},
+                    {"type": "variable_if", "name": "vim_count", "value": i},
+                ],
+                "from": {"key_code": x},
+                "to": [
+                    {"set_variable": {"name": "vim_count", "value": 0}},
+                ]
+                + repeat_action({"key_code": y, "modifiers": ["option"]}, max(1, i)),
+            },
+            {
+                "conditions": [
+                    {"type": "variable_if", "name": "vim_mode", "value": VISUAL_MODE},
+                    {"type": "variable_if", "name": "vim_count", "value": i},
+                ],
+                "from": {"key_code": x},
+                "to": [
+                    {"set_variable": {"name": "vim_count", "value": 0}},
+                ]
+                + repeat_action(
+                    {"key_code": y, "modifiers": ["option", "shift"]}, max(1, i)
+                ),
+            },
+        )
 
 
 print(json.dumps(config))
