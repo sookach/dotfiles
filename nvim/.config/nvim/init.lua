@@ -228,6 +228,20 @@ vim.lsp.enable('perlnavigator')
 vim.lsp.enable('taplo')
 vim.lsp.enable("zuban")
 
+vim.pack.add { 'https://github.com/nvimdev/lspsaga.nvim' }
+local lspsaga = require('lspsaga')
+lspsaga.setup {
+  symbol_in_winbar = { enable = false },
+  outline = { layout = 'normal' }
+}
+
+vim.keymap.set({ 'n' }, '<leader>lk', '<cmd>Lspsaga hover_doc<cr>')
+vim.keymap.set({ 'n' }, '<leader>ldp', '<cmd>Lspsaga peek_definition<cr>')
+vim.keymap.set({ 'n' }, '<leader>ldj', '<cmd>Lspsaga peek_definition<cr>')
+vim.keymap.set({ 'n' }, '<leader>lo', '<cmd>Lspsaga outline<cr>')
+vim.keymap.set({ 'n' }, '<leader>lij', '<cmd>Lspsaga diagnostic_jump_next<cr>')
+vim.keymap.set({ 'n' }, '<leader>lik', '<cmd>Lspsaga diagnostic_jump_next<cr>')
+
 vim.api.nvim_create_user_command('PackClean', function()
   local inactive = {}
   for _, p in ipairs(vim.pack.get()) do
