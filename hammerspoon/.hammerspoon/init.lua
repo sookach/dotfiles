@@ -1,5 +1,6 @@
 require("hs.ipc")
 hs = hs
+hs.menuIcon(true)
 
 local previousState = rawget(_G, "_dotfilesHammerspoonState")
 if previousState then
@@ -30,9 +31,9 @@ local function styledSpaceTitle(index)
 end
 
 local function styledVimTitle(mode)
-  return hs.styledtext.new(string.upper(mode), {
-    font = { name = spaceFont, size = 12 },
-  })
+  return hs.styledtext.new(string.upper(string.sub(mode, 1, 1)),
+    { font = { name = spaceFont, size = 12 }, }
+  )
 end
 
 local function setVimMode(mode)
