@@ -180,7 +180,35 @@ blink.setup {
 }
 blink.build():pwait()
 
-vim.keymap.set({ 'n', 'v' }, 'gf', vim.lsp.buf.format)
+local function format_buffer()
+  if vim.bo.filetype == 'python' then
+    if vim.fn.executable('black') == 0 then
+      vim.notify('black is not installed', vim.log.levels.ERROR)
+      return
+    end
+
+    local filename = vim.api.nvim_buf_get_name(0)
+    local input = table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), '\n')
+    local result = vim.system({ 'black', '--quiet', '--stdin-filename', filename, '-' }, {
+      stdin = input,
+      text = true,
+    }):wait()
+
+    if result.code ~= 0 then
+      vim.notify(result.stderr or 'black failed', vim.log.levels.ERROR)
+      return
+    end
+
+    local cursor = vim.api.nvim_win_get_cursor(0)
+    vim.api.nvim_buf_set_lines(0, 0, -1, false, vim.split(result.stdout, '\n', { plain = true }))
+    vim.api.nvim_win_set_cursor(0, cursor)
+    return
+  end
+
+  vim.lsp.buf.format()
+end
+
+vim.keymap.set({ 'n', 'v' }, 'gf', format_buffer)
 vim.keymap.set({ 'n', 'v' }, 'grd', vim.lsp.buf.definition)
 
 vim.filetype.add {
