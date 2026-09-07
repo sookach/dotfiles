@@ -59,9 +59,9 @@ def create_manipulators(*manipulators):
 NEW_SAFARI_WINDOW = """
 osascript -e '
   tell application "Safari"
-    make new document
+    make new document at end of documents
     activate
-  endtell
+  end tell'
 '
 """
 
@@ -70,7 +70,7 @@ osascript -e '
   tell application "Finder"
     make new Finder window to (get home)
     activate
-  endtell
+  end tell
 '
 """
 
