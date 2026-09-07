@@ -9,6 +9,9 @@ if previousState then
   if previousState.spaceMenu then
     previousState.spaceMenu:delete()
   end
+  if previousState.vimMenu then
+    previousState.vimMenu:delete()
+  end
 end
 
 local state = {}
@@ -16,6 +19,7 @@ _G._dotfilesHammerspoonState = state
 
 local yabai = "/opt/homebrew/bin/yabai"
 local spaceFont = "NotoSansM Nerd Font Mono"
+local vimMode = previousState and previousState.vimMode or "insert"
 
 hs.alert.defaultStyle.textFont = spaceFont
 
@@ -24,6 +28,27 @@ local function styledSpaceTitle(index)
     font = { name = spaceFont, size = 12 },
   })
 end
+
+local function styledVimTitle(mode)
+  return hs.styledtext.new(string.upper(mode), {
+    font = { name = spaceFont, size = 12 },
+  })
+end
+
+local function setVimMode(mode)
+  if mode ~= "normal" and mode ~= "insert" and mode ~= "visual" then
+    hs.printf("unknown Vim mode: %s", tostring(mode))
+    return
+  end
+
+  vimMode = mode
+  state.vimMode = mode
+  if state.vimMenu then
+    state.vimMenu:setTitle(styledVimTitle(mode))
+  end
+end
+
+_G._dotfilesSetVimMode = setVimMode
 
 local function runYabai(args, callback)
   local task = hs.task.new(yabai, function(exitCode, stdout, stderr)
@@ -80,6 +105,13 @@ if state.spaceMenu then
   state.spaceMenu:setTitle(styledSpaceTitle("?"))
   state.spaceMenu:setTooltip("Current Space")
 end
+
+state.vimMenu = hs.menubar.new()
+if state.vimMenu then
+  state.vimMenu:setTitle(styledVimTitle(vimMode))
+  state.vimMenu:setTooltip("Vim mode")
+end
+state.vimMode = vimMode
 
 state.spaceWatcher = hs.spaces.watcher.new(function(index)
   if index and index > 0 then
