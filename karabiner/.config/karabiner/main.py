@@ -213,15 +213,14 @@ for i in range(0, 10):
     create_manipulator(
         {
             "conditions": [
-                {"type": "variable_if", "name": "vim_mode", "value": 0},
-                {"type": "variable_if", "name": "vim_mode", "value": 2},
+                {"type": "variable_unless", "name": "vim_mode", "value": 1},
             ],
             "from": {"key_code": str(i)},
             "to": [
                 {
                     "set_variable": {
                         "name": "vim_count",
-                        "expression": f"vim_count * 10 + i",
+                        "expression": f"vim_count * 10 + {i}",
                     }
                 }
             ],
@@ -239,7 +238,7 @@ def repeat_action(x, n):
 for x, y in [
     ("h", "left_arrow"),
     ("j", "down_arrow"),
-    ("k", "down_arrow"),
+    ("k", "up_arrow"),
     ("l", "right_arrow"),
 ]:
     for i in range(0, 100):
@@ -258,7 +257,7 @@ for x, y in [
                         }
                     },
                 ]
-                + repeat_action({"key_code": y}, i),
+                + repeat_action({"key_code": y}, max(1, i)),
             },
             {
                 "conditions": [
@@ -274,7 +273,7 @@ for x, y in [
                         }
                     },
                 ]
-                + repeat_action({"key_code": y, "modifiers": ["shift"]}, i),
+                + repeat_action({"key_code": y, "modifiers": ["shift"]}, max(1, i)),
             },
         )
 
@@ -286,28 +285,8 @@ for x, y in [("w", "right_arrow"), ("e", "right_arrow"), ("b", "left_arrow")]:
             "to": [{"key_code": y, "modifiers": ["option"]}],
         },
         {
-            "conditions": [{"type": "variable_if", "name": "vim_mode", "value": 0}],
+            "conditions": [{"type": "variable_if", "name": "vim_mode", "value": 2}],
             "from": {"key_code": x},
-            "to": [{"key_code": y, "modifiers": ["option"]}],
-        },
-        {
-            "conditions": [{"type": "variable_if", "name": "vim_mode", "value": 0}],
-            "from": {"key_code": "b"},
-            "to": [{"key_code": y, "modifiers": ["option"]}],
-        },
-        {
-            "conditions": [{"type": "variable_if", "name": "vim_mode", "value": 0}],
-            "from": {"key_code": x},
-            "to": [{"key_code": y, "modifiers": ["option", "shift"]}],
-        },
-        {
-            "conditions": [{"type": "variable_if", "name": "vim_mode", "value": 0}],
-            "from": {"key_code": x},
-            "to": [{"key_code": y, "modifiers": ["option", "shift"]}],
-        },
-        {
-            "conditions": [{"type": "variable_if", "name": "vim_mode", "value": 0}],
-            "from": {"key_code": "b"},
             "to": [{"key_code": y, "modifiers": ["option", "shift"]}],
         },
     )
