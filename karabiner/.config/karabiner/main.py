@@ -38,9 +38,7 @@ MAX_VIM_COUNT = 99
 
 def hammerspoon_vim_mode(mode):
     return {
-        "shell_command": (
-            f"/opt/homebrew/bin/hs -c '_dotfilesSetVimMode(\"{mode}\")'"
-        )
+        "shell_command": (f"/opt/homebrew/bin/hs -c '_dotfilesSetVimMode(\"{mode}\")'")
     }
 
 
@@ -213,7 +211,9 @@ create_manipulators(
         ],
     },
     {
-        "conditions": [{"type": "variable_if", "name": "vim_mode", "value": NORMAL_MODE}],
+        "conditions": [
+            {"type": "variable_if", "name": "vim_mode", "value": NORMAL_MODE}
+        ],
         "from": {"key_code": "i"},
         "to": [
             {"set_variable": {"name": "vim_mode", "value": INSERT_MODE}},
@@ -221,7 +221,9 @@ create_manipulators(
         ],
     },
     {
-        "conditions": [{"type": "variable_if", "name": "vim_mode", "value": NORMAL_MODE}],
+        "conditions": [
+            {"type": "variable_if", "name": "vim_mode", "value": NORMAL_MODE}
+        ],
         "from": {"key_code": "v"},
         "to": [
             {"set_variable": {"name": "vim_mode", "value": VISUAL_MODE}},
@@ -230,6 +232,7 @@ create_manipulators(
     },
 )
 
+"""
 for digit in range(0, 10):
     create_manipulator(
         {
@@ -241,7 +244,9 @@ for digit in range(0, 10):
             "to": [{"set_variable": {"name": "vim_count", "value": 0}}],
         }
     )
+"""
 
+"""
 for digit in range(0, 10):
     create_manipulator(
         {
@@ -259,6 +264,7 @@ for digit in range(0, 10):
             ],
         }
     )
+"""
 
 
 def repeat_action(x, n):
@@ -274,70 +280,75 @@ for x, y in [
     ("k", "up_arrow"),
     ("l", "right_arrow"),
 ]:
-    for i in range(0, MAX_VIM_COUNT + 1):
-        create_manipulators(
-            {
-                "conditions": [
-                    {"type": "variable_if", "name": "vim_mode", "value": NORMAL_MODE},
-                    {"type": "variable_if", "name": "vim_count", "value": i},
-                ],
-                "from": {"key_code": x},
-                "to": [
-                    {
-                        "set_variable": {
-                            "name": "vim_count",
-                            "value": 0,
-                        }
-                    },
-                ]
-                + repeat_action({"key_code": y}, max(1, i)),
-            },
-            {
-                "conditions": [
-                    {"type": "variable_if", "name": "vim_mode", "value": VISUAL_MODE},
-                    {"type": "variable_if", "name": "vim_count", "value": i},
-                ],
-                "from": {"key_code": x},
-                "to": [
-                    {
-                        "set_variable": {
-                            "name": "vim_count",
-                            "value": 0,
-                        }
-                    },
-                ]
-                + repeat_action({"key_code": y, "modifiers": ["shift"]}, max(1, i)),
-            },
-        )
+    #    for i in range(0, MAX_VIM_COUNT + 1):
+    create_manipulators(
+        {
+            "conditions": [
+                {"type": "variable_if", "name": "vim_mode", "value": NORMAL_MODE},
+                #            {"type": "variable_if", "name": "vim_count", "value": i},
+            ],
+            "from": {"key_code": x},
+            "to": [
+                {
+                    "key_code": y
+                    #                "set_variable": {
+                    #    "name": "vim_count",
+                    #    "value": 0,
+                    # }
+                },
+            ],
+            #            + repeat_action({"key_code": y}, max(1, i)),
+        },
+        {
+            "conditions": [
+                {"type": "variable_if", "name": "vim_mode", "value": VISUAL_MODE},
+                #                {"type": "variable_if", "name": "vim_count", "value": i},
+            ],
+            "from": {"key_code": x},
+            "to": [
+                {
+                    "key_code": y,
+                    "modifiers": ["shift"],
+                    #        "set_variable": {
+                    #    "name": "vim_count",
+                    #    "value": 0,
+                    # }
+                },
+            ],
+            #            + repeat_action({"key_code": y, "modifiers": ["shift"]}, max(1, i)),
+        },
+    )
 
 for x, y in [("w", "right_arrow"), ("e", "right_arrow"), ("b", "left_arrow")]:
-    for i in range(0, MAX_VIM_COUNT + 1):
-        create_manipulators(
-            {
-                "conditions": [
-                    {"type": "variable_if", "name": "vim_mode", "value": NORMAL_MODE},
-                    {"type": "variable_if", "name": "vim_count", "value": i},
-                ],
-                "from": {"key_code": x},
-                "to": [
-                    {"set_variable": {"name": "vim_count", "value": 0}},
-                ]
-                + repeat_action({"key_code": y, "modifiers": ["option"]}, max(1, i)),
-            },
-            {
-                "conditions": [
-                    {"type": "variable_if", "name": "vim_mode", "value": VISUAL_MODE},
-                    {"type": "variable_if", "name": "vim_count", "value": i},
-                ],
-                "from": {"key_code": x},
-                "to": [
-                    {"set_variable": {"name": "vim_count", "value": 0}},
-                ]
-                + repeat_action(
-                    {"key_code": y, "modifiers": ["option", "shift"]}, max(1, i)
-                ),
-            },
-        )
+    #    for i in range(0, MAX_VIM_COUNT + 1):
+    create_manipulators(
+        {
+            "conditions": [
+                {"type": "variable_if", "name": "vim_mode", "value": NORMAL_MODE},
+                #                {"type": "variable_if", "name": "vim_count", "value": i},
+            ],
+            "from": {"key_code": x},
+            "to": [
+                {"key_code": y, "modifiers": ["option"]}
+                #                {"set_variable": {"name": "vim_count", "value": 0}},
+            ],
+            #            + repeat_action({"key_code": y, "modifiers": ["option"]}, max(1, i)),
+        },
+        {
+            "conditions": [
+                {"type": "variable_if", "name": "vim_mode", "value": VISUAL_MODE},
+                #                {"type": "variable_if", "name": "vim_count", "value": i},
+            ],
+            "from": {"key_code": x},
+            "to": [
+                {"key_code": y, "modifiers": ["option", "shift"]}
+                #                {"set_variable": {"name": "vim_count", "value": 0}},
+            ],
+            #            + repeat_action(
+            #                {"key_code": y, "modifiers": ["option", "shift"]}, max(1, i)
+            #            ),
+        },
+    )
 
 
 print(json.dumps(config))
