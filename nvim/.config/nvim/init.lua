@@ -239,7 +239,7 @@ lspsaga.setup {
 
 vim.keymap.set({ 'n' }, '<leader>lk', '<cmd>Lspsaga hover_doc<cr>')
 vim.keymap.set({ 'n' }, '<leader>ldp', '<cmd>Lspsaga peek_definition<cr>')
-vim.keymap.set({ 'n' }, '<leader>ldj', '<cmd>Lspsaga peek_definition<cr>')
+vim.keymap.set({ 'n' }, '<leader>ldj', '<cmd>Lspsaga goto_definition<cr>')
 vim.keymap.set({ 'n' }, '<leader>lo', '<cmd>Lspsaga outline<cr>')
 vim.keymap.set({ 'n' }, '<leader>lij', '<cmd>Lspsaga diagnostic_jump_next<cr>')
 vim.keymap.set({ 'n' }, '<leader>lik', '<cmd>Lspsaga diagnostic_jump_next<cr>')
