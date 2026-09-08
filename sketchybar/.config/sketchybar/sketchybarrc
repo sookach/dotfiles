@@ -31,7 +31,7 @@ sketchybar --add item apple left \
     label.drawing=off \
     click_script="$BINARY_DIR/apple-menu"
 
-sketchybar --add itme empty left \
+sketchybar --add item empty left \
   --set empty \
     background.drawing=off \
     label.width=12
@@ -42,7 +42,7 @@ sketchybar --add item space left \
     icon.drawing=off \
     label.drawing=on \
     label.padding_left=12 \
-    background.drawing=off
+    background.drawing=off \
   --subscribe space space_change
 
 sketchybar --add item front_app left \
@@ -82,7 +82,7 @@ sketchybar --add item battery right \
     label.drawing=on \
     label.padding_right=12 \
     background.height=24 \
-    background.padding_right=12
+    background.padding_right=12 \
   --subscribe battery system_woke power_source_change
 
 sketchybar --add item wifi right \
