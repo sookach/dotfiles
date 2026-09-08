@@ -28,8 +28,8 @@ sketchybar --add item front_app left \
     script="$PLUGIN_DIR/front-app.sh" \
     icon.drawing=off \
     label.drawing=on \
-    label.padding_left=8 \
-    label.padding_right=8 \
+    label.padding_left=0 \
+    label.padding_right=12 \
   --subscribe front_app front_app_switched
 
 sketchybar --add bracket left_bar apple front_app \
