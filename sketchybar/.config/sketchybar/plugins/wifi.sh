@@ -1,22 +1,27 @@
 #!/usr/bin/env bash
 
-# Replace these placeholder values with the Wi-Fi glyphs you want to use.
-ICON_WIFI_4='󰤨'
-ICON_WIFI_3='󰤥'
-ICON_WIFI_2='󰤢'
-ICON_WIFI_1='󰤟'
-ICON_WIFI_OFF='󰤮'
+# Replace these placeholders with the final glyphs.
+ICON_WIFI_4="󰤨"
+ICON_WIFI_3="󰤥"
+ICON_WIFI_2="󰤢"
+ICON_WIFI_1="󰤟"
+ICON_WIFI_OFF="󰤮"
+
+ICON_VPN_CONNECTED=""
+ICON_VPN_CONNECTING=""
+ICON_VPN_OFF=""
 
 BINARY_DIR="${BINARY_DIR:-$HOME/.config/sketchybar/bin}"
 WIFI_STATUS="$BINARY_DIR/wifi-status"
+WINDSCRIBE_CLI="${WINDSCRIBE_CLI:-/usr/local/bin/windscribe-cli}"
 
-status=$($WIFI_STATUS 2>/dev/null)
-IFS='|' read -r connection signal_dbm <<< "$status"
+wifi_status=$($WIFI_STATUS 2>/dev/null)
+IFS='|' read -r wifi_connection signal_dbm <<< "$wifi_status"
 
-if [[ "$connection" != "connected" ]]; then
+if [[ "$wifi_connection" != "connected" ]]; then
     sketchybar --set "$NAME" \
         icon="$ICON_WIFI_OFF" \
-        icon.color=0xffd20f39
+        label="$ICON_VPN_OFF"
     exit 0
 fi
 
@@ -35,24 +40,39 @@ else
 fi
 
 case "$signal_level" in
-    4)
-        icon="$ICON_WIFI_4"
-        icon_color=0xff40a02b
+    4) wifi_icon="$ICON_WIFI_4" ;;
+    3) wifi_icon="$ICON_WIFI_3" ;;
+    2) wifi_icon="$ICON_WIFI_2" ;;
+    *) wifi_icon="$ICON_WIFI_1" ;;
+esac
+
+vpn_state="off"
+if [[ -x "$WINDSCRIBE_CLI" ]]; then
+    connect_state=$($WINDSCRIBE_CLI status 2>/dev/null \
+        | /usr/bin/awk -F 'Connect state: ' '/Connect state:/{state=$2} END{print state}')
+
+    case "$connect_state" in
+        Connected:*)
+            vpn_state="connected"
+            ;;
+        Connecting*|Authenticating*|Disconnecting*)
+            vpn_state="connecting"
+            ;;
+    esac
+fi
+
+case "$vpn_state" in
+    connected)
+        vpn_icon="$ICON_VPN_CONNECTED"
         ;;
-    3)
-        icon="$ICON_WIFI_3"
-        icon_color=0xffffffff
-        ;;
-    2)
-        icon="$ICON_WIFI_2"
-        icon_color=0xffdf8e1d
+    connecting)
+        vpn_icon="$ICON_VPN_CONNECTING"
         ;;
     *)
-        icon="$ICON_WIFI_1"
-        icon_color=0xffd20f39
+        vpn_icon="$ICON_VPN_OFF"
         ;;
 esac
 
 sketchybar --set "$NAME" \
-    icon="$icon" \
-    icon.color="$icon_color"
+    icon="$wifi_icon" \
+    label="$vpn_icon"

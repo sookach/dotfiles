@@ -70,10 +70,13 @@ sketchybar --add item wifi right \
     script="$PLUGIN_DIR/wifi.sh" \
     update_freq=30 \
     icon.drawing=on \
-    icon.font="NotoSansM Nerd Font Mono:Bold:20.0" \
-    label.drawing=off \
+    icon.font="NotoSansM Nerd Font Mono:Bold:25.0" \
+    label.drawing=on \
+    label.font="NotoSansM Nerd Font Mono:Bold:15.0" \
     icon.padding_left=12 \
     icon.padding_right=12 \
+    label.padding_left=4 \
+    label.padding_right=12 \
     background.padding_right=12 \
   --subscribe wifi system_woke
 
