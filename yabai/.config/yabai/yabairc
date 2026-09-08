@@ -79,11 +79,11 @@ yabai -m config mouse_drop_action swap
 # ------------------------------------------------------------
 
 # Keep this signal replacement-safe when yabai reloads its config.
-yabai -m signal --remove sketchybar_space_changed 2>/dev/null || true
-yabai -m signal --add \
-  event=space_changed \
-  label=sketchybar_space_changed \
-  action="sketchybar --trigger space_change"
+# yabai -m signal --remove sketchybar_space_changed 2>/dev/null || true
+# yabai -m signal --add \
+#  event=space_changed \
+#  label=sketchybar_space_changed \
+#  action="sketchybar --trigger space_change"
 
 
 # ------------------------------------------------------------
