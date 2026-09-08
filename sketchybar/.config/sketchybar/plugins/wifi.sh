@@ -1,34 +1,24 @@
 #!/usr/bin/env bash
 
-ICON_WIFI_4="󰤨"
-ICON_WIFI_3="󰤥"
-ICON_WIFI_2="󰤢"
-ICON_WIFI_1="󰤟"
-ICON_WIFI_OFF="󰤮"
+# Replace these placeholder values with the Wi-Fi glyphs you want to use.
+ICON_WIFI_4='󰤨'
+ICON_WIFI_3='󰤥'
+ICON_WIFI_2='󰤢'
+ICON_WIFI_1='󰤟'
+ICON_WIFI_OFF='󰤮'
 
-wifi_device=$(/usr/sbin/networksetup -listallhardwareports \
-  | /usr/bin/awk '/Hardware Port: Wi-Fi/{getline; print $2}')
+BINARY_DIR="${BINARY_DIR:-$HOME/.config/sketchybar/bin}"
+WIFI_STATUS="$BINARY_DIR/wifi-status"
 
-if [[ -z "$wifi_device" ]]; then
+status=$($WIFI_STATUS 2>/dev/null)
+IFS='|' read -r connection signal_dbm <<< "$status"
+
+if [[ "$connection" != "connected" ]]; then
     sketchybar --set "$NAME" \
         icon="$ICON_WIFI_OFF" \
         icon.color=0xffd20f39
     exit 0
 fi
-
-network=$(/usr/sbin/ipconfig getsummary "$wifi_device" 2>/dev/null \
-  | /usr/bin/awk -F ' : ' '$1 ~ /^[[:space:]]*SSID$/ {print $2; exit}')
-
-if [[ -z "$network" ]]; then
-    sketchybar --set "$NAME" \
-        icon="$ICON_WIFI_OFF" \
-        icon.color=0xffd20f39
-    exit 0
-fi
-
-signal_dbm=$(/usr/sbin/system_profiler SPAirPortDataType -json 2>/dev/null \
-  | /usr/bin/jq -r '.. | objects | .spairport_signal_noise? // empty' \
-  | /usr/bin/awk 'NR == 1 { print $1 }')
 
 if [[ "$signal_dbm" =~ ^-[0-9]+$ ]]; then
     if (( signal_dbm >= -55 )); then
@@ -50,8 +40,8 @@ case "$signal_level" in
         icon_color=0xff40a02b
         ;;
     3)
-        icon="$ICON_WIFI_4"
-        icon_color=0xff179299
+        icon="$ICON_WIFI_3"
+        icon_color=0xffffffff
         ;;
     2)
         icon="$ICON_WIFI_2"
