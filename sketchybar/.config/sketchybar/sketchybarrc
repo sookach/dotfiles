@@ -2,27 +2,24 @@ CONFIG_DIR="$HOME/.config/sketchybar"
 BINARY_DIR="$CONFIG_DIR/bin"
 PLUGIN_DIR="$CONFIG_DIR/plugins"
 
-sketchybar --bar color=0x00000000
-
-sketchybar --add item bar_left left \
-  --set bar_left \
-    width=500 \
-    background.drawing=on \
-    background.color=0xff000000 \
-    background.corner_radius=12
-
-sketchybar --add item bar_right right \
-  --set bar_right \
-    width=500 \
-    background.drawing=on \
-    background.color=0xff000000 \
-    background.corner_radius=12
+sketchybar --bar \
+  color=0x00000000 \
+  height=30 \
 
 sketchybar --add item apple left \
   --set apple \
     icon= \
     icon.font="SF Pro:Regular:16:0" \
+    icon.padding_left=12 \
+    icon.padding_right=12 \
     label.drawing=off \
     click_script="$BINARY_DIR/apple-menu"
+
+sketchybar --add bracket left_bar apple \
+  --set left_bar \
+    background.drawing=on \
+    background.color=0xff000000 \
+    background.corner_radius=15 \
+    background.height=24 \
 
 sketchybar --update
