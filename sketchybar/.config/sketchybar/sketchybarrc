@@ -44,4 +44,26 @@ sketchybar --add item front_app left \
 #     background.corner_radius=15 \
 #     background.height=24 \
 
+sketchybar --add item clock right \
+  --set clock \
+    script="$PLUGIN_DIR/clock.sh" \
+    update_freq=1 \
+    icon.drawing=off \
+    label.drawing=on \
+    label.padding_left=12 \
+    label.padding_right=12
+
+sketchybar --add item battery right \
+  --set battery \
+    script="$PLUGIN_DIR/battery.sh" \
+    update_freq=120 \
+    icon.drawing=on \
+    icon.font="NotoSansM Nerd Font Mono:Bold:25.0" \
+    icon.padding_left=12 \
+    icon.padding_right=12 \
+    label.drawing=on \
+    label.padding_right=12 \
+    background.padding_right=12 \
+  --subscribe battery system_woke power_source_change
+
 sketchybar --update
