@@ -12,7 +12,11 @@ default=(
   background.height=24 
 )
 
-sketchybar --default "${default[@]}" sketchybar --bar \
+sketchybar --default "${default[@]}"
+
+sketchybar --add event space_change
+
+sketchybar --bar \
   color=0x00000000 \
   height=30 \
 
@@ -24,6 +28,16 @@ sketchybar --add item apple left \
     icon.padding_right=12 \
     label.drawing=off \
     click_script="$BINARY_DIR/apple-menu"
+
+sketchybar --add item space left \
+  --set space \
+    script="$PLUGIN_DIR/current-space.sh" \
+    icon.drawing=off \
+    label.drawing=on \
+    label.padding_left=12 \
+    label.padding_right=12 \
+    background.padding_left=12 \
+  --subscribe space space_change
 
 sketchybar --add item front_app left \
   --set front_app \
