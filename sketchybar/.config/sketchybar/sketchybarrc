@@ -2,6 +2,14 @@ CONFIG_DIR="$HOME/.config/sketchybar"
 BINARY_DIR="$CONFIG_DIR/bin"
 PLUGIN_DIR="$CONFIG_DIR/plugins"
 
+
+default=(
+  icon.font="NotoSansM Nerd Font Mono:Bold:18.0"
+  label.font="NotoSansM Nerd Font Mono:Bold:12.0"
+)
+
+sketchybar --default "${default[@]}"
+
 sketchybar --bar \
   color=0x00000000 \
   height=30 \
@@ -9,13 +17,22 @@ sketchybar --bar \
 sketchybar --add item apple left \
   --set apple \
     icon= \
-    icon.font="SF Pro:Regular:16:0" \
+    icon.y_offset=1 \
     icon.padding_left=12 \
     icon.padding_right=12 \
     label.drawing=off \
     click_script="$BINARY_DIR/apple-menu"
 
-sketchybar --add bracket left_bar apple \
+sketchybar --add item front_app left \
+  --set front_app \
+    script="$PLUGIN_DIR/front-app.sh" \
+    icon.drawing=off \
+    label.drawing=on \
+    label.padding_left=8 \
+    label.padding_right=8 \
+  --subscribe front_app front_app_switched
+
+sketchybar --add bracket left_bar apple front_app \
   --set left_bar \
     background.drawing=on \
     background.color=0xff000000 \
