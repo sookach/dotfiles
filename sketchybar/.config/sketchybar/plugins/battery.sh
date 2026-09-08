@@ -30,12 +30,6 @@ case ${PERCENTAGE} in
   ;;
 esac
 
-ICON_COLOR='0xffffffff'
-if printf '%s\n' "$BATTERY_INFO" | grep -q 'AC Power'; then
-  ICON_COLOR='0xffceff00'
-fi
-
 sketchybar --set "$NAME" \
     icon="$ICON" \
-    icon.color="$ICON_COLOR" \
     label="${PERCENTAGE}%"
