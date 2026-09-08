@@ -144,6 +144,7 @@ require('nvim-treesitter').install {
   'mlir',
   'perl',
   'python',
+  'swift',
   'toml',
   'vim',
   'vimdoc',
@@ -225,6 +226,7 @@ vim.lsp.enable('jsonls')
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('marksman')
 vim.lsp.enable('perlnavigator')
+vim.lsp.enable('sourcekit')
 vim.lsp.enable('taplo')
 vim.lsp.enable("zuban")
 
