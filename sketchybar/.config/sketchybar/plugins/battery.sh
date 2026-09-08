@@ -15,32 +15,74 @@ if [[ -z "$PERCENTAGE" ]]; then
 fi
 
 case ${PERCENTAGE} in
-9[0-9] | 100)
+100)
   if (( CHARGE == 1 )); then
     ICON='󰂅'
   else
     ICON='󰁹'
   fi
   ;;
-[6-8][0-9])
+9[0-9])
+  if (( CHARGE == 1 )); then
+    ICON='󰂋'
+  else
+    ICON='󰂂'
+  fi
+  ;;
+8[0-9])
   if (( CHARGE == 1 )); then
     ICON='󰂊'
   else
     ICON='󰂁'
   fi
   ;;
-[3-5][0-9])
+7[0-9])
+  if (( CHARGE == 1 )); then
+    ICON='󰢞'
+  else
+    ICON='󰂀'
+  fi
+  ;;
+6[0-9])
+  if (( CHARGE == 1 )); then
+    ICON='󰂉'
+  else
+    ICON='󰁿'
+  fi
+  ;;
+5[0-9])
   if (( CHARGE == 1 )); then
     ICON='󰢝'
   else
     ICON='󰁾'
   fi
   ;;
-[1-2][0-9])
+4[0-9])
+  if (( CHARGE == 1 )); then
+    ICON='󰂈'
+  else
+    ICON='󰁽'
+  fi
+  ;;
+3[0-9])
+  if (( CHARGE == 1 )); then
+    ICON='󰂇'
+  else
+    ICON='󰁼'
+  fi
+  ;;
+2[0-9])
   if (( CHARGE == 1 )); then
     ICON='󰂆'
   else
     ICON='󰁻'
+  fi
+  ;;
+1[0-9])
+  if (( CHARGE == 1 )); then
+    ICON='󰂆'
+  else
+    ICON='󰢜'
   fi
   ;;
 *)
