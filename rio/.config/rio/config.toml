@@ -2,6 +2,11 @@ confirm-before-quit = false
 
 theme = "cyberdream"
 
+[window]
+opacity = 0.70
+decorations = "Transparent"
+blur = "macos-glass-regular"
+
 [fonts]
 family = "NotoSansM NFM"
 size = 11.0
