@@ -1,7 +1,10 @@
 confirm-before-quit = false
+
 theme = "cyberdream"
-font-family = "NotoSansM NFM"
-font-size = 11
+
+[fonts]
+family = "NotoSansM NFM"
+size = 11.0
 
 [effects]
 trail-cursor = true
