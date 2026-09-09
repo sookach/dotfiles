@@ -174,12 +174,12 @@ vim.pack.add {
   'https://github.com/saghen/blink.cmp',
 }
 local blink = require('blink.cmp')
+blink.build():pwait()
 blink.setup {
   keymap = { preset = 'default' },
   appearance = { use_nvim_cmp_as_default = true },
   sources = { default = { 'lsp', 'path', 'snippets', 'buffer' } },
 }
-blink.build():pwait()
 
 local function format_buffer()
   if vim.bo.filetype == 'python' then
