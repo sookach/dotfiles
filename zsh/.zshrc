@@ -18,7 +18,7 @@ unsetopt HIST_FIND_NO_DUPS
 unsetopt HIST_IGNORE_ALL_DUPS
 unsetopt HIST_SAVE_NO_DUPS
 
-source ~/.zshenv.local
+[ -f ~/.zshenv.local ] && source ~/.zshenv.local
 
 # Install zinit
 typeset ZINIT_HOME="$HOME/.local/share/zinit/zinit.git"
