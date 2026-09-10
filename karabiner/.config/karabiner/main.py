@@ -71,6 +71,7 @@ PROGRAMS = [
     ("s", NEW_SAFARI_WINDOW),
     ("f", NEW_FINDER_WINDOW),
     ("g", "$HOME/.config/ghostty/open-window.sh"),
+    ("k", "kitty --single-instance &")
 ]
 
 for c, cmd in PROGRAMS:
