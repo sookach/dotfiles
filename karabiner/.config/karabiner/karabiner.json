@@ -67,7 +67,7 @@
                 },
                 "to": [
                   {
-                    "shell_command": "kitty --single-instance &"
+                    "shell_command": "open -na Kitty --args --single-instance --directory $HOME"
                   }
                 ],
                 "type": "basic"
