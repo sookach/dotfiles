@@ -71,7 +71,7 @@ PROGRAMS = [
     ("s", NEW_SAFARI_WINDOW),
     ("f", NEW_FINDER_WINDOW),
     ("g", "$HOME/.config/ghostty/open-window.sh"),
-    ("k", "open -na Kitty --args --single-instance --directory $HOME")
+    ("k", "open -na Kitty --args --single-instance --directory $HOME"),
 ]
 
 for c, cmd in PROGRAMS:
@@ -167,6 +167,30 @@ for x, y in [("m", "zoom-fullscreen"), ("comma", "float"), ("period", "split")]:
             "to": [
                 {"shell_command": f"/opt/homebrew/bin/yabai -m window --toggle {y}"}
             ],
+        }
+    )
+
+
+for x, y in [("b", "bsp"), ("n", "stack"), ("m", "float")]:
+    create_manipulator(
+        {
+            "from": {
+                "key_code": x,
+                "modifiers": {"mandatory": ["control", "command", "shift"]},
+            },
+            "to": [{"shell_command": f"/opt/homebrew/bin/yabai -m config layout {y}"}],
+        }
+    )
+
+
+for x, y in [("comma", "bsp"), ("period", "stack"), ("slash", "float")]:
+    create_manipulator(
+        {
+            "from": {
+                "key_code": x,
+                "modifiers": {"mandatory": ["control", "command", "shift"]},
+            },
+            "to": [{"shell_command": f"/opt/homebrew/bin/yabai -m space --layout {y}"}],
         }
     )
 
