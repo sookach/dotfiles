@@ -91,7 +91,14 @@ create_manipulator(
     }
 )
 
-for x, y in [("h", "west"), ("j", "south"), ("k", "north"), ("l", "east")]:
+for x, y in [
+    ("h", "west"),
+    ("j", "south"),
+    ("k", "north"),
+    ("l", "east"),
+    ("n", "stack.prev"),
+    ("m", "stack.next"),
+]:
     create_manipulator(
         {
             "from": {"key_code": x, "modifiers": {"mandatory": ["control", "command"]}},
@@ -160,7 +167,7 @@ for x, y in [("semicolon", "prev"), ("quote", "next"), ("p", "recent")]:
         },
     )
 
-for x, y in [("m", "zoom-fullscreen"), ("comma", "float"), ("period", "split")]:
+for x, y in [("comma", "zoom-fullscreen"), ("period", "float"), ("slash", "split")]:
     create_manipulator(
         {
             "from": {"key_code": x, "modifiers": {"mandatory": ["control", "command"]}},
