@@ -11,12 +11,12 @@
 {
    "$schema": "https://vicinae.com/schemas/config.json",
    "global_shortcuts": {
-      "toggle": "super+SPACE"
+      "toggle": "alt+SPACE"
    },
    "font": {
       "normal": {
-         "family": "NotoSansM Nerd Font Mono",
-         "size": 12
+         "family": ".AppleSystemUIFont",
+         "size": 14
       }
    },
    "theme": {
@@ -28,14 +28,27 @@
       "system_info": false
    },
    "launcher_window": {
+      "rounding": 30,
       "opacity": 0.2,
       "compact_mode": {
          "enabled": true
-      }
+      },
+      "material": "liquid_glass"
    },
    "providers": {
       "macos-settings": {
          "enabled": true
+      },
+      "scripts": {
+         "enabled": false,
+         "entrypoints": {
+            "eject-all-disks.applescript": {
+               "enabled": false
+            },
+            "empty-trash.applescript": {
+               "enabled": false
+            }
+         }
       },
       "wm": {
          "entrypoints": {
