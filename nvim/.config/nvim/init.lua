@@ -47,6 +47,11 @@ vim.pack.add {
   'https://github.com/scottmckendry/cyberdream.nvim.git',
   'https://github.com/ntbbloodbath/doom-one.nvim'
 }
+
+local extra_colors = {
+  rich_lemon = "#FDF500"
+}
+
 require('cyberdream').setup {
   transparent = true,
   cache = false,
@@ -54,6 +59,10 @@ require('cyberdream').setup {
     sidebars = 'transparent',
     floats = 'transparent',
   },
+  highlights = {
+    String = { fg = extra_colors.rich_lemon },
+    Character = { fg = extra_colors.rich_lemon }
+  }
 }
 
 vim.g.doom_one_transparent_background = true
