@@ -70,7 +70,7 @@ vim.g.doom_one_transparent_background = true
 
 require('mfd').setup { transparent = true }
 
-vim.cmd.colorscheme('cyberdream')
+vim.cmd.colorscheme('crack')
 
 vim.pack.add {
   'https://github.com/nvim-tree/nvim-web-devicons',
