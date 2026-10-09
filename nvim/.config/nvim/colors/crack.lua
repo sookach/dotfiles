@@ -5,7 +5,7 @@ vim.g.colors_name = 'crack'
 
 local c = {
   bg       = '#000000', -- pure black
-  fg       = '#D0D0D0', -- off-white
+  fg       = '#E0E0E0', -- off-white
   dim      = '#585858', -- gray (comments)
   bright   = '#FFFFFF', -- white (emphasis)
   subtle   = '#383838', -- dark gray (line numbers)
