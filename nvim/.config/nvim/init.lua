@@ -45,7 +45,8 @@ end, { desc = "Open Neovim config in horizontal split" })
 
 vim.pack.add {
   'https://github.com/scottmckendry/cyberdream.nvim.git',
-  'https://github.com/ntbbloodbath/doom-one.nvim'
+  'https://github.com/ntbbloodbath/doom-one.nvim',
+  'https://github.com/kungfusheep/mfd.nvim'
 }
 
 local extra_colors = {
@@ -66,6 +67,8 @@ require('cyberdream').setup {
 }
 
 vim.g.doom_one_transparent_background = true
+
+require('mfd').setup { transparent = true }
 
 vim.cmd.colorscheme('cyberdream')
 
