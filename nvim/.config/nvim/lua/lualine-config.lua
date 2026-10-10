@@ -1,3 +1,6 @@
+local fg_color = '#ffffff'
+local bg_color = '#000000'
+
 local rounded_edge = {
   left = "",
   right = "",
@@ -14,19 +17,20 @@ local mode_color = function()
 
   return {
     fg = mode_colors[vim.fn.mode()] or colors.blue,
-    bg = '#000000',
+    bg = bg_color,
     gui = 'bold',
   }
 end
 
+
 vim.api.nvim_set_hl(0, "LualineTabActive", {
-  fg = "#ffffff",
-  bg = "#000000",
+  fg = fg_color,
+  bg = bg_color,
 })
 
 vim.api.nvim_set_hl(0, "LualineTabInactive", {
   fg = colors.grey,
-  bg = "#000000",
+  bg = fg_color,
 })
 
 return {
@@ -68,8 +72,8 @@ return {
           right = nil,
         },
         color = {
-          fg = '#ffffff',
-          bg = '#000000',
+          fg = fg_color,
+          bg = bg_color,
           gui = 'bold',
         },
       },
@@ -93,7 +97,7 @@ return {
         end,
         color = {
           fg = colors.orange,
-          bg = '#000000',
+          bg = bg_color,
           gui = 'bold',
         },
         padding = {
@@ -106,8 +110,8 @@ return {
         icon = '',
         separator = nil,
         color = {
-          fg = '#ffffff',
-          bg = '#000000',
+          fg = fg_color,
+          bg = bg_color,
           gui = 'bold',
         },
       },
@@ -117,7 +121,7 @@ return {
         end,
         color = {
           fg = colors.pink,
-          bg = '#000000',
+          bg = bg_color,
           gui = 'bold',
         },
         separator = nil,
@@ -126,8 +130,8 @@ return {
         "filename",
         separator = nil,
         color = {
-          fg = '#ffffff',
-          bg = '#000000',
+          fg = fg_color,
+          bg = bg_color,
           gui = 'bold',
         },
       },
@@ -136,7 +140,7 @@ return {
         separator = nil,
         color = {
           fg = colors.yellow,
-          bg = '#000000',
+          bg = bg_color,
           gui = 'bold',
         },
       },
@@ -144,8 +148,8 @@ return {
         'encoding',
         separator = nil,
         color = {
-          fg = '#ffffff',
-          bg = '#000000',
+          fg = fg_color,
+          bg = bg_color,
           gui = 'bold',
         },
       },
@@ -153,8 +157,8 @@ return {
         'filetype',
         separator = nil,
         color = {
-          fg = '#ffffff',
-          bg = '#000000',
+          fg = fg_color,
+          bg = bg_color,
           gui = 'bold',
         },
       },
@@ -165,7 +169,7 @@ return {
         seperator = nil,
         color = {
           fg = colors.green,
-          bg = '#000000',
+          bg = bg_color,
           gui = 'bold',
         },
       },
@@ -176,8 +180,8 @@ return {
           right = rounded_edge.right,
         },
         color = {
-          fg = '#ffffff',
-          bg = '#000000',
+          fg = fg_color,
+          bg = bg_color,
           gui = 'bold',
         },
       },
