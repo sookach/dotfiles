@@ -193,7 +193,7 @@
               },
               {
                 "from": {
-                  "key_code": "a",
+                  "key_code": "s",
                   "modifiers": {
                     "mandatory": [
                       "control",
@@ -210,7 +210,7 @@
               },
               {
                 "from": {
-                  "key_code": "s",
+                  "key_code": "d",
                   "modifiers": {
                     "mandatory": [
                       "control",
