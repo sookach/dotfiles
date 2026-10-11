@@ -98,6 +98,8 @@ for x, y in [
     ("l", "east"),
     ("n", "stack.prev"),
     ("m", "stack.next"),
+    ("a", "stack.prev"),
+    ("s", "stack.next"),
 ]:
     create_manipulator(
         {
