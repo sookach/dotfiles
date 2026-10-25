@@ -82,7 +82,7 @@ case ${PERCENTAGE} in
   if (( CHARGE == 1 )); then
     ICON='󰂆'
   else
-    ICON='󰢜'
+    ICON='󰁺'
   fi
   ;;
 *)
