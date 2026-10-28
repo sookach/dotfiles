@@ -6,7 +6,8 @@ font-family = "NotoSansM NFM"
 font-size = 11
 font-thicken = true
 
-macos-titlebar-style = hidden
+macos-titlebar-style = tabs
+macos-window-buttons = hidden
 keybind = cmd+c=copy_to_clipboard
 
 background-opacity = 0.70
