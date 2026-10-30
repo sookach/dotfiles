@@ -2,7 +2,7 @@ user: '#B8B8B8'
 group: '#808080'
 permission:
   read: '#B8B8B8'
-  write: "#E0E0E0'
+  write: '#E0E0E0'
   exec: '#FFFFFF'
   exec-sticky: '#FFFFFF'
   no-access: '#383838'
@@ -22,7 +22,7 @@ inode:
   valid: '#808080'
   invalid: '#585858'
 links:
-  read: '#B8B8B8'
+  valid: '#B8B8B8'
   invalid: '#585858'
 tree-edge: '#383838'
 git-status:
