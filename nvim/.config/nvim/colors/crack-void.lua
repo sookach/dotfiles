@@ -1,5 +1,6 @@
 -- Crack: pure black neutral monochrome (standalone, zero plugin dependencies)
-vim.cmd("highlight clear")
+
+vim.cmd('highlight clear')
 if vim.fn.exists('syntax_on') == 1 then
   vim.cmd('syntax reset')
 end
@@ -27,7 +28,7 @@ local base_palette = {
   subtle    = '#383838', -- line numbers, whitespace, indent guides
   dim       = '#585858', -- comments, hints, secondary chrome
   muted     = '#808080', -- punctuators, operators, delimiters
-  secondary = '#B8B8B8', -- UI warnings & secondary headings (never code identifiers)  [value unreadable in OCR: guessed]
+  secondary = '#B8B8B8', -- UI warnings & secondary headings (never code identifiers)
   fg        = '#E0E0E0', -- all code identifiers, types, literals & functions
   bright    = '#FFFFFF', -- control-flow keywords, errors, active emphasis
 }
@@ -86,6 +87,7 @@ local function scale_to_contrast(src_hex, bg_surfaces, target, t)
     end
     if ok then hi_f = mid else lo = mid end
   end
+
   local k = hi_f * t
   return rgb_to_hex(r + (1 - r) * k, g + (1 - g) * k, b + (1 - b) * k)
 end
@@ -93,10 +95,21 @@ end
 local function compute_palette(palette, level)
   level = math.max(0, math.min(10, tonumber(level) or 0))
   if level == 0 then return vim.deepcopy(palette) end
+
   local out = vim.deepcopy(palette)
   local surfaces = { palette.bg, palette.float_bg, palette.cursor }
+  local fg_keys = {
+    'border',
+    'subtle',
+    'dim',
+    'muted',
+    'secondary',
+    'fg',
+    'bright',
+  }
   local t = level / 10.0
-  for _, key in ipairs({ 'border', 'subtle', 'dim', 'muted', 'secondary', 'fg', 'bright' }) do
+
+  for _, key in ipairs(fg_keys) do
     out[key] = scale_to_contrast(palette[key], surfaces, 7.1, t)
   end
   return out
@@ -130,11 +143,11 @@ hi('lCursor', { fg = c.bg, bg = c.bright })
 hi('CursorIM', { fg = c.bg, bg = c.bright })
 hi('TermCursor', { fg = c.bg, bg = c.bright })
 hi('TermCursorNC', { fg = c.bg, bg = c.dim })
-hi('CursorNormal', { fg = c.bg, bg = '#D0D0D0' })      -- neutral off-white, home base
-hi('CursorInsert', { fg = c.bg, bg = c.bright })       -- pure white, hot
-hi('CursorVisual', { fg = c.bg, bg = c.muted })        -- mid-gray, selection
-hi('CursorReplace', { fg = c.bg, bg = c.fg })          -- bright neutral
-hi('CursorCommand', { fg = c.bg, bg = '#D0D0D0' })     -- same as normal
+hi('CursorNormal', { fg = c.bg, bg = '#D0D0D0' })  -- neutral off-white, home base
+hi('CursorInsert', { fg = c.bg, bg = c.bright })   -- pure white, hot
+hi('CursorVisual', { fg = c.bg, bg = c.muted })    -- mid-gray, selection
+hi('CursorReplace', { fg = c.bg, bg = c.fg })      -- bright neutral
+hi('CursorCommand', { fg = c.bg, bg = '#D0D0D0' }) -- same as normal
 hi('CursorLine', { bg = c.cursor })
 hi('CursorColumn', { bg = c.cursor })
 hi('ColorColumn', { bg = c.cursor })
@@ -142,11 +155,13 @@ hi('LineNr', { fg = c.subtle })
 hi('LineNrAbove', { fg = c.subtle })
 hi('LineNrBelow', { fg = c.subtle })
 hi('CursorLineNr', { fg = c.fg, bold = true })
+hi('CursorLineFold', { fg = c.dim, bg = 'NONE' })
+hi('CursorLineSign', { bg = 'NONE' })
 hi('SignColumn', { bg = 'NONE' })
 hi('VertSplit', { fg = c.border, bg = 'NONE' })
 hi('WinSeparator', { fg = c.border, bg = 'NONE' })
-hi('StatusLine', { fg = c.fg, bg = c.cursor })
-hi('StatusLineNC', { fg = c.dim, bg = c.cursor })
+hi('StatusLine', { fg = c.fg, bg = surface_bg, bold = true })
+hi('StatusLineNC', { fg = c.dim, bg = surface_bg })
 hi('TabLine', { fg = c.dim, bg = c.cursor })
 hi('TabLineFill', { bg = surface_bg })
 hi('TabLineSel', { fg = c.fg, bg = surface_bg, bold = true })
@@ -155,7 +170,7 @@ hi('WinBarNC', { fg = c.dim, bg = surface_bg })
 hi('MsgArea', { fg = c.fg, bg = surface_bg })
 hi('MsgSeparator', { fg = c.border, bg = surface_bg })
 
--- Popup / Completion menu (kept opaque so borderless menus stay legible)
+-- Popup / Completion menu (kept opaque c.float_bg so borderless menus stay legible)
 hi('Pmenu', { fg = c.fg, bg = c.float_bg })
 hi('PmenuSel', { fg = c.bg, bg = c.fg, bold = true })
 hi('PmenuKind', { fg = c.dim, bg = c.float_bg })
@@ -204,14 +219,14 @@ hi('SpellRare', { underdotted = true, sp = c.dim })
 
 -- Diffs (luminance + strikethrough separates +/- without color)
 hi('DiffAdd', { fg = c.bright, bg = '#141414' })
-hi('DiffChange', { bg = '#0A0A0A' })
+hi('DiffChange', { bg = '#0E0E0E' })
 hi('DiffDelete', { fg = c.dim, bg = '#0A0A0A', strikethrough = true })
 hi('DiffText', { fg = c.bright, bg = '#242424', bold = true })
-hi('Added', { fg = c.fg })
+hi('Added', { fg = c.bright })
 hi('Changed', { fg = c.muted })
 hi('Removed', { fg = c.dim, strikethrough = true })
 
--- Legacy Vim Syntax: monotone identifiers with dimmed punctuators
+-- Legacy Vim Syntax: monotone identifiers (#E0E0E0) with dimmed punctuators (#808080)
 hi('Comment', { fg = comment, italic = true })
 hi('Constant', { fg = c.fg })
 hi('String', { fg = c.fg, italic = true })
@@ -270,18 +285,19 @@ hi('@string.special.url', { fg = c.fg, underline = true })
 hi('@string.special.path', { fg = c.fg })
 hi('@character', { fg = c.fg })
 hi('@character.special', { fg = c.bright, bold = true })
+hi('@boolean', { fg = c.fg, bold = true })
 hi('@number', { fg = c.fg })
 hi('@number.float', { fg = c.fg })
-hi('@boolean', { fg = c.fg, bold = true })
 hi('@type', { fg = c.fg, bold = true })
 hi('@type.builtin', { fg = c.fg, bold = true })
 hi('@type.definition', { fg = c.fg, bold = true })
-hi('@attribute', { fg = c.fg, italic = true })
+hi('@attribute', { fg = c.fg })
+hi('@attribute.builtin', { fg = c.fg, italic = true })
 hi('@property', { fg = c.fg })
 hi('@function', { fg = c.fg, bold = true })
-hi('@function.builtin', { fg = c.fg, bold = true })
+hi('@function.builtin', { fg = c.fg, bold = true, italic = true })
 hi('@function.call', { fg = c.fg })
-hi('@function.macro', { fg = c.fg, bold = true, italic = true })
+hi('@function.macro', { fg = c.fg, bold = true })
 hi('@function.method', { fg = c.fg, bold = true })
 hi('@function.method.call', { fg = c.fg })
 hi('@constructor', { fg = c.fg, bold = true })
@@ -291,7 +307,7 @@ hi('@keyword.function', { fg = c.bright, bold = true })
 hi('@keyword.coroutine', { fg = c.bright, bold = true })
 hi('@keyword.operator', { fg = c.bright, bold = true })
 hi('@keyword.import', { fg = c.fg, bold = true })
-hi('@keyword.type', { fg = c.bright, bold = true })
+hi('@keyword.type', { fg = c.fg, bold = true })
 hi('@keyword.modifier', { fg = c.fg, bold = true })
 hi('@keyword.repeat', { fg = c.bright, bold = true })
 hi('@keyword.return', { fg = c.bright, bold = true })
@@ -333,8 +349,8 @@ hi('@markup.heading.5', { fg = c.secondary, bold = true })
 hi('@markup.heading.6', { fg = c.muted, bold = true })
 hi('@markup.quote', { fg = c.muted, italic = true })
 hi('@markup.math', { fg = c.secondary })
-hi('@markup.link', { fg = c.secondary })
-hi('@markup.link.label', { fg = c.secondary, italic = true })
+hi('@markup.link', { fg = c.secondary, italic = true })
+hi('@markup.link.label', { fg = c.fg, bold = true })
 hi('@markup.link.url', { fg = c.muted, underline = true })
 hi('@markup.raw', { fg = c.fg, bg = c.visual })
 hi('@markup.raw.block', { fg = c.fg })
@@ -349,14 +365,14 @@ hi('RenderMarkdownH4', { fg = c.fg, bold = true })
 hi('RenderMarkdownH5', { fg = c.secondary, bold = true })
 hi('RenderMarkdownH6', { fg = c.muted, bold = true })
 hi('RenderMarkdownH1Bg', { fg = c.bright, bg = c.visual, bold = true })
-hi('RenderMarkdownH2Bg', { bg = '#151515', bold = true })
-hi('RenderMarkdownH3Bg', { bg = c.cursor, bold = true })
-hi('RenderMarkdownH4Bg', { bg = c.cursor, bold = true })
-hi('RenderMarkdownH5Bg', { bg = c.cursor, bold = true })
-hi('RenderMarkdownH6Bg', { bg = c.cursor, bold = true })
-hi('RenderMarkdownCode', { fg = c.secondary, bg = c.float_bg })
-hi('RenderMarkdownCodeBorder', { fg = c.muted, bg = c.float_bg })
-hi('RenderMarkdownCodeInfo', { fg = c.border, bg = c.float_bg })
+hi('RenderMarkdownH2Bg', { fg = c.bright, bg = '#151515', bold = true })
+hi('RenderMarkdownH3Bg', { fg = c.fg, bg = c.cursor, bold = true })
+hi('RenderMarkdownH4Bg', { fg = c.fg, bg = c.cursor, bold = true })
+hi('RenderMarkdownH5Bg', { fg = c.secondary, bg = c.cursor, bold = true })
+hi('RenderMarkdownH6Bg', { fg = c.muted, bg = c.cursor, bold = true })
+hi('RenderMarkdownCode', { bg = c.float_bg })
+hi('RenderMarkdownCodeBorder', { fg = c.border, bg = c.float_bg })
+hi('RenderMarkdownCodeInfo', { fg = c.dim, bg = c.float_bg, italic = true })
 hi('RenderMarkdownCodeInline', { fg = c.fg, bg = c.visual })
 hi('RenderMarkdownBullet', { fg = c.muted })
 hi('RenderMarkdownDash', { fg = c.border })
@@ -371,9 +387,9 @@ hi('RenderMarkdownUnchecked', { fg = c.dim })
 hi('RenderMarkdownTodo', { fg = c.secondary, bold = true })
 hi('RenderMarkdownTableHead', { fg = c.fg, bold = true })
 hi('RenderMarkdownTableRow', { fg = c.fg })
-hi('RenderMarkdownSuccess', { fg = c.dim })
-hi('RenderMarkdownInfo', { fg = c.dim, italic = true })
-hi('RenderMarkdownHint', { fg = c.secondary, bold = true })
+hi('RenderMarkdownSuccess', { fg = c.fg })
+hi('RenderMarkdownInfo', { fg = c.dim })
+hi('RenderMarkdownHint', { fg = c.dim, italic = true })
 hi('RenderMarkdownWarn', { fg = c.secondary, bold = true })
 hi('RenderMarkdownError', { fg = c.bright, bold = true })
 
@@ -440,13 +456,13 @@ hi('GitSignsAdd', { fg = c.fg })
 hi('GitSignsChange', { fg = c.muted })
 hi('GitSignsDelete', { fg = c.bright })
 hi('GitSignsStagedAdd', { fg = c.dim })
-hi('GitSignsStagedChange', { fg = c.dim })
-hi('GitSignsStagedDelete', { fg = c.subtle })
+hi('GitSignsStagedChange', { fg = c.subtle })
+hi('GitSignsStagedDelete', { fg = c.dim })
 hi('GitSignsCurrentLineBlame', { fg = c.dim, italic = true })
 hi('GitSignsAddPreview', { link = 'DiffAdd' })
 hi('GitSignsDeletePreview', { link = 'DiffDelete' })
-hi('GitSignsAddInline', { fg = c.bright, bg = c.visual, bold = true })
-hi('GitSignsDeleteInline', { fg = c.dim, bg = '#241414', strikethrough = true })
+hi('GitSignsAddInline', { fg = c.bright, bg = '#1C1C1C', bold = true })
+hi('GitSignsDeleteInline', { fg = c.dim, bg = '#141414', strikethrough = true })
 hi('GitSignsChangeInline', { bg = c.visual })
 
 -- fzf-lua (overrides default pink/green/ANSI highlights)
@@ -464,16 +480,16 @@ hi('FzfLuaScrollFloatFull', { bg = c.dim })
 hi('FzfLuaHeaderBind', { fg = c.secondary, bold = true })
 hi('FzfLuaHeaderText', { fg = c.muted })
 hi('FzfLuaPathColNr', { fg = c.dim })
-hi('FzfLuaPathLineNr', { fg = c.dim })
-hi('FzfLuaBufName', { fg = c.muted })
-hi('FzfLuaBufId', { fg = c.fg })
-hi('FzfLuaBufNr', { fg = c.dim })
-hi('FzfLuaBufLineNr', { fg = c.muted })
-hi('FzfLuaBufFlagCur', { fg = c.dim })
-hi('FzfLuaBufFlagAlt', { fg = c.bright, bold = true })
-hi('FzfLuaTabTitle', { fg = c.muted })
-hi('FzfLuaTabMarker', { fg = c.bright, bold = true })
-hi('FzfLuaDirIcon', { fg = c.secondary, bold = true })
+hi('FzfLuaPathLineNr', { fg = c.muted })
+hi('FzfLuaBufName', { fg = c.fg })
+hi('FzfLuaBufId', { fg = c.dim })
+hi('FzfLuaBufNr', { fg = c.muted })
+hi('FzfLuaBufLineNr', { fg = c.dim })
+hi('FzfLuaBufFlagCur', { fg = c.bright, bold = true })
+hi('FzfLuaBufFlagAlt', { fg = c.muted })
+hi('FzfLuaTabTitle', { fg = c.bright, bold = true })
+hi('FzfLuaTabMarker', { fg = c.secondary, bold = true })
+hi('FzfLuaDirIcon', { fg = c.dim })
 hi('FzfLuaDirPart', { fg = c.dim })
 hi('FzfLuaFilePart', { fg = c.fg })
 hi('FzfLuaLivePrompt', { fg = c.bright, bold = true })
@@ -486,7 +502,7 @@ hi('FzfLuaFzfScrollbar', { fg = c.dim, bg = float_bg })
 hi('FzfLuaFzfSeparator', { fg = c.border, bg = float_bg })
 hi('FzfLuaFzfGutter', { bg = float_bg })
 hi('FzfLuaFzfHeader', { fg = c.muted })
-hi('FzfLuaFzfInfo', { fg = c.muted })
+hi('FzfLuaFzfInfo', { fg = c.dim })
 hi('FzfLuaFzfPointer', { fg = c.bright, bold = true })
 hi('FzfLuaFzfMarker', { fg = c.bright, bold = true })
 hi('FzfLuaFzfSpinner', { fg = c.secondary })
@@ -512,22 +528,26 @@ for level, spec in pairs({
   hi('Notify' .. level .. 'Border', { fg = spec.border, bg = float_bg })
   hi('Notify' .. level .. 'Icon', { fg = spec.fg, bg = float_bg, bold = spec.bold })
   hi('Notify' .. level .. 'Title', { fg = spec.fg, bg = float_bg, bold = true })
-  hi('Notify' .. level .. 'Body', { fg = spec.fg, bg = float_bg })
+  hi('Notify' .. level .. 'Body', { fg = c.fg, bg = float_bg })
 end
 hi('NotifyBackground', { bg = c.bg })
 
 hi('NoiceCmdline', { fg = c.fg, bg = float_bg })
 hi('NoiceCmdlinePopup', { fg = c.fg, bg = float_bg })
 hi('NoiceCmdlinePopupBorder', { fg = c.border, bg = float_bg })
+hi('NoiceCmdlinePopupBorderSearch', { fg = c.muted, bg = float_bg })
 hi('NoiceCmdlinePopupTitle', { fg = c.fg, bg = float_bg, bold = true })
 hi('NoiceCmdlineIcon', { fg = c.bright, bold = true })
-hi('NoiceCmdlineIconSearch', { fg = c.bright, bold = true })
+hi('NoiceCmdlineIconSearch', { fg = c.secondary, bold = true })
 hi('NoiceConfirm', { fg = c.fg, bg = float_bg })
 hi('NoiceConfirmBorder', { fg = c.border, bg = float_bg })
+hi('NoiceMini', { fg = c.dim, bg = float_bg })
 hi('NoicePopup', { fg = c.fg, bg = float_bg })
 hi('NoicePopupBorder', { fg = c.border, bg = float_bg })
 hi('NoicePopupmenu', { link = 'Pmenu' })
 hi('NoicePopupmenuBorder', { fg = c.border, bg = c.float_bg })
+hi('NoicePopupmenuSelected', { link = 'PmenuSel' })
+hi('NoicePopupmenuMatch', { link = 'PmenuMatch' })
 hi('NoiceScrollbar', { bg = c.float_bg })
 hi('NoiceScrollbarThumb', { bg = c.dim })
 hi('NoiceSplit', { fg = c.fg, bg = surface_bg })
@@ -536,7 +556,7 @@ hi('NoiceVirtualText', { fg = c.dim, italic = true })
 hi('NoiceFormatProgressDone', { fg = c.bg, bg = c.fg, bold = true })
 hi('NoiceFormatProgressTodo', { fg = c.dim, bg = c.cursor })
 
--- lspsaga (overrides hardcoded crimson SagaBeacon & gray SagaCount)
+-- lspsaga.nvim (overrides hardcoded crimson SagaBeacon & gray SagaCount)
 hi('SagaNormal', { fg = c.fg, bg = float_bg })
 hi('SagaBorder', { fg = c.border, bg = float_bg })
 hi('SagaTitle', { fg = c.fg, bg = float_bg, bold = true })
@@ -546,6 +566,8 @@ hi('SagaCount', { fg = c.bg, bg = c.muted, bold = true })
 
 -- blink.cmp & nvim-cmp
 hi('BlinkCmpMenu', { fg = c.fg, bg = c.float_bg })
+hi('BlinkCmpMenuBorder', { fg = c.border, bg = c.float_bg })
+hi('BlinkCmpMenuSelection', { fg = c.fg, bg = c.fg, bold = true })
 hi('BlinkCmpScrollBarGutter', { bg = c.float_bg })
 hi('BlinkCmpScrollBarThumb', { bg = c.dim })
 hi('BlinkCmpLabel', { fg = c.fg })
@@ -571,13 +593,14 @@ hi('CmpItemAbbrDeprecated', { fg = c.dim, strikethrough = true })
 hi('CmpItemKind', { fg = c.muted })
 hi('CmpItemMenu', { fg = c.dim, italic = true })
 for _, kind in ipairs({
-  'Text', 'Variable', 'Color', 'File', 'Reference', 'Value', 'Unit',
-  'Constant', 'Field', 'Property', 'Module', 'EnumMember', 'Event', 'Operator',
+  'Text', 'Field', 'Variable', 'Module', 'Property', 'Unit', 'Value',
+  'Color', 'File', 'Reference', 'EnumMember', 'Constant', 'Event', 'Operator',
 }) do
   hi('CmpItemKind' .. kind, { fg = c.dim })
 end
 for _, kind in ipairs({
-  'Method', 'Function', 'Keyword', 'Folder', 'Constructor', 'Class', 'Interface', 'Enum', 'Struct',
+  'Method', 'Function', 'Constructor', 'Class', 'Interface', 'Enum',
+  'Keyword', 'Folder', 'Struct',
 }) do
   hi('CmpItemKind' .. kind, { fg = c.muted, bold = true })
 end
@@ -609,28 +632,25 @@ vim.g.terminal_color_7  = c.fg
 vim.g.terminal_color_8  = c.dim
 vim.g.terminal_color_9  = c.bright
 vim.g.terminal_color_10 = '#D0D0D0'
-vim.g.terminal_color_11 = c.muted
-vim.g.terminal_color_12 = c.secondary
-vim.g.terminal_color_13 = c.fg
+vim.g.terminal_color_11 = '#E8E8E8'
+vim.g.terminal_color_12 = c.muted
+vim.g.terminal_color_13 = c.secondary
 vim.g.terminal_color_14 = '#C8C8C8'
 vim.g.terminal_color_15 = c.bright
 
--- Standalone monotone icon & optional OSC 12 cursor sync
--- (replaces mfd.override_icons / enable cursor_sync)
+-- Standalone monotone icon & optional OSC 12 cursor sync (replaces mfd.override_icons / enable cursor_sync)
 local augroup           = vim.api.nvim_create_augroup('CrackColorscheme', { clear = true })
 
 local function apply_monotone_icons()
   if vim.g.colors_name ~= 'crack' then return end
 
-  for _, color in ipairs({ 'Blue', 'Green', 'Cyan', 'Grey', 'Orange', 'Purple', 'Red', 'Yellow', 'Azure' }) do
+  for _, color in ipairs({ 'Blue', 'Cyan', 'Green', 'Grey', 'Orange', 'Purple', 'Red', 'Yellow', 'Azure' }) do
     vim.api.nvim_set_hl(0, 'MiniIcons' .. color, { fg = c.dim })
   end
 
   for _, grp in ipairs({
-    'NvimTreeFolderIcon',
-    'NvimTreeOpenedFolderIcon',
-    'NvimTreeFileIcon',
-    'NvimTreeSpecialFile',
+    'NvimTreeFolderIcon', 'NvimTreeOpenedFolderIcon', 'NvimTreeClosedFolderIcon',
+    'NvimTreeFileIcon', 'NvimTreeSpecialFile', 'NvimTreeImageFile', 'NvimTreeSymlink',
   }) do
     vim.api.nvim_set_hl(0, grp, { fg = c.dim })
   end
@@ -638,11 +658,11 @@ local function apply_monotone_icons()
   local ok, devicons = pcall(require, 'nvim-web-devicons')
   if ok then
     local def = devicons.get_default_icon and devicons.get_default_icon() or {}
-    devicons.set_default_icon(def.icon or '', c.dim)
-    local icons = devicons.get_icons()
-    local overrides = {}
-    for key, icon in pairs(icons) do
-      overrides[key] = { icon = icon.icon, color = c.dim, name = icon.name }
+    devicons.set_default_icon(def.icon or '', c.dim)
+    for key, icon in pairs(devicons.get_icons()) do
+      pcall(devicons.set_icon, {
+        [key] = { icon = icon.icon, color = c.dim, name = icon.name },
+      })
     end
     pcall(devicons.set_icon, overrides)
   end
@@ -684,11 +704,7 @@ if cfg.cursor_sync then
     end
   end
 
-  vim.api.nvim_create_autocmd('ModeChanged', {
-    group = augroup,
-    pattern = '*',
-    callback = sync_cursor,
-  })
+  vim.api.nvim_create_autocmd('ModeChanged', { group = augroup, pattern = '*', callback = sync_cursor })
   vim.api.nvim_create_autocmd('VimLeavePre', {
     group = augroup,
     callback = function() osc('\027]112\007') end,
