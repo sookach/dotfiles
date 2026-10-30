@@ -1,0 +1,12 @@
+[theme]
+name = 'crack'
+
+[colors]
+Base = '#787878'       # inactive commands & UI chrome (dimmed)
+AlertError = '#FFFFFF' # actively selected command (+ bold) & failed durations
+Important = '#FFFFFF'
+Title = '#E0E0E0'
+AlertWarn = '#B8B8B8'
+AlertInfo = '#585858'  # successful command durations
+Guidance = '#585858'   # relative timestamps ("2m ago")
+Muted = '#383838'
