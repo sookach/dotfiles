@@ -110,7 +110,9 @@ local function compute_palette(palette, level)
   local t = level / 10.0
 
   for _, key in ipairs(fg_keys) do
-    out[key] = scale_to_contrast(palette[key], surfaces, 7.1, t)
+    if palette[key] then
+      out[key] = scale_to_contrast(palette[key], surfaces, 7.1, t)
+    end
   end
   return out
 end
@@ -214,8 +216,8 @@ hi('Conceal', { fg = c.dim })
 -- Spelling (dotted underline preserves clean geometry without hiding typos)
 hi('SpellBad', { underdotted = true, sp = c.bright })
 hi('SpellCap', { underdotted = true, sp = c.muted })
-hi('SpellLocal', { underdotted = true, sp = c.dim })
 hi('SpellRare', { underdotted = true, sp = c.dim })
+hi('SpellLocal', { underdotted = true, sp = c.dim })
 
 -- Diffs (luminance + strikethrough separates +/- without color)
 hi('DiffAdd', { fg = c.bright, bg = '#141414' })
@@ -303,8 +305,8 @@ hi('@function.method.call', { fg = c.fg })
 hi('@constructor', { fg = c.fg, bold = true })
 hi('@operator', { fg = c.muted })
 hi('@keyword', { fg = c.bright, bold = true })
-hi('@keyword.function', { fg = c.bright, bold = true })
 hi('@keyword.coroutine', { fg = c.bright, bold = true })
+hi('@keyword.function', { fg = c.bright, bold = true })
 hi('@keyword.operator', { fg = c.bright, bold = true })
 hi('@keyword.import', { fg = c.fg, bold = true })
 hi('@keyword.type', { fg = c.fg, bold = true })
@@ -368,8 +370,8 @@ hi('RenderMarkdownH1Bg', { fg = c.bright, bg = c.visual, bold = true })
 hi('RenderMarkdownH2Bg', { fg = c.bright, bg = '#151515', bold = true })
 hi('RenderMarkdownH3Bg', { fg = c.fg, bg = c.cursor, bold = true })
 hi('RenderMarkdownH4Bg', { fg = c.fg, bg = c.cursor, bold = true })
-hi('RenderMarkdownH5Bg', { fg = c.secondary, bg = c.cursor, bold = true })
-hi('RenderMarkdownH6Bg', { fg = c.muted, bg = c.cursor, bold = true })
+hi('RenderMarkdownH5Bg', { fg = c.secondary, bg = c.float_bg, bold = true })
+hi('RenderMarkdownH6Bg', { fg = c.muted, bg = c.float_bg, bold = true })
 hi('RenderMarkdownCode', { bg = c.float_bg })
 hi('RenderMarkdownCodeBorder', { fg = c.border, bg = c.float_bg })
 hi('RenderMarkdownCodeInfo', { fg = c.dim, bg = c.float_bg, italic = true })
@@ -567,7 +569,7 @@ hi('SagaCount', { fg = c.bg, bg = c.muted, bold = true })
 -- blink.cmp & nvim-cmp
 hi('BlinkCmpMenu', { fg = c.fg, bg = c.float_bg })
 hi('BlinkCmpMenuBorder', { fg = c.border, bg = c.float_bg })
-hi('BlinkCmpMenuSelection', { fg = c.fg, bg = c.fg, bold = true })
+hi('BlinkCmpMenuSelection', { fg = c.bg, bg = c.fg, bold = true })
 hi('BlinkCmpScrollBarGutter', { bg = c.float_bg })
 hi('BlinkCmpScrollBarThumb', { bg = c.dim })
 hi('BlinkCmpLabel', { fg = c.fg })
