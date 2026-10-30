@@ -1,38 +1,38 @@
-user: 81
-group: 75
+user: '#B8B8B8'
+group: '#808080'
 permission:
-  read: 84
-  write: 191
-  exec: 209
-  exec-sticky: 135
-  no-access: 102
-  octal: 74
-  acl: 74
-  context: 81
+  read: '#B8B8B8'
+  write: "#E0E0E0'
+  exec: '#FFFFFF'
+  exec-sticky: '#FFFFFF'
+  no-access: '#383838'
+  octal: '#808080'
+  acl: '#808080'
+  context: '#808080'
 date:
-  hour-old: 188
-  day-old: 102
-  older: 59
+  hour-old: '#E0E0E0'
+  day-old: '#989898'
+  older: '#585858'
 size:
-  none: 102
-  small: 84
-  medium: 191
-  large: 215
+  none: '#383838'
+  small: '#808080'
+  medium: '#B8B8B8'
+  large: '#FFFFFF'
 inode:
-  valid: 206
-  invalid: 102
+  valid: '#808080'
+  invalid: '#585858'
 links:
-  valid: 206
-  invalid: 102
-tree-edge: 102
+  read: '#B8B8B8'
+  invalid: '#585858'
+tree-edge: '#383838'
 git-status:
-  default: 102
-  unmodified: 102
-  ignored: 102
-  new-in-index: 77
-  new-in-workdir: 77
-  typechange: 149
-  deleted: 167
-  renamed: 77
-  modified: 149
-  conflicted: 167
+  default: '#585858'
+  unmodified: '#585858'
+  ignored: '#383838'
+  new-in-index: '#E0E0E0'
+  new-in-workdir: '#E0E0E0'
+  typechange: '#B8B8B8'
+  deleted: '#FFFFFF'
+  renamed: '#E0E0E0'
+  modified: '#B8B8B8'
+  conflicted: '#FFFFFF'
