@@ -33,7 +33,7 @@ zinit light zdharma-continuum/fast-syntax-highlighting
 autoload -Uz compinit
 compinit
 zinit cdreplay -q
-[[ "${FAST_THEME_NAME}:-}" != 'crack' && -f ~/.config/fsh/crack.ini ]] && fast-theme -q XDG:crack
+[[ "${FAST_THEME_NAME}:-}" != 'cracked' && -f ~/.config/fsh/cracked.ini ]] && fast-theme -q XDG:cracked
 
 alias vi=nvim
 alias vim=nvim
