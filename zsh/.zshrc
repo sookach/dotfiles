@@ -89,4 +89,4 @@ autoload -Uz add-zsh-hook
 add-zsh-hook precmd _crack_precmd_newline
 alias clear='_prompt_newline=0; command clear'
 
-PROMPT='%B%F{#ffffff}%~%f%b %(?.%B%F{#ffea00}.%B%F{#ff55555})%f%b '
+PROMPT=$'%B%F{#ffffff}%~%f%b %(?.%B%F{#444444}\uf0e7.%B%F{#444444}\u2716)%f%b '
