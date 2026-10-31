@@ -33,6 +33,7 @@ zinit light zdharma-continuum/fast-syntax-highlighting
 autoload -Uz compinit
 compinit
 zinit cdreplay -q
+[[ "${FAST_THEME_NAME}:-}" != 'crack' && -f ~/.config/fsh/crack.ini ]] && fast-theme -q XDG:crack
 
 alias vi=nvim
 alias vim=nvim
@@ -79,4 +80,13 @@ function vnote() {
 eval "$(atuin init zsh)"
 eval "$(zoxide init zsh)"
 
-PROMPT='%B%F{12}%~%f%b %B%F{#FFEA00}%f%b '
+typeset -gi _prompt_newline=0
+_crack_precmd_newline() {
+  (( _prompt_newline )) && print ''
+  _prompt_newline=1
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd _crack_precmd_newline
+alias clear='_prompt_newline=0; command clear'
+
+PROMPT='%B%F{#ffffff}%~%f%b %(?.%B%F{#ffea00}.%B%F{#ff55555})%f%b '
