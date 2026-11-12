@@ -3,6 +3,8 @@
 import json
 import copy
 
+YABAI_BIN = "/opt/homebrew/bin/yabai"
+
 config: dict = {
     "global": {"show_in_menu_bar": False},
     "profiles": [
@@ -91,31 +93,70 @@ create_manipulator(
     }
 )
 
-for x, y in [
-    ("h", "west"),
-    ("j", "south"),
-    ("k", "north"),
-    ("l", "east"),
-    ("n", "stack.prev"),
-    ("m", "stack.next"),
-    ("s", "stack.prev"),
-    ("d", "stack.next"),
-]:
-    create_manipulator(
+for x, y in [("h", "west"), ("j", "south"), ("k", "north"), ("l", "east")]:
+    create_manipulators(
         {
             "from": {"key_code": x, "modifiers": {"mandatory": ["control", "command"]}},
-            "to": [{"shell_command": f"/opt/homebrew/bin/yabai -m window --focus {y}"}],
-        }
+            "to": [{"shell_command": f"{YABAI_BIN} -m window --focus {y}"}],
+        },
+        {
+            "from": {
+                "key_code": x,
+                "modifiers": {"mandatory": ["control", "command", "shift"]},
+            },
+            "to": [{"shell_command": f"{YABAI_BIN} -m window --warp {y}"}],
+        },
+    )
+
+
+for x, y, z in [
+    ("n", "stack.prev", "stack.last"),
+    ("m", "stack.next", "stack.first"),
+    ("s", "stack.prev", "stack.last"),
+    ("d", "stack.next", "stack.first"),
+]:
+    create_manipulators(
+        {
+            "from": {"key_code": x, "modifiers": {"mandatory": ["control", "command"]}},
+            "to": [
+                {
+                    "shell_command": f"{YABAI_BIN} -m window --focus {y} || {YABAI_BIN} -m window --focus {z}"
+                }
+            ],
+        },
+        {
+            "from": {
+                "key_code": x,
+                "modifiers": {"mandatory": ["control", "command", "shift"]},
+            },
+            "to": [
+                {
+                    "shell_command": f"{YABAI_BIN} -m window --swap {y} --focus || {YABAI_BIN} -m window --swap {z} --focus"
+                }
+            ],
+        },
     )
 
 
 for x, y in [("y", "west"), ("u", "south"), ("i", "north"), ("o", "east")]:
-    create_manipulator(
+    create_manipulators(
         {
             "from": {"key_code": x, "modifiers": {"mandatory": ["control", "command"]}},
-            "to": [{"shell_command": f"/opt/homebrew/bin/yabai -m window --warp {y}"}],
-        }
+            "to": [{"shell_command": f"{YABAI_BIN} -m window --stack {y}"}],
+        },
+        {
+            "from": {
+                "key_code": x,
+                "modifiers": {"mandatory": ["control", "command", "shift"]},
+            },
+            "to": [
+                {
+                    "shell_command": f"{YABAI_BIN} -m window {y} --stack $({YABAI_BIN} -m query --windows --window | jq -r '.id')"
+                }
+            ],
+        },
     )
+
 
 for x, y in [
     ("h", "left:-50:0"),
@@ -131,11 +172,9 @@ for x, y in [
         {
             "from": {
                 "key_code": x,
-                "modifiers": {"mandatory": ["control", "command", "shift"]},
+                "modifiers": {"mandatory": ["control", "option"]},
             },
-            "to": [
-                {"shell_command": f"/opt/homebrew/bin/yabai -m window --resize {y}"}
-            ],
+            "to": [{"shell_command": f"{YABAI_BIN} -m window --resize {y}"}],
         }
     )
 
@@ -143,14 +182,14 @@ for i in range(1, 10):
     create_manipulators(
         {
             "from": {"key_code": str(i), "modifiers": {"mandatory": ["control"]}},
-            "to": [{"shell_command": f"/opt/homebrew/bin/yabai -m space --focus {i}"}],
+            "to": [{"shell_command": f"{YABAI_BIN} -m space --focus {i}"}],
         },
         {
             "from": {
                 "key_code": str(i),
                 "modifiers": {"mandatory": ["control", "command"]},
             },
-            "to": [{"shell_command": f"/opt/homebrew/bin/yabai -m window --space {i}"}],
+            "to": [{"shell_command": f"{YABAI_BIN} -m window --space {i}"}],
         },
     )
 
@@ -158,14 +197,14 @@ for x, y in [("semicolon", "prev"), ("quote", "next"), ("p", "recent")]:
     create_manipulators(
         {
             "from": {"key_code": x, "modifiers": {"mandatory": ["control", "command"]}},
-            "to": [{"shell_command": f"/opt/homebrew/bin/yabai -m space --focus {y}"}],
+            "to": [{"shell_command": f"{YABAI_BIN} -m space --focus {y}"}],
         },
         {
             "from": {
                 "key_code": x,
                 "modifiers": {"mandatory": ["control", "command", "shift"]},
             },
-            "to": [{"shell_command": f"/opt/homebrew/bin/yabai -m window --space {y}"}],
+            "to": [{"shell_command": f"{YABAI_BIN} -m window --space {y}"}],
         },
     )
 
@@ -173,9 +212,7 @@ for x, y in [("comma", "zoom-fullscreen"), ("period", "float"), ("slash", "split
     create_manipulator(
         {
             "from": {"key_code": x, "modifiers": {"mandatory": ["control", "command"]}},
-            "to": [
-                {"shell_command": f"/opt/homebrew/bin/yabai -m window --toggle {y}"}
-            ],
+            "to": [{"shell_command": f"{YABAI_BIN} -m window --toggle {y}"}],
         }
     )
 
@@ -185,9 +222,9 @@ for x, y in [("b", "bsp"), ("n", "stack"), ("m", "float")]:
         {
             "from": {
                 "key_code": x,
-                "modifiers": {"mandatory": ["control", "command", "shift"]},
+                "modifiers": {"mandatory": ["control", "option"]},
             },
-            "to": [{"shell_command": f"/opt/homebrew/bin/yabai -m config layout {y}"}],
+            "to": [{"shell_command": f"{YABAI_BIN} -m config layout {y}"}],
         }
     )
 
@@ -197,11 +234,21 @@ for x, y in [("comma", "bsp"), ("period", "stack"), ("slash", "float")]:
         {
             "from": {
                 "key_code": x,
-                "modifiers": {"mandatory": ["control", "command", "shift"]},
+                "modifiers": {"mandatory": ["control", "option"]},
             },
-            "to": [{"shell_command": f"/opt/homebrew/bin/yabai -m space --layout {y}"}],
+            "to": [{"shell_command": f"{YABAI_BIN} -m space --layout {y}"}],
         }
     )
+
+create_manipulator(
+    {
+        "from": {
+            "key_code": "b",
+            "modifiers": {"mandatory": ["control", "command"]},
+        },
+        "to": [{"shell_command": f"{YABAI_BIN} -m window --insert stack"}],
+    }
+)
 
 print(json.dumps(config))
 
