@@ -1,0 +1,3 @@
+# kitty startup session for workspace restore. Opt-in: see kitty.conf, `startup_session`.
+# The kitten opens each workspace that was open last time in its own OS window, then exits.
+launch --type=os-window /opt/homebrew/bin/kitten /Users/suk/.config/kitty/restore_on_launch.py
