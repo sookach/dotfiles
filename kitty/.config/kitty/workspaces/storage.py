@@ -51,6 +51,7 @@ def _from_dict(d: dict) -> Workspace:
                         label=w["label"],
                         cwd=w.get("cwd"),
                         state=w.get("state", "detached"),
+                        placement=w.get("placement"),
                     )
                     for w in t.get("windows", [])
                 ],

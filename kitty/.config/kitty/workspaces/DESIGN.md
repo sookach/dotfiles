@@ -56,18 +56,18 @@ Rex-like persistent workspaces for kitty, using zmx for process persistence.
 | cmd+n | New OS window running the picker (its own window, so no overlay); pick a workspace, or "n" for a new one. Cancelling leaves no window behind |
 | cmd+t | New tab in the current workspace (creates a workspace if the window has none) |
 | ctrl+s, v / n | Vertical / horizontal split; launched through the same kitten so the new window is zmx-backed |
-| cmd+w | Detach: close the kitty window; zmx keeps running; state becomes `detached` |
+| cmd+w | Kill this window: `zmx kill` ends its session, remove it from the store, close it (matches Rex's close) |
+| ctrl+s, x | Detach: close the kitty window; zmx keeps running; state becomes `detached` |
 | cmd+shift+w | Close this workspace's windows in this OS window: detached, not killed. Plain windows in that OS window stay |
 | ctrl+s, shift+x | Kill one window: `zmx kill`, remove it from the store, close it |
-| picker "x N" | Kill a workspace (after confirmation): its zmx sessions end, its windows close, the workspace is deleted |
-| cmd+k | Picker: open the chosen workspace in the current OS window (switches out the current workspace). If already open, focus it |
-| picker "d" | List detached windows; "r <n>" reattaches one, "p <n>" prunes one |
+| cmd+k | Workspace picker (`--command select`) in its own tab, anchored to the window you came from. Full window size, not zmx-backed; closes when done |
 | ctrl+s, w, r | Rename the current workspace (label only) |
+| ctrl+s, shift+t | Rename this window's tab: the saved label and kitty's title change together, so the name survives a restart |
 
 - Autosave happens at each step: the kitten writes the file when it creates a
   window, and the watcher writes it when a window closes. No polling.
 - Every new window is zmx-backed, including splits.
-- Removed binding: `cmd+w close_os_window` (replaced by detach).
+- Removed binding: `cmd+w close_os_window` (cmd+w now kills the window, as in Rex).
 
 ## Watcher (autosave on close)
 
@@ -81,7 +81,7 @@ Rex-like persistent workspaces for kitty, using zmx for process persistence.
 
 ## Opening a workspace (cmd+k)
 
-The picker runs as an overlay over the window the user was in (the "anchor").
+The picker runs in its own tab and is anchored to the window the user was in (the "anchor", passed as `--anchor`).
 The anchor is found with `kitten @ ls --match state:overlay_parent`; kittens
 never act on their own overlay window ID.
 
@@ -105,7 +105,7 @@ Layout is an ordered list of tabs and windows. Split geometry is not restored (v
 cmd+k on an open workspace only focuses it. Detached windows are never restored
 automatically.
 
-The picker's "d" entry lists every stored window that is not open in kitty.
+The command menu's "Detached windows" entry lists every stored window that is not open in kitty.
 - "r <n>" reattaches one into its workspace's open OS window: beside a window of its
   own tab if one is open, otherwise as a new tab. Only for open workspaces.
 - "p <n>" prunes one: ends its zmx session and removes it from the store. Refuses an
@@ -122,6 +122,29 @@ cmd+shift+w, killed). It is not updated on quit, so a plain quit still counts as
 "open". With `startup_session ~/.config/kitty/workspaces/startup.session` enabled
 in kitty.conf, `restore_on_launch.py` opens each listed workspace in its own OS window.
 Off by default.
+
+## Restore fidelity
+
+- Each window stores `placement`: `vsplit` or `hsplit` for a split beside its tab's first
+  window, `null` for the tab's first window. Restore and reattach use it, so an hsplit comes
+  back as an hsplit. Files written before this field load with `null`, which restores as vsplit.
+- Tab names are stored, so a renamed tab keeps its name after a restart.
+
+## The command menu (picker)
+
+Every custom command lives in one menu. The picker (`workspace_picker.py`, logic in
+`workspaces/menu.py`) runs in its own tab. With no arguments it shows the base menu; with
+`--command <name>` it runs one command directly, which is how the command palette and cmd+k use it.
+
+Base menu: select workspace (with New workspace at the top), new workspace (asks for a name),
+rename workspace, kill workspace, new tab, split right, split down, rename tab, kill this window,
+close workspace window, detached windows.
+
+Lists use fzf when it's installed (fuzzy search, arrow keys), and a numbered prompt otherwise.
+In the detached list: Enter reattaches, ctrl-x prunes, F3 prunes all.
+
+The palette keeps the commands that take no list (aliases in kitty.conf) and adds picker
+entries (ws_menu, ws_open_workspace, ws_detached_windows, ws_kill_workspace).
 
 ## Renaming, killing whole workspaces
 

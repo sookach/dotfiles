@@ -37,9 +37,9 @@ def _kill_zmx(win_id: str) -> None:
     subprocess.run([kc.zmx_bin(), "kill", win_id], capture_output=True, text=True)
 
 
-def create_workspace() -> Workspace:
-    """A new workspace with one shell window. The caller opens it (cmd+n picker, 'new' entry)."""
-    ws = ops.new_workspace(label=f"workspace {len(storage.list_all()) + 1}")
+def create_workspace(label: str | None = None) -> Workspace:
+    """A new workspace with one shell window. The caller opens it (the picker's New workspace)."""
+    ws = ops.new_workspace(label=label or f"workspace {len(storage.list_all()) + 1}")
     win = ops.add_window(ws, label="shell", cwd=None)
     ops.set_state(ws, win.id, STATE_DETACHED)  # not open until open_workspace succeeds
     storage.save(ws)
@@ -73,7 +73,13 @@ def new_window(
     if where != "tab" and tab_id is None:
         where = "tab"
 
-    win = ops.add_window(ws, label="shell", cwd=cwd, tab_id=tab_id)
+    win = ops.add_window(
+        ws,
+        label="shell",
+        cwd=cwd,
+        tab_id=tab_id,
+        placement=where if where != "tab" else None,
+    )
     if where == "tab":
         match = f"id:{kitty_win_id}" if kitty_win_id is not None else None
         kid = _launch_zmx_window("tab", win.id, cwd, match, "shell")
@@ -152,6 +158,25 @@ def close_workspace_window(anchor: int) -> int:
     for w in sorted(mine, key=lambda w: w.get("id") == anchor):
         kr.run_close(w["id"])
     return len(mine)
+
+
+def rename_tab(anchor: int, label: str) -> str:
+    """Rename the tab that `anchor` is in: the stored label (so it survives a restart) and kitty's title."""
+    state = kr.ls()
+    ws_id = kc.current_workspace_id(state, anchor)
+    if not ws_id:
+        raise ValueError("this window is not in a workspace")
+    ws = storage.load(ws_id)
+    if ws is None:
+        raise KeyError(ws_id)
+    win_id = kc.window_var(state, anchor, kc.VAR_WINDOW)
+    tab = ops.tab_for_window(ws, win_id) if win_id else None
+    if tab is None:
+        raise KeyError(f"window {anchor} has no tab in its workspace")
+    tab.label = label
+    storage.save(ws)
+    kr.run_set_tab_title(anchor, label)
+    return label
 
 
 def rename_workspace(ws_id: str, label: str) -> None:

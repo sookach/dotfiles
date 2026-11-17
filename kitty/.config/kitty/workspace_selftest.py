@@ -22,6 +22,7 @@ if _HERE not in sys.path:
     sys.path.insert(0, _HERE)
 
 from workspaces import actions, kitty_cmd as kc, kitty_remote as kr, ops, storage  # noqa: E402
+from workspaces.kitten_util import quiet  # noqa: E402
 from workspaces.models import STATE_DETACHED, STATE_OPEN  # noqa: E402
 
 RESULTS: list[tuple[str, bool]] = []
@@ -138,6 +139,9 @@ def main(args: list[str]) -> str:
     except EOFError:
         pass
     return ""
+
+
+main = quiet(main)
 
 
 if __name__ == "__main__":

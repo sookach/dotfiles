@@ -819,6 +819,246 @@ class NewBehaviourTests(_StoreTest):
         self.assertIn(old.id, storage.load_open_ids())  # still open in the other OS window
 
 
+    def test_picker_window_is_closed_when_done_on_both_paths(self) -> None:
+        # cmd+k runs the picker in its own tab (window 8), anchored to the user's window (5).
+        ws = ops.new_workspace("api")
+        ops.add_window(ws, "editor", None)
+        storage.save(ws)
+        fake = FakeKitty([{"id": 1, "tabs": [{"id": 2, "windows": [{"id": 5, "user_vars": {}}]}, {"id": 3, "windows": [{"id": 8, "user_vars": {}}]}]}])
+        with mock.patch.object(kr, "_run", side_effect=fake):
+            kr.open_workspace(ws, anchor=5, close_window=8)
+        self.assertEqual(fake.calls[-1], ["close-window", "--match", "id:8"])
+        self.assertTrue(any(c_[0] == "launch" and "id:5" in c_ for c_ in fake.calls))  # opened into the anchor
+
+        other = ops.new_workspace("open one")
+        w = ops.add_window(other, "w", None)
+        storage.save(other)
+        state = [{"id": 1, "tabs": [{"id": 2, "windows": [
+            {"id": 3, "user_vars": {"kitty_workspace": other.id, "kitty_window": w.id}},
+            {"id": 8, "user_vars": {}}]}]}]
+        fake2 = FakeKitty(state)
+        with mock.patch.object(kr, "_run", side_effect=fake2):
+            self.assertEqual(kr.open_workspace(other, anchor=5, close_window=8), "focused")
+        self.assertIn(["close-window", "--match", "id:8"], fake2.calls)
+
+
+class ChooseTests(unittest.TestCase):
+    def test_fzf_args_include_expect_keys_only_when_asked(self) -> None:
+        from workspaces import choose as ch
+
+        self.assertNotIn("--expect", ch.fzf_args("open> "))
+        args = ch.fzf_args("detached> ", expect=("ctrl-x", "f3"))
+        self.assertEqual(args[args.index("--expect") + 1], "ctrl-x,f3")
+        self.assertEqual(args[args.index("--with-nth") + 1], "2..")
+
+    def test_parse_fzf_output(self) -> None:
+        from workspaces import choose as ch
+
+        self.assertEqual(ch.parse_fzf_output("3\tlabel\n"), (None, 3))
+        self.assertEqual(ch.parse_fzf_output("ctrl-x\n4\tlabel\n", ("ctrl-x",)), ("ctrl-x", 4))
+        self.assertEqual(ch.parse_fzf_output("\n2\tlabel\n", ("ctrl-x",)), (None, 2))  # Enter
+        self.assertEqual(ch.parse_fzf_output("\n", ("ctrl-x",)), (None, None))
+
+    def test_numbered_fallback_when_fzf_missing(self) -> None:
+        from workspaces import choose as ch
+
+        with mock.patch.object(ch, "fzf_bin", return_value=None), mock.patch("builtins.input", return_value="2"), mock.patch("builtins.print"):
+            self.assertEqual(ch.choose(["a", "b", "c"], "x> "), (None, 1))
+        with mock.patch.object(ch, "fzf_bin", return_value=None), mock.patch("builtins.input", return_value=""), mock.patch("builtins.print"):
+            self.assertIsNone(ch.choose(["a"], "x> "))
+
+    def test_fzf_cancel_returns_none(self) -> None:
+        from workspaces import choose as ch
+
+        res = mock.Mock(returncode=130, stdout="")
+        with mock.patch.object(ch, "fzf_bin", return_value="/bin/fzf"), mock.patch.object(ch.subprocess, "run", return_value=res):
+            self.assertIsNone(ch.choose(["a"], "x> "))
+
+
+class RestoreFidelityTests(_StoreTest):
+    def test_restored_split_keeps_its_direction(self) -> None:
+        ws = ops.new_workspace("api")
+        ops.add_window(ws, "editor", None)
+        ops.add_window(ws, "logs", None, tab_id=ws.tabs[0].id, placement="hsplit")
+        storage.save(ws)
+        fake = FakeKitty([])
+        with mock.patch.object(kr, "_run", side_effect=fake):
+            kr.open_workspace(ws, anchor=1)
+        splits = [c_ for c_ in fake.calls if c_[0] == "launch" and c_[1] == "--type=window"]
+        self.assertEqual(splits[0][splits[0].index("--location") + 1], "hsplit")
+
+    def test_placement_survives_a_round_trip_and_old_files_default(self) -> None:
+        ws = ops.new_workspace("api")
+        ops.add_window(ws, "editor", None)
+        ops.add_window(ws, "logs", None, tab_id=ws.tabs[0].id, placement="vsplit")
+        storage.save(ws)
+        loaded = storage.load(ws.id)
+        self.assertEqual([w.placement for w in loaded.tabs[0].windows], [None, "vsplit"])
+        # a file written before placement existed still loads
+        path = os.path.join(self._tmp.name, f"{ws.id}.json")
+        with open(path) as f:
+            data = json.load(f)
+        for w in data["tabs"][0]["windows"]:
+            w.pop("placement", None)
+        with open(path, "w") as f:
+            json.dump(data, f)
+        self.assertEqual([w.placement for w in storage.load(ws.id).tabs[0].windows], [None, None])
+
+
+class RenameTabTests(_StoreTest):
+    def test_rename_tab_saves_label_and_sets_kitty_title(self) -> None:
+        ws = ops.new_workspace("api")
+        a = ops.add_window(ws, "editor", None)
+        storage.save(ws)
+        state = [{"id": 1, "tabs": [{"id": 2, "title": "shell", "windows": [
+            {"id": 5, "user_vars": {"kitty_workspace": ws.id, "kitty_window": a.id}}]}]}]
+        fake = FakeKitty(state)
+        with mock.patch.object(kr, "_run", side_effect=fake):
+            self.assertEqual(actions.rename_tab(5, "backend"), "backend")
+        self.assertEqual(storage.load(ws.id).tabs[0].label, "backend")
+        self.assertIn(["set-tab-title", "--match", "id:5", "backend"], fake.calls)
+
+    def test_rename_tab_refuses_a_window_outside_a_workspace(self) -> None:
+        with mock.patch.object(kr, "_run", side_effect=FakeKitty([{"id": 1, "tabs": [{"id": 2, "windows": [{"id": 9, "user_vars": {}}]}]}])):
+            with self.assertRaises(ValueError):
+                actions.rename_tab(9, "x")
+
+
+class ScriptedUI:
+    """A menu UI that answers from scripted lists, so the menu can be tested without a terminal."""
+
+    def __init__(self, picks=(), asks=(), confirms=()):
+        self.picks = list(picks)  # each: (key, index) or None
+        self.asks = list(asks)
+        self.confirms = list(confirms)
+        self.said: list[str] = []
+        self.prompts: list[str] = []
+
+    def choose(self, items, prompt, expect=()):
+        self.prompts.append(prompt)
+        return self.picks.pop(0)
+
+    def ask(self, prompt):
+        return self.asks.pop(0)
+
+    def confirm(self, prompt):
+        return self.confirms.pop(0)
+
+    def say(self, message):
+        self.said.append(message)
+
+    def as_ui(self):
+        from workspaces.menu import UI
+
+        return UI(choose=self.choose, ask=self.ask, confirm=self.confirm, say=self.say)
+
+
+class MenuTests(_StoreTest):
+    def _ctx(self, anchor=5, self_id=8):
+        from workspaces.menu import Ctx
+
+        return Ctx(anchor=anchor, self_id=self_id)
+
+    def test_select_opens_the_chosen_workspace_and_closes_the_picker(self) -> None:
+        from workspaces import menu
+
+        a = ops.new_workspace("alpha")
+        storage.save(a)
+        ui = ScriptedUI(picks=[(None, 1)])  # index 1 = the first workspace (index 0 is New workspace)
+        with mock.patch.object(menu.kr, "open_workspace", return_value="opened") as opn:
+            self.assertTrue(menu.run("select", self._ctx(), ui.as_ui()))
+        ws_arg, anchor = opn.call_args[0][0], opn.call_args[0][1]
+        self.assertEqual(ws_arg.id, a.id)
+        self.assertEqual(anchor, 5)
+        self.assertEqual(opn.call_args[1], {"close_window": 8})
+
+    def test_select_new_workspace_asks_for_a_name(self) -> None:
+        from workspaces import menu
+
+        ui = ScriptedUI(picks=[(None, 0)], asks=["api"])
+        with mock.patch.object(menu.kr, "open_workspace", return_value="opened"):
+            self.assertTrue(menu.run("select", self._ctx(), ui.as_ui()))
+        self.assertEqual([w.label for w in storage.list_all()], ["api"])
+
+    def test_new_workspace_blank_name_gets_a_default(self) -> None:
+        from workspaces import menu
+
+        ui = ScriptedUI(asks=[""])
+        with mock.patch.object(menu.kr, "open_workspace", return_value="opened"):
+            menu.run("new_workspace", self._ctx(), ui.as_ui())
+        self.assertTrue(storage.list_all()[0].label.startswith("workspace "))
+
+    def test_kill_workspace_only_when_confirmed(self) -> None:
+        from workspaces import menu
+
+        ws = ops.new_workspace("gone")
+        storage.save(ws)
+        with mock.patch.object(menu.actions, "kill_workspace") as kill:
+            menu.run("kill_workspace", self._ctx(), ScriptedUI(picks=[(None, 0)], confirms=[False]).as_ui())
+            kill.assert_not_called()
+            menu.run("kill_workspace", self._ctx(), ScriptedUI(picks=[(None, 0)], confirms=[True]).as_ui())
+            kill.assert_called_once_with(ws.id, 5)
+
+    def test_detached_enter_reattaches_an_open_workspaces_window(self) -> None:
+        from workspaces import menu
+
+        item = {"ws_id": "ws-00000001", "ws_label": "api", "ws_open": True, "tab_label": "t", "win_id": "win-00000001", "win_label": "w", "cwd": None}
+        ui = ScriptedUI(picks=[(None, 0)])
+        with mock.patch.object(menu.actions, "detached_windows", return_value=[item]), \
+                mock.patch.object(menu.kr, "ls", return_value=[]), \
+                mock.patch.object(menu.kr, "reattach_window") as re_:
+            menu.run("detached", self._ctx(), ui.as_ui())
+        re_.assert_called_once_with("ws-00000001", "win-00000001")
+
+    def test_detached_enter_on_a_closed_workspace_explains_instead(self) -> None:
+        from workspaces import menu
+
+        item = {"ws_id": "ws-00000001", "ws_label": "api", "ws_open": False, "tab_label": "t", "win_id": "win-00000001", "win_label": "w", "cwd": None}
+        ui = ScriptedUI(picks=[(None, 0)])
+        with mock.patch.object(menu.actions, "detached_windows", return_value=[item]), \
+                mock.patch.object(menu.kr, "ls", return_value=[]), \
+                mock.patch.object(menu.kr, "reattach_window") as re_:
+            menu.run("detached", self._ctx(), ui.as_ui())
+        re_.assert_not_called()
+        self.assertTrue(any("isn't open" in m for m in ui.said))
+
+    def test_detached_f3_prunes_all_after_confirming(self) -> None:
+        from workspaces import menu
+
+        items = [
+            {"ws_id": "ws-00000001", "ws_label": "a", "ws_open": True, "tab_label": "t", "win_id": "win-00000001", "win_label": "w", "cwd": None},
+            {"ws_id": "ws-00000001", "ws_label": "a", "ws_open": True, "tab_label": "t", "win_id": "win-00000002", "win_label": "w", "cwd": None},
+        ]
+        ui = ScriptedUI(picks=[("f3", 0)], confirms=[True])
+        with mock.patch.object(menu.actions, "detached_windows", return_value=items), \
+                mock.patch.object(menu.kr, "ls", return_value=[]), \
+                mock.patch.object(menu.actions, "prune_window") as prune:
+            menu.run("detached", self._ctx(), ui.as_ui())
+        self.assertEqual([c[0] for c in prune.call_args_list], [("ws-00000001", "win-00000001"), ("ws-00000001", "win-00000002")])
+
+    def test_base_menu_runs_the_chosen_command(self) -> None:
+        from workspaces import menu
+
+        ui = ScriptedUI(picks=[(None, menu.BASE_MENU.index("new_tab"))])
+        with mock.patch.object(menu.actions, "new_window") as nw:
+            self.assertTrue(menu.run(None, self._ctx(), ui.as_ui()))
+        nw.assert_called_once_with(5, where="tab")
+
+    def test_anchor_commands_fail_cleanly_without_an_anchor(self) -> None:
+        from workspaces import menu
+
+        ui = ScriptedUI()
+        self.assertFalse(menu.run("kill_window", self._ctx(anchor=None), ui.as_ui()))
+        self.assertTrue(any(m.startswith("Failed") for m in ui.said))
+
+    def test_unknown_command_is_reported(self) -> None:
+        from workspaces import menu
+
+        ui = ScriptedUI()
+        self.assertFalse(menu.run("nope", self._ctx(), ui.as_ui()))
+        self.assertTrue(any("Unknown command" in m for m in ui.said))
+
+
 if __name__ == "__main__":
     unittest.main()
 

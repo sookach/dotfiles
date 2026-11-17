@@ -15,6 +15,8 @@ class Window:
     label: str
     cwd: str | None = None
     state: str = STATE_DETACHED
+    # How this window sits beside its tab's first window: "vsplit", "hsplit", or None for a tab's first window.
+    placement: str | None = None
 
 
 @dataclass

@@ -16,6 +16,7 @@ if _HERE not in sys.path:  # kittens may not have their own dir on sys.path
     sys.path.insert(0, _HERE)
 
 from workspaces import kitty_remote, storage  # noqa: E402
+from workspaces.kitten_util import quiet  # noqa: E402
 
 
 def main(args: list[str]) -> str:
@@ -39,6 +40,9 @@ def main(args: list[str]) -> str:
         except EOFError:
             pass
     return ""
+
+
+main = quiet(main)
 
 
 if __name__ == "__main__":

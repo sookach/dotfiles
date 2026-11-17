@@ -77,7 +77,9 @@ def config_dir() -> str:
 def launch_picker_os_window() -> int:
     """cmd+n: a new OS window running the picker as its only window (no overlay)."""
     picker = os.path.join(config_dir(), "workspace_picker.py")
-    return int(_run(["launch", "--type=os-window", kc.kitten_bin(), picker]).strip())
+    return int(
+        _run(["launch", "--type=os-window", kc.kitten_bin(), picker, "--command", "select"]).strip()
+    )
 
 
 # ---- single operations --------------------------------------------------------
@@ -99,6 +101,10 @@ def run_close(kitty_win_id: int) -> None:
     except RuntimeError as e:
         if "No matching windows" not in str(e):
             raise
+
+
+def run_set_tab_title(kitty_win_id: int, title: str) -> None:
+    _run(["set-tab-title", "--match", f"id:{kitty_win_id}", title])
 
 
 def run_focus_workspace(ws_id: str) -> None:
@@ -152,7 +158,7 @@ def reattach_window(ws_id: str, win_id: str) -> str:
     tab, win = found
     beside = [open_map[w.id] for w in tab.windows if w.id in open_map]
     if beside:
-        _launch_win(ws, tab.label, win, "window", f"id:{beside[0]}", location="vsplit")
+        _launch_win(ws, tab.label, win, "window", f"id:{beside[0]}", location=win.placement or "vsplit")
     else:
         _launch_win(ws, tab.label, win, "tab", f"id:{next(iter(open_map.values()))}")
     storage.save(ws)
@@ -164,6 +170,7 @@ def open_workspace(
     anchor: int | None,
     close_anchor: bool = False,
     new_os_window: bool = False,
+    close_window: int | None = None,
 ) -> str:
     """Open `ws`. Returns 'opened' or 'focused'.
 
@@ -185,6 +192,8 @@ def open_workspace(
         run_focus_workspace(ws.id)
         if close_anchor and anchor is not None:
             run_close(anchor)
+        if close_window is not None:
+            run_close(close_window)
         return "focused"
 
     if anchor is None and not new_os_window:
@@ -217,7 +226,9 @@ def open_workspace(
                     kid = _launch_win(ws, tab.label, win, "tab", f"id:{target}")
                 tab_anchor = kid
             else:
-                kid = _launch_win(ws, tab.label, win, "window", f"id:{tab_anchor}", location="vsplit")
+                kid = _launch_win(
+                    ws, tab.label, win, "window", f"id:{tab_anchor}", location=win.placement or "vsplit"
+                )
             launched += 1
     storage.save(ws)
     storage.add_open_id(ws.id)
@@ -242,4 +253,7 @@ def open_workspace(
         and not any(kw.get("id") == anchor for kw in old_windows)
     ):
         run_close(anchor)
+    # close_window is the picker's own window. Closing it comes last: it ends the picker.
+    if close_window is not None and launched:
+        run_close(close_window)
     return "opened"

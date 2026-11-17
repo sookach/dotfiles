@@ -24,10 +24,16 @@ def find_window(ws: Workspace, win_id: str) -> tuple[Tab, Window] | None:
 
 
 def add_window(
-    ws: Workspace, label: str, cwd: str | None, tab_id: str | None = None
+    ws: Workspace,
+    label: str,
+    cwd: str | None,
+    tab_id: str | None = None,
+    placement: str | None = None,
 ) -> Window:
     """Add a window. With tab_id=None, starts a new tab for it. Returns the new window."""
-    win = Window(id=new_id("win"), label=label, cwd=cwd, state=STATE_OPEN)
+    win = Window(
+        id=new_id("win"), label=label, cwd=cwd, state=STATE_OPEN, placement=placement
+    )
     if tab_id is None:
         ws.tabs.append(Tab(id=new_id("tab"), label=label, windows=[win]))
         return win
